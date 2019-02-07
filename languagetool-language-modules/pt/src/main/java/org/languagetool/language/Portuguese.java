@@ -135,7 +135,7 @@ public class Portuguese extends Language implements AutoCloseable {
   }
 
   @Override
-  public List<Rule> getRelevantRules(ResourceBundle messages, UserConfig userConfig, List<Language> altLanguages) throws IOException {
+  public List<Rule> getRelevantRules(ResourceBundle messages, UserConfig userConfig) throws IOException {
     return Arrays.asList(
             new CommaWhitespaceRule(messages,
                 Example.wrong("Tomamos café<marker> ,</marker> queijo, bolachas e uvas."),
@@ -143,7 +143,7 @@ public class Portuguese extends Language implements AutoCloseable {
             new GenericUnpairedBracketsRule(messages,
                     Arrays.asList("[", "(", "{", "\"", "“" /*, "«", "'", "‘" */),
                     Arrays.asList("]", ")", "}", "\"", "”" /*, "»", "'", "’" */)),
-            new HunspellRule(messages, this, userConfig, altLanguages),
+            new HunspellRule(messages, this, userConfig),
             new LongSentenceRule(messages, userConfig, -1, true),
             new LongParagraphRule(messages, this, userConfig),
             new UppercaseSentenceStartRule(messages, this,
@@ -171,9 +171,7 @@ public class Portuguese extends Language implements AutoCloseable {
             new PortugueseAccentuationCheckRule(messages),
             new PortugueseWrongWordInContextRule(messages),
             new PortugueseWordCoherencyRule(messages),
-            new PortugueseUnitConversionRule(messages),
-            new PortugueseReadabilityRule(messages, this, userConfig, true),
-            new PortugueseReadabilityRule(messages, this, userConfig, false)
+            new PortugueseUnitConversionRule(messages)
     );
   }
 
@@ -256,8 +254,6 @@ public class Portuguese extends Language implements AutoCloseable {
       case "FILLER_WORDS_PT":           return -990;
       case LongSentenceRule.RULE_ID:    return -997;
       case LongParagraphRule.RULE_ID:   return -998;
-      case "READABILITY_RULE_SIMPLE_PT":       return -1100;
-      case "READABILITY_RULE_DIFFICULT_PT":    return -1101;
       case "CACOPHONY":                 return -1500;
       case "UNKNOWN_WORD":              return -2000;
     }

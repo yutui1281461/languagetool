@@ -18,8 +18,10 @@
  */
 package org.languagetool.server;
 
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import org.junit.Before;
+import org.junit.Test;
+import org.languagetool.Language;
+import org.languagetool.language.German;
 
 import java.io.File;
 import java.io.IOException;
@@ -30,11 +32,8 @@ import java.net.URLEncoder;
 import java.util.Arrays;
 import java.util.HashMap;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.languagetool.Language;
-import org.languagetool.language.German;
-import org.languagetool.language.GermanyGerman;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 public class HTTPSServerTest {
 
@@ -54,8 +53,8 @@ public class HTTPSServerTest {
     HTTPSServer server = new HTTPSServer(serverConfig, false, HTTPServerConfig.DEFAULT_HOST, null);
     try {
       server.run();
-      check(new GermanyGerman(), "foo");
-      check(new GermanyGerman(), "foo");
+      check(new German(), "foo");
+      check(new German(), "foo");
       try {
         System.out.println("=== Testing too many requests now, please ignore the following error ===");
         String result = check(new German(), "foo");

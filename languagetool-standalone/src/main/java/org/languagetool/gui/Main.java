@@ -144,7 +144,6 @@ import org.languagetool.tools.StringTools;
 public final class Main {
 
   static final String EXTERNAL_LANGUAGE_SUFFIX = " (ext.)";
-  
   private static final String HTML_FONT_START = "<font face='Arial,Helvetica'>";
   private static final String HTML_FONT_END = "</font>";
 
@@ -168,7 +167,7 @@ public final class Main {
   private JTextPane taggerArea;
   private JTextArea textArea;
   private TextLineNumber textLineNumber;
-  private JScrollPane numberedTextAreaPane;
+  private JScrollPane numberedtextAreaPane;
   private JTextPane resultArea;
   private LanguageComboBox languageBox;
   private CheckboxMenuItem enableHttpServerItem;
@@ -357,8 +356,8 @@ public final class Main {
     textArea.addKeyListener(new ControlReturnTextCheckingListener());
 
     textLineNumber = new TextLineNumber(textArea, 2);
-    numberedTextAreaPane = new JScrollPane(textArea);
-    numberedTextAreaPane.setRowHeaderView(textLineNumber);
+    numberedtextAreaPane = new JScrollPane(textArea);
+    numberedtextAreaPane.setRowHeaderView(textLineNumber);
 
     resultArea = new JTextPane();
     undoRedo = new UndoRedoSupport(this.textArea, messages);
@@ -449,7 +448,7 @@ public final class Main {
     cons.gridy = 2;
     cons.weighty = 5.0f;
     splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
-            numberedTextAreaPane, new JScrollPane(resultArea));
+            numberedtextAreaPane, new JScrollPane(resultArea));
     mainPanel.setLayout(new GridLayout(0,1));
     contentPane.add(mainPanel, cons);
     mainPanel.add(splitPane);
@@ -1136,7 +1135,7 @@ public final class Main {
     if (enable) {
       this.mainPanel.removeAll();
       mainPanel.add(this.splitPane);
-      splitPane.setTopComponent(numberedTextAreaPane);
+      splitPane.setTopComponent(numberedtextAreaPane);
       splitPane.setDividerLocation(200);
       MainWindowStateBean state
               = localStorage.loadProperty(GUI_STATE, MainWindowStateBean.class);
@@ -1150,7 +1149,7 @@ public final class Main {
       localStorage.saveProperty(GUI_STATE, bean);
       this.mainPanel.removeAll();
       splitPane.setTopComponent(null);
-      mainPanel.add(numberedTextAreaPane);
+      mainPanel.add(numberedtextAreaPane);
       ResultAreaHelper.disable(resultArea);
     }
     mainPanel.validate();

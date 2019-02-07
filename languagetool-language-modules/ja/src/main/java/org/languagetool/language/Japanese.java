@@ -60,7 +60,7 @@ public class Japanese extends Language {
   }
 
   @Override
-  public List<Rule> getRelevantRules(ResourceBundle messages, UserConfig userConfig, List<Language> altLanguages) {
+  public List<Rule> getRelevantRules(ResourceBundle messages, UserConfig userConfig) {
     return Arrays.asList(
             new DoublePunctuationRule(messages),
             new MultipleWhitespaceRule(messages, this)

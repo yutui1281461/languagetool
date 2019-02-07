@@ -36,7 +36,10 @@ import org.languagetool.tokenizers.SimpleSentenceTokenizer;
 import org.languagetool.tokenizers.Tokenizer;
 import org.languagetool.tokenizers.WordTokenizer;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.*;
 import java.util.regex.Pattern;
 
@@ -97,9 +100,9 @@ public abstract class Language {
 
   /**
    * Get the rules classes that should run for texts in this language.
-   * @since 4.3
+   * @since 1.4 (signature modified in 2.7)
    */
-  public abstract List<Rule> getRelevantRules(ResourceBundle messages, UserConfig userConfig, List<Language> altLanguages) throws IOException;
+  public abstract List<Rule> getRelevantRules(ResourceBundle messages, UserConfig userConfig) throws IOException;
 
   // -------------------------------------------------------------------------
 
@@ -154,18 +157,6 @@ public abstract class Language {
     return Collections.emptyList();
   }
 
-
-  /**
-   * Get a list of rules that can optionally use a {@link LanguageModel}. Returns an empty list for
-   * languages that don't have such rules.
-   * @since 4.5
-   * @param languageModel null if no language model is available
-   */
-  public List<Rule> getRelevantLanguageModelCapableRules(ResourceBundle messages, @Nullable LanguageModel languageModel,
-                                                         UserConfig userConfig, List<Language> altLanguages) throws IOException {
-    return Collections.emptyList();
-  }
-
   /**
    * @param indexDir directory with a subdirectories like 'en', each containing dictionary.txt and final_embeddings.txt
    * @return a {@link Word2VecModel} or {@code null} if this language doesn't support one
@@ -182,15 +173,6 @@ public abstract class Language {
    * @since 4.0
    */
   public List<Rule> getRelevantWord2VecModelRules(ResourceBundle messages, Word2VecModel word2vecModel) throws IOException {
-    return Collections.emptyList();
-  }
-
-  /**
-   * Get a list of rules that load trained neural networks. Returns an empty list for
-   * languages that don't have such rules.
-   * @since 4.4
-   */
-  public List<Rule> getRelevantNeuralNetworkModels(ResourceBundle messages, File modelDir) {
     return Collections.emptyList();
   }
 
@@ -219,8 +201,7 @@ public abstract class Language {
 
   /**
    * Get the location of the rule file(s) in a form like {@code /org/languagetool/rules/de/grammar.xml},
-   * i.e. a path in the classpath. The files must exist or an exception will be thrown, unless the filename
-   * contains the string {@code -test-}.
+   * i.e. a path in the classpath.
    */
   public List<String> getRuleFileNames() {
     List<String> ruleFiles = new ArrayList<>();
@@ -381,23 +362,11 @@ public abstract class Language {
         InputStream is = null;
         try {
           is = this.getClass().getResourceAsStream(fileName);
-          boolean ignore = false;
           if (is == null) {                     // files loaded via the dialog
-            try {
-              is = new FileInputStream(fileName);
-            } catch (FileNotFoundException e) {
-              if (fileName.contains("-test-")) {
-                // ignore, used for testing
-                ignore = true;
-              } else {
-                throw e;
-              }
-            }
+            is = new FileInputStream(fileName);
           }
-          if (!ignore) {
-            rules.addAll(ruleLoader.getRules(is, fileName));
-            patternRules = Collections.unmodifiableList(rules);
-          }
+          rules.addAll(ruleLoader.getRules(is, fileName));
+          patternRules = Collections.unmodifiableList(rules);
         } finally {
           if (is != null) {
             is.close();

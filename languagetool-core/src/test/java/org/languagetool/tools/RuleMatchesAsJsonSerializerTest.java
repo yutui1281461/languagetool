@@ -20,7 +20,6 @@ package org.languagetool.tools;
 
 import org.junit.Test;
 import org.languagetool.AnalyzedSentence;
-import org.languagetool.DetectedLanguage;
 import org.languagetool.JLanguageTool;
 import org.languagetool.Languages;
 import org.languagetool.rules.ITSIssueType;
@@ -48,8 +47,7 @@ public class RuleMatchesAsJsonSerializerTest {
 
   @Test
   public void testJson() {
-    DetectedLanguage lang = new DetectedLanguage(Languages.getLanguageForShortCode("xx-XX"), Languages.getLanguageForShortCode("xx-XX")) ;
-    String json = serializer.ruleMatchesToJson(matches, "This is an text.", 5, lang);
+    String json = serializer.ruleMatchesToJson(matches, "This is an text.", 5, Languages.getLanguageForShortCode("xx-XX"), null);
     // Software:
     assertContains("\"LanguageTool\"", json);
     assertContains(JLanguageTool.VERSION, json);
@@ -73,15 +71,13 @@ public class RuleMatchesAsJsonSerializerTest {
 
   @Test
   public void testJsonWithUnixLinebreak() {
-    DetectedLanguage lang = new DetectedLanguage(Languages.getLanguageForShortCode("xx-XX"), Languages.getLanguageForShortCode("xx-XX")) ;
-    String json = serializer.ruleMatchesToJson(matches, "This\nis an text.", 5, lang);
+    String json = serializer.ruleMatchesToJson(matches, "This\nis an text.", 5, Languages.getLanguageForShortCode("xx-XX"), null);
     assertTrue(json.contains("This is ..."));  // got filtered out by ContextTools
   }
   
   @Test
   public void testJsonWithWindowsLinebreak() {
-    DetectedLanguage lang = new DetectedLanguage(Languages.getLanguageForShortCode("xx-XX"), Languages.getLanguageForShortCode("xx-XX")) ;
-    String json = serializer.ruleMatchesToJson(matches, "This\ris an text.", 5, lang);
+    String json = serializer.ruleMatchesToJson(matches, "This\ris an text.", 5, Languages.getLanguageForShortCode("xx-XX"), null);
     assertTrue(json.contains("This\\ris ..."));
   }
   

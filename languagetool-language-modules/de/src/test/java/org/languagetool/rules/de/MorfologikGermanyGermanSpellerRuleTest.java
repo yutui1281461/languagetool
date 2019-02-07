@@ -18,35 +18,32 @@
  */
 package org.languagetool.rules.de;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
-
-import java.io.IOException;
-import java.net.URL;
-import java.nio.charset.CharacterCodingException;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import morfologik.speller.Speller;
+import morfologik.stemming.Dictionary;
 
 import org.junit.Ignore;
 import org.junit.Test;
 import org.languagetool.JLanguageTool;
 import org.languagetool.TestTools;
 import org.languagetool.language.German;
-import org.languagetool.language.GermanyGerman;
 import org.languagetool.rules.RuleMatch;
 
-import morfologik.speller.Speller;
-import morfologik.stemming.Dictionary;
+import java.io.IOException;
+import java.net.URL;
+import java.nio.charset.CharacterCodingException;
+import java.util.Arrays;
+import java.util.List;
 
-@Ignore
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
+
 public class MorfologikGermanyGermanSpellerRuleTest {
 
   @Test
   public void testMorfologikSpeller() throws IOException {
     MorfologikGermanyGermanSpellerRule rule =
-          new MorfologikGermanyGermanSpellerRule(TestTools.getMessages("en"), new GermanyGerman(), null, Collections.emptyList());
+          new MorfologikGermanyGermanSpellerRule(TestTools.getMessages("en"), new German(), null);
     JLanguageTool lt = new JLanguageTool(new German());
 
     assertEquals(0, rule.match(lt.getAnalyzedSentence("Hier stimmt jedes Wort!")).length);

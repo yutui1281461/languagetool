@@ -16,39 +16,35 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301
  * USA
  */
-package org.languagetool;
+package org.languagetool.server;
 
-import java.util.ArrayList;
-import java.util.List;
+import org.languagetool.Language;
+
+import java.util.Objects;
 
 /**
- * Dummy class for UserConfig
- * has to be overridden by concrete linguistic service e.g. by LO extension
- * @author Fred Kruse
- * @since 4.4
+ * @since 4.2
  */
-public class LinguServices {
-  
-  /**
-   * Get all synonyms of a word as list of strings.
-   */
-  public List<String> getSynonyms(String word, Language lang) {
-    return new ArrayList<String>();
+public class DetectedLanguage {
+
+  private final Language givenLanguage;
+  private final Language detectedLanguage;
+
+  public DetectedLanguage(Language givenLanguage, Language detectedLanguage) {
+    this.givenLanguage = Objects.requireNonNull(givenLanguage);
+    this.detectedLanguage = detectedLanguage;
   }
-  
-  /**
-   * Returns true if the spell check is positive
-   */
-  public boolean isCorrectSpell(String word, Language lang) {
-    return false;
+
+  public Language getGivenLanguage() {
+    return givenLanguage;
   }
-  
-  /**
-   * Returns the number of syllable of a word
-   * Returns -1 if the word was not found or anything goes wrong
-   */
-  public int getNumberOfSyllables(String word, Language lang) {
-    return 0;
+
+  public Language getDetectedLanguage() {
+    return detectedLanguage;
   }
-  
+
+  @Override
+  public String toString() {
+    return detectedLanguage.getShortCodeWithCountryAndVariant();
+  }
 }

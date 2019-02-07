@@ -26,10 +26,10 @@ import org.languagetool.chunking.Chunker;
 import org.languagetool.chunking.GermanChunker;
 import org.languagetool.languagemodel.LanguageModel;
 import org.languagetool.languagemodel.LuceneLanguageModel;
-import org.languagetool.rules.de.LongSentenceRule;
-import org.languagetool.rules.de.SentenceWhitespaceRule;
 import org.languagetool.rules.*;
 import org.languagetool.rules.de.*;
+import org.languagetool.rules.de.LongSentenceRule;
+import org.languagetool.rules.de.SentenceWhitespaceRule;
 import org.languagetool.rules.neuralnetwork.NeuralNetworkRuleCreator;
 import org.languagetool.rules.neuralnetwork.Word2VecModel;
 import org.languagetool.synthesis.GermanSynthesizer;
@@ -58,7 +58,7 @@ public class German extends Language implements AutoCloseable {
 
   private static final Language GERMANY_GERMAN = new GermanyGerman();
   
-  protected Tagger tagger;
+  private Tagger tagger;
   private Synthesizer synthesizer;
   private SentenceTokenizer sentenceTokenizer;
   private Disambiguator disambiguator;
@@ -156,7 +156,7 @@ public class German extends Language implements AutoCloseable {
   }
 
   @Override
-  public List<Rule> getRelevantRules(ResourceBundle messages, UserConfig userConfig, List<Language> altLanguages) throws IOException {
+  public List<Rule> getRelevantRules(ResourceBundle messages, UserConfig userConfig) throws IOException {
     return Arrays.asList(
             new CommaWhitespaceRule(messages,
                     Example.wrong("Die Partei<marker> ,</marker> die die letzte Wahl gewann."),
@@ -188,7 +188,7 @@ public class German extends Language implements AutoCloseable {
             new WhiteSpaceBeforeParagraphEnd(messages, this),
             new WhiteSpaceAtBeginOfParagraph(messages),
             new EmptyLineRule(messages, this),
-            new GermanStyleRepeatedWordRule(messages, this, userConfig),
+            new GermanStyleRepeatedWordRule(messages, userConfig),
             new CompoundCoherencyRule(messages),
             new LongSentenceRule(messages, userConfig),
             new LongParagraphRule(messages, this, userConfig),
@@ -196,10 +196,7 @@ public class German extends Language implements AutoCloseable {
             new GermanParagraphRepeatBeginningRule(messages, this),
             new PunctuationMarkAtParagraphEnd(messages, this),
             new DuUpperLowerCaseRule(messages),
-            new UnitConversionRule(messages),
-            new GermanReadabilityRule(messages, this, userConfig, true),
-            new GermanReadabilityRule(messages, this, userConfig, false),
-            new CompoundInfinitivRule(messages, this, userConfig)
+            new UnitConversionRule(messages)
     );
   }
 
@@ -293,12 +290,11 @@ public class German extends Language implements AutoCloseable {
       case "DE_PROHIBITED_COMPOUNDS": return 1;  // a more detailed error message than from spell checker
       case "ANS_OHNE_APOSTROPH": return 1;
       case "CONFUSION_RULE": return -1;  // probably less specific than the rules from grammar.xml
-      case "MODALVERB_FLEKT_VERB": return -1;
       case "AKZENT_STATT_APOSTROPH": return -1;  // lower prio than PLURAL_APOSTROPH
       case "PUNKT_ENDE_ABSATZ": return -10;  // should never hide other errors, as chance for a false alarm is quite high
       case "KOMMA_ZWISCHEN_HAUPT_UND_NEBENSATZ": return -10;
-      default: return 0;
     }
+    return 0;
   }
 
 }

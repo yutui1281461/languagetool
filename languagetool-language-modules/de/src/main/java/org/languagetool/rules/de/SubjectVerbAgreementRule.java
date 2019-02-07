@@ -18,7 +18,6 @@
  */
 package org.languagetool.rules.de;
 
-import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.Nullable;
 import org.languagetool.AnalyzedSentence;
 import org.languagetool.AnalyzedToken;
@@ -96,11 +95,6 @@ public class SubjectVerbAgreementRule extends Rule {
       new PatternTokenBuilder().pos(JLanguageTool.SENTENCE_START_TAGNAME).build(),
       new PatternTokenBuilder().posRegex("EIG:.*").build(),
       new PatternTokenBuilder().csToken("und").setSkip(2).build(),
-      new PatternTokenBuilder().tokenRegex("sind|waren").build()
-    ),
-    Arrays.asList(
-      new PatternTokenBuilder().pos("KON:UNT").build(),
-      new PatternTokenBuilder().csToken("sie").setSkip(3).build(),
       new PatternTokenBuilder().tokenRegex("sind|waren").build()
     )
   );
@@ -203,7 +197,7 @@ public class SubjectVerbAgreementRule extends Rule {
                       && prevChunkIsNominative(tokens, i-1)
                       && !hasUnknownTokenToTheLeft(tokens, i)
                       && !hasUnknownTokenToTheRight(tokens, i+1)
-                      && !StringUtils.equalsAny(tokens[1].getToken(), "Alle", "Viele") // "Viele Brunnen in Italiens Hauptstadt sind bereits abgeschaltet."
+                      && !tokens[1].getToken().matches("Alle|Viele") // "Viele Brunnen in Italiens Hauptstadt sind bereits abgeschaltet."
                       && !isFollowedByNominativePlural(tokens, i+1);  // z.B. "Die Zielgruppe sind Männer." - beides Nominativ, aber 'Männer' ist das Subjekt
       if (match) {
         String message = "Bitte prüfen, ob hier <suggestion>" + getSingularFor(tokenStr) + "</suggestion> stehen sollte.";
@@ -287,7 +281,7 @@ public class SubjectVerbAgreementRule extends Rule {
       String token = tokens[i].getToken();
       if (tokens[i].hasPartialPosTag("SUB:")) {
         AnalyzedTokenReadings lookup = tagger.lookup(token.toLowerCase());
-        if (lookup != null && lookup.hasPosTagStartingWith("VER:INF")) {
+        if (lookup != null && lookup.hasPosTagStartingWith("VER:INF:")) {
           infinitives++;
         } else {
           return false;
@@ -300,9 +294,10 @@ public class SubjectVerbAgreementRule extends Rule {
   boolean isFollowedByNominativePlural(AnalyzedTokenReadings[] tokens, int startPos) {
     for (int i = startPos; i < tokens.length; i++) {
       AnalyzedTokenReadings token = tokens[i];
-      if (token.hasAnyPartialPosTag("SUB", "PRO")
-      		&& (token.hasPartialPosTag("NOM:PLU") || token.getChunkTags().contains(new ChunkTag("NPP")))) {  // NPP catches 'und' phrases
-        return true;
+      if (token.hasPartialPosTag("SUB") || token.hasPartialPosTag("PRO")) {
+        if (token.hasPartialPosTag("NOM:PLU") || token.getChunkTags().contains(new ChunkTag("NPP"))) {  // NPP catches 'und' phrases
+          return true;
+        }
       }
     }
     return false;

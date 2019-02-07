@@ -42,9 +42,8 @@ public class WordListValidatorTest {
           "ŚśōżúïÎôêâû" +
           "õ" +   // for Portuguese
           "·" +   // for Catalan
-          "'ÅıøğåšĝÇİŞŠśčžć" +   // for Dutch (inhabitants) proper names mostly
           "./-]+" + 
-          "|[khmcdµ]?m[²³]|°[CFR]|CO₂-?.*"
+          "|[khmcdµ]?m[²³]|°[CFR]"
   );
 
   // Words that are valid but with special characters so that we don't want to
@@ -52,8 +51,6 @@ public class WordListValidatorTest {
   private static final Set<String> VALID_WORDS = new HashSet<>(Arrays.asList(
           "Mondelēz",
           "Brač",
-          "Djuveč",
-          "Djuvečreis",
           "Hidschāb/S",
           "Dvořák/S",
           "Erdoğan/S",

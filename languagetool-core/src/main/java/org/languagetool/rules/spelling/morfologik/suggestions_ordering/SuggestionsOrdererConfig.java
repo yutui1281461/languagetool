@@ -32,12 +32,12 @@ public class SuggestionsOrdererConfig {
     SuggestionsOrdererConfig.ngramsPath = ngramsPath;
   }
 
-  public static boolean isMLSuggestionsOrderingEnabled() {
+  static boolean isMLSuggestionsOrderingEnabled() {
     String enableMLSuggestionsOrderingProperty = System.getProperty(PROP_NAME, "false");
     return Boolean.parseBoolean(enableMLSuggestionsOrderingProperty);
   }
 
-  public static void setMLSuggestionsOrderingEnabled(boolean MLSuggestionsOrderingEnabled) {
+  static void setMLSuggestionsOrderingEnabled(boolean MLSuggestionsOrderingEnabled) {
     System.setProperty(PROP_NAME, String.valueOf(MLSuggestionsOrderingEnabled));
   }
 }

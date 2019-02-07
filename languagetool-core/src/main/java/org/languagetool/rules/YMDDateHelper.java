@@ -18,6 +18,7 @@
  */
 package org.languagetool.rules;
 
+import java.util.Calendar;
 import java.util.Map;
 
 /**
@@ -51,9 +52,7 @@ public class YMDDateHelper {
     String correctDate = String.format("%d-%s-%s", correctYear, month, day);
     String message = match.getMessage()
             .replace("{realDate}", correctDate);
-    RuleMatch ruleMatch = new RuleMatch(match.getRule(), match.getSentence(), match.getFromPos(),
+    return new RuleMatch(match.getRule(), match.getSentence(), match.getFromPos(),
             match.getToPos(), message, match.getShortMessage());
-    ruleMatch.setType(match.getType());
-    return ruleMatch;
   }
 }

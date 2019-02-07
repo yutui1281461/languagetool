@@ -23,6 +23,7 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.regex.Pattern;
 
 import org.languagetool.AnalyzedSentence;
 import org.languagetool.AnalyzedTokenReadings;
@@ -39,6 +40,7 @@ public class LongParagraphRule extends TextLevelRule {
   public static final String RULE_ID = "TOO_LONG_PARAGRAPH";
   
   private static final int DEFAULT_MAX_WORDS = 80;
+  private static final Pattern NON_WORD_REGEX = Pattern.compile("[.?!…:;,~’'\"„“”»«‚‘›‹()\\[\\]\\-–—*×∗·+÷/=]");
   private static final boolean DEFAULT_ACTIVATION = false;
 
   protected int maxWords = DEFAULT_MAX_WORDS;
@@ -121,7 +123,8 @@ public class LongParagraphRule extends TextLevelRule {
     for(AnalyzedSentence sentence : sentences) {
       AnalyzedTokenReadings[] tokens = sentence.getTokensWithoutWhitespace();
       for(AnalyzedTokenReadings token : tokens) {
-        if(!token.isWhitespace() && !token.isSentenceStart() && !token.isNonWord()) {
+        String sToken = token.getToken();
+        if(!token.isWhitespace() && !token.isSentenceStart() && !NON_WORD_REGEX.matcher(sToken).matches()) {
           wordCount++;
           if(wordCount == 1) {
             startPos = token.getStartPos() + pos;

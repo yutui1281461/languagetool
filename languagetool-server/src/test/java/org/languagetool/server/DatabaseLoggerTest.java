@@ -21,7 +21,6 @@
 package org.languagetool.server;
 
 import org.apache.ibatis.jdbc.SQL;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.languagetool.Language;
 import org.languagetool.Languages;
@@ -31,25 +30,29 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.sql.ResultSet;
 
-import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
 
-@Ignore("Requires local MySQL/MariaDB")
 public class DatabaseLoggerTest {
+
+
+  private DatabaseAccess db;
+  private DatabaseLogger logger;
 
   @Test
   public void testHTTPServer() throws Exception {
     HTTPServerConfig config = new HTTPServerConfig(HTTPTools.getDefaultPort());
-    config.setDatabaseDriver("org.mariadb.jdbc.Driver");
-    config.setDatabaseUrl("jdbc:mysql://localhost:3306/lt_test");
-    config.setDatabaseUsername("lt");
-    config.setDatabasePassword("languagetool");
+    config.setDatabaseDriver("org.hsqldb.jdbcDriver");
+    config.setDatabaseUrl("jdbc:hsqldb:mem:testdb");
+    config.setDatabaseUsername("");
+    config.setDatabasePassword("");
+    config.setSecretTokenKey("myfoo");
+    config.setCacheSize(100);
     DatabaseAccess.init(config);
-    DatabaseAccess db = DatabaseAccess.getInstance();
-    DatabaseLogger logger = DatabaseLogger.getInstance();
+    db = DatabaseAccess.getInstance();
+    logger = DatabaseLogger.getInstance();
     try {
-      logger.createTestTables(true);
-      DatabaseAccess.createAndFillTestTables(true);
+      logger.createTestTables();
+      DatabaseAccess.createAndFillTestTables();
 
       HTTPServer server = new HTTPServer(config);
       Language en = Languages.getLanguageForShortCode("en-US");
@@ -72,7 +75,6 @@ public class DatabaseLoggerTest {
         Long agent2 = db.getOrCreateClientId("agent2");
         Long user1 = db.getUserId(UserDictTest.USERNAME1, UserDictTest.API_KEY1);
         Long user2 = db.getUserId(UserDictTest.USERNAME2, UserDictTest.API_KEY2);
-        Thread.sleep(DatabaseLogger.SQL_BATCH_WAITING_TIME);
         try (ResultSet results = DatabaseAccess.executeStatement(checkLogQuery)) {
           results.next();
           assertEquals(results.getLong(1), 1);
@@ -159,41 +161,6 @@ public class DatabaseLoggerTest {
           assertEquals(results.getString(3), "MORFOLOGIK_RULE_EN_US");
           assertEquals(results.getInt(4), 1);
         }
-
-        int check_count;
-        // test committing after batch size is reached
-        SQL checkCount = new SQL(){{
-          SELECT("COUNT(*)");
-          FROM("check_log");
-        }};
-        try (ResultSet results = DatabaseAccess.executeStatement(checkCount)) {
-          results.next();
-          check_count = results.getInt(1);
-        }
-        for (int i = 0; i < DatabaseLogger.SQL_BATCH_SIZE; i++) {
-          check(en, String.format("This is the check with batch number %d.", i), null, null, null, null);
-        }
-        int check_count2;
-        try (ResultSet results = DatabaseAccess.executeStatement(checkCount)) {
-          results.next();
-          check_count2 = results.getInt(1);
-          assertThat(check_count2, is(check_count + DatabaseLogger.SQL_BATCH_SIZE));
-        }
-        // test committing after wait time elapsed
-        check(en, "This is a check I am waiting for.", null, null, null, null);
-        int check_count3;
-        try (ResultSet results = DatabaseAccess.executeStatement(checkCount)) {
-          results.next();
-          check_count3 = results.getInt(1);
-          assertThat(check_count2, is(check_count3));
-        }
-        Thread.sleep(DatabaseLogger.SQL_BATCH_WAITING_TIME);
-        int check_count4;
-        try (ResultSet results = DatabaseAccess.executeStatement(checkCount)) {
-          results.next();
-          check_count4 = results.getInt(1);
-          assertThat(check_count4, is(check_count3 + 1));
-        }
       } finally {
         server.stop();
       }
@@ -202,6 +169,7 @@ public class DatabaseLoggerTest {
       DatabaseAccess.deleteTestTables();
     }
   }
+
 
   private String check(Language lang, String text, String username, String apiKey, String textSessionId, String agent) throws IOException {
     String urlOptions = "?language=" + lang.getShortCodeWithCountryAndVariant();

@@ -21,7 +21,6 @@ package org.languagetool.rules.en;
 
 import org.languagetool.Languages;
 import org.languagetool.rules.AbstractDashRule;
-import org.languagetool.rules.Example;
 import org.languagetool.rules.patterns.PatternRule;
 
 import java.io.IOException;
@@ -38,8 +37,6 @@ public class EnglishDashRule extends AbstractDashRule {
 
   public EnglishDashRule() throws IOException {
     super(dashRules);
-    addExamplePair(Example.wrong("I'll buy a new <marker>T—shirt</marker>."),
-                   Example.fixed("I'll buy a new <marker>T-shirt</marker>."));
   }
 
   @Override

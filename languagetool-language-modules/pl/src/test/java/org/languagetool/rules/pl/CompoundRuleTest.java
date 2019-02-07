@@ -20,7 +20,6 @@ package org.languagetool.rules.pl;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Collections;
 import java.util.Scanner;
 
 import org.junit.Before;
@@ -53,7 +52,7 @@ public class CompoundRuleTest extends AbstractCompoundRuleTest {
   @Test
   public void testCompoundFile() throws IOException {
     final MorfologikPolishSpellerRule spellRule =
-        new MorfologikPolishSpellerRule (TestTools.getMessages("pl"), new Polish(), null, Collections.emptyList());
+        new MorfologikPolishSpellerRule (TestTools.getMessages("pl"), new Polish(), null);
     final InputStream   file = JLanguageTool.getDataBroker().getFromResourceDirAsStream("/pl/compounds.txt");
     try (Scanner scanner = new Scanner(file, "UTF-8")) {
       while (scanner.hasNextLine()) {

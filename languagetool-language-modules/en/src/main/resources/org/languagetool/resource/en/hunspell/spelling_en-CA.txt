@@ -68,8 +68,6 @@ decaweber
 decawebers
 decigramme
 decigrammes
-emoji
-emojis
 exagramme
 exagrammes
 exalitre

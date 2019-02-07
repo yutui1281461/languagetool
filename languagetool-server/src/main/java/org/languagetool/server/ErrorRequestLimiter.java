@@ -21,8 +21,6 @@ package org.languagetool.server;
 import org.languagetool.JLanguageTool;
 
 import java.util.Date;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Limit the maximum number of request per IP address for a given time range.
@@ -41,9 +39,9 @@ class ErrorRequestLimiter extends RequestLimiter {
    * @param ipAddress the client's IP address
    * @return true if access is allowed because the request limit is not reached yet
    */
-  boolean wouldAccessBeOkay(String ipAddress, Map<String, String> parameters, Map<String, List<String>> httpHeader) {
+  boolean wouldAccessBeOkay(String ipAddress) {
     try {
-      checkLimit(ipAddress, parameters, httpHeader);
+      checkLimit(ipAddress, JLanguageTool.Mode.ALL);
       return true;
     } catch (TooManyRequestsException e) {
       return false;
@@ -52,13 +50,12 @@ class ErrorRequestLimiter extends RequestLimiter {
   
   /**
    * @param ipAddress the client's IP address
-   * @param params the request's query parameters
    */
-  void logAccess(String ipAddress, Map<String, List<String>> httpHeader, Map<String, String> params) {
+  void logAccess(String ipAddress) {
     while (requestEvents.size() > REQUEST_QUEUE_SIZE) {
       requestEvents.remove(0);
     }
-    requestEvents.add(new RequestEvent(ipAddress, new Date(), 0, computeFingerprint(httpHeader, params), JLanguageTool.Mode.ALL));
+    requestEvents.add(new RequestEvent(ipAddress, new Date(), 0));
   }
   
 }

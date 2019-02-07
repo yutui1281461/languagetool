@@ -92,12 +92,12 @@ public class Esperanto extends Language {
   }
 
   @Override
-  public List<Rule> getRelevantRules(ResourceBundle messages, UserConfig userConfig, List<Language> altLanguages) {
+  public List<Rule> getRelevantRules(ResourceBundle messages, UserConfig userConfig) {
     return Arrays.asList(
             new CommaWhitespaceRule(messages),
             new DoublePunctuationRule(messages),
             new GenericUnpairedBracketsRule(messages),
-            new HunspellNoSuggestionRule(messages, this, userConfig, altLanguages),
+            new HunspellNoSuggestionRule(messages, this, userConfig),
             new UppercaseSentenceStartRule(messages, this),
             new WordRepeatRule(messages, this),
             new MultipleWhitespaceRule(messages, this),

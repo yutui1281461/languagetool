@@ -26,7 +26,6 @@ import org.languagetool.language.JekavianSerbian;
 import org.languagetool.rules.Rule;
 
 import java.io.IOException;
-import java.util.Collections;
 
 import static org.junit.Assert.*;
 
@@ -37,7 +36,7 @@ public class MorfologikJekavianSpellerRuleTest {
 
   @Before
   public void setUp() throws Exception {
-    rule = new MorfologikJekavianSpellerRule(TestTools.getMessages("sr"), new JekavianSerbian(), null, Collections.emptyList());
+    rule = new MorfologikJekavianSpellerRule(TestTools.getMessages("sr"), new JekavianSerbian(), null);
     languageTool = new JLanguageTool(new JekavianSerbian());
   }
 

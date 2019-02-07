@@ -25,7 +25,6 @@ import org.languagetool.language.Breton;
 import org.languagetool.rules.RuleMatch;
 
 import java.io.IOException;
-import java.util.Collections;
 
 import static org.junit.Assert.assertEquals;
 
@@ -34,7 +33,7 @@ public class MorfologikBretonSpellerRuleTest {
   @Test
   public void testMorfologikSpeller() throws IOException {
     final MorfologikBretonSpellerRule rule =
-            new MorfologikBretonSpellerRule (TestTools.getMessages("br"), new Breton(), null, Collections.emptyList());
+            new MorfologikBretonSpellerRule (TestTools.getMessages("br"), new Breton(), null);
 
     RuleMatch[] matches;
     final JLanguageTool langTool = new JLanguageTool(new Breton());

@@ -27,18 +27,16 @@ import java.util.ResourceBundle;
 import org.languagetool.AnalyzedSentence;
 import org.languagetool.AnalyzedTokenReadings;
 import org.languagetool.Language;
-import org.languagetool.tokenizers.WordTokenizer;
 
 /**
- * A rule that checks for a punctuation mark at the end of a paragraph.
+ * A rule that checks for a punctuation mark at the end of a paragraph
  * @author Fred Kruse
  * @since 4.1
  */
 public class PunctuationMarkAtParagraphEnd extends TextLevelRule {
-
-  private final static String[] PUNCTUATION_MARKS = {".", "!", "?", ":", ",", ";"};
-  private final static String[] QUOTATION_MARKS = {"„", "»", "«", "\"", "”", "″", "’", "‚", "‘", "›", "‹", "′", "'"};
   
+  private final static String PUNCTUATION_MARKS[] = {".", "!", "?", ":", ",", ";"};
+  private final static String QUOTATION_MARKS[] = {"„", "»", "«", "\"", "”", "″", "’", "‚", "‘", "›", "‹", "′", "'"};
   private final Language lang;
 
   public PunctuationMarkAtParagraphEnd(ResourceBundle messages, Language lang) {
@@ -84,10 +82,10 @@ public class PunctuationMarkAtParagraphEnd extends TextLevelRule {
     List<RuleMatch> ruleMatches = new ArrayList<>();
     int lastPara = -1;
     int pos = 0;
-    boolean isFirstWord;
+    boolean isFirstWord = false;
     for (int n = 0; n < sentences.size(); n++) {
       AnalyzedSentence sentence = sentences.get(n);
-      if (sentence.hasParagraphEndMark(lang) || n == sentences.size() - 1) {
+      if(sentence.hasParagraphEndMark(lang) || n == sentences.size() - 1) {
         AnalyzedTokenReadings[] tokens = sentence.getTokensWithoutWhitespace();
         if (tokens.length > 2) {
           isFirstWord = (isWord(tokens[1]) && !isPunctuationMark(tokens[2]))
@@ -97,11 +95,6 @@ public class PunctuationMarkAtParagraphEnd extends TextLevelRule {
             int lastNWToken = tokens.length - 1;
             while (tokens[lastNWToken].isLinebreak()) {
               lastNWToken--;
-            }
-            if (tokens[tokens.length-2].getToken().equalsIgnoreCase(":") &&
-                WordTokenizer.isUrl(tokens[tokens.length-1].getToken())) {
-              // e.g. "find it at: http://example.com" should not be an error
-              continue;
             }
             if (isWord(tokens[lastNWToken]) 
                 || (isQuotationMark(tokens[lastNWToken]) && isWord(tokens[lastNWToken - 1]))) {
@@ -118,6 +111,7 @@ public class PunctuationMarkAtParagraphEnd extends TextLevelRule {
             }
           }
           lastPara = n;
+          isFirstWord = false;
         }
       }
       pos += sentence.getText().length();

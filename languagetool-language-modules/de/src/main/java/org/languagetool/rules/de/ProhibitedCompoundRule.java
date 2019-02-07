@@ -64,22 +64,50 @@ public class ProhibitedCompoundRule extends Rule {
   );
   private static final GermanSpellerRule spellerRule = new GermanSpellerRule(JLanguageTool.getMessageBundle(), new GermanyGerman(), null, null);
   private static final List<String> ignoreWords = Arrays.asList("Die", "De");
-
-  // have per-class static list of these and reference that in instance
-  // -> avoid loading word list for every instance, but allow variations in subclasses
-  protected AhoCorasickDoubleArrayTrie<String> ahoCorasickDoubleArrayTrie;
-  protected Map<String, List<Pair>> pairMap;
-
-  private static final AhoCorasickDoubleArrayTrie<String> prohibitedCompoundRuleSearcher;
-  private static final Map<String, List<Pair>> prohibitedCompoundRulePairMap;
-
+  private static final List<Pair> pairs = new ArrayList<>();
   static {
-    List<Pair> pairs = new ArrayList<>();
-    Map<String, List<Pair>> pairMap = new HashMap<>();
-    addUpperCaseVariants(pairs);
-    addItemsFromConfusionSets(pairs, "/de/confusion_sets.txt", true);
-    prohibitedCompoundRuleSearcher = setupAhoCorasickSearch(pairs, pairMap);
-    prohibitedCompoundRulePairMap = pairMap;
+    addUpperCaseVariants();
+  /* Performance impact: Before / After /
+    Optimized: only nouns / + at least 6 characters / + AhoCorasick
+   --------------------------------------------------------------
+    Language: German, Text length: 494609 chars, 10513 sentences
+    Warmup...
+    Check time on first run: 61001ms = 5.8ms per sentence
+    Checking text...
+    Check time after warmup: 50635ms = 4.8ms per sentence
+    Average time per sentence = 4.0ms
+   --------------------------------------------------------------
+    Language: German, Text length: 494609 chars, 10513 sentences
+    Warmup...
+    Check time on first run: 268446ms = 25.5ms per sentence
+    Checking text...
+    Check time after warmup: 240333ms = 22.9ms per sentence
+    Average time per sentence = 22.0ms
+   --------------------------------------------------------------
+    Language: German, Text length: 494609 chars, 10513 sentences
+    Warmup...
+    Check time on first run: 108777ms = 10.3ms per sentence
+    Checking text...
+    Check time after warmup: 95940ms = 9.1ms per sentence
+    Average time per sentence = 9.0ms
+   --------------------------------------------------------------
+    Language: German, Text length: 494609 chars, 10513 sentences
+    Warmup...
+    Check time on first run: 78983ms = 7.5ms per sentence
+    Checking text...
+    Check time after warmup: 68574ms = 6.5ms per sentence / 6.7 / 6.4
+    Average time per sentence = 6.0ms
+   --------------------------------------------------------------
+    Language: German, Text length: 494609 chars, 10513 sentences
+    Warmup...
+    Check time on first run: 65225ms = 6.2ms per sentence
+    Checking text...
+    Check time after warmup: 52716ms = 5.0ms per sentence / 5.0 / 4.7 / / 5.0
+    Average time per sentence = 5.0ms
+   */
+
+
+    addItemsFromConfusionSets("/de/confusion_sets.txt", true);
   }
 
 
@@ -92,7 +120,7 @@ public class ProhibitedCompoundRule extends Rule {
     }
   }
 
-  private static void addUpperCaseVariants(List<Pair> pairs) {
+  private static void addUpperCaseVariants() {
     for (Pair lcPair : lowercasePairs) {
       if (StringTools.startsWithUppercase(lcPair.part1)) {
         throw new IllegalArgumentException("Use all-lowercase word in " + ProhibitedCompoundRule.class + ": " + lcPair.part1);
@@ -104,7 +132,7 @@ public class ProhibitedCompoundRule extends Rule {
     }
   }
 
-  protected static void addItemsFromConfusionSets(List<Pair> pairs, String confusionSetsFile, boolean isUpperCase) {
+  private static void addItemsFromConfusionSets(String confusionSetsFile, boolean isUpperCase) {
     try {
       ResourceDataBroker dataBroker = JLanguageTool.getDataBroker();
       try (InputStream confusionSetStream = dataBroker.getFromResourceDirAsStream(confusionSetsFile)) {
@@ -136,31 +164,15 @@ public class ProhibitedCompoundRule extends Rule {
     }
   }
 
-  protected static AhoCorasickDoubleArrayTrie<String> setupAhoCorasickSearch(List<Pair> pairs, Map<String, List<Pair>> pairMap) {
-    TreeMap<String, String> map = new TreeMap<>();
-    for (Pair pair : pairs) {
-      map.put(pair.part1, pair.part1);
-      map.put(pair.part2, pair.part2);
-
-      pairMap.putIfAbsent(pair.part1, new LinkedList<>());
-      pairMap.putIfAbsent(pair.part2, new LinkedList<>());
-      pairMap.get(pair.part1).add(pair);
-      pairMap.get(pair.part2).add(pair);
-    }
-    // Build an AhoCorasickDoubleArrayTrie
-    AhoCorasickDoubleArrayTrie<String> ahoCorasickDoubleArrayTrie = new AhoCorasickDoubleArrayTrie<>();
-    ahoCorasickDoubleArrayTrie.build(map);
-    return ahoCorasickDoubleArrayTrie;
-  }
-
   private final BaseLanguageModel lm;
   private Pair confusionPair = null; // specify single pair for evaluation
+  private AhoCorasickDoubleArrayTrie<String> ahoCorasickDoubleArrayTrie = null;
+  private Map<String, List<Pair>> pairMap = new HashMap<>();
 
   public ProhibitedCompoundRule(ResourceBundle messages, LanguageModel lm) {
     this.lm = (BaseLanguageModel) Objects.requireNonNull(lm);
     super.setCategory(Categories.TYPOS.getCategory(messages));
-    this.ahoCorasickDoubleArrayTrie = prohibitedCompoundRuleSearcher;
-    this.pairMap = prohibitedCompoundRulePairMap;
+    setupAhoCorasickSearch();
   }
 
   @Override
@@ -173,6 +185,22 @@ public class ProhibitedCompoundRule extends Rule {
     return "Markiert wahrscheinlich falsche Komposita wie 'Lehrzeile', wenn 'Leerzeile' häufiger vorkommt.";
   }
 
+  private void setupAhoCorasickSearch() {
+    TreeMap<String, String> map = new TreeMap<String, String>();
+    for (Pair pair : pairs)
+    {
+      map.put(pair.part1, pair.part1);
+      map.put(pair.part2, pair.part2);
+
+      pairMap.putIfAbsent(pair.part1, new LinkedList<>());
+      pairMap.putIfAbsent(pair.part2, new LinkedList<>());
+      pairMap.get(pair.part1).add(pair);
+      pairMap.get(pair.part2).add(pair);
+    }
+    // Build an AhoCorasickDoubleArrayTrie
+    ahoCorasickDoubleArrayTrie = new AhoCorasickDoubleArrayTrie<String>();
+    ahoCorasickDoubleArrayTrie.build(map);
+  }
 
   @Override
   public RuleMatch[] match(AnalyzedSentence sentence) throws IOException {

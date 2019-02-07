@@ -29,9 +29,9 @@ public class CategoryId {
   private final String id;
 
   public CategoryId(String id) {
-    Objects.requireNonNull(id, "Category id must not be null.");
+    Objects.requireNonNull(id, "category id must not be null");
     if (id.trim().isEmpty()) {
-      throw new IllegalArgumentException("Category id must not be empty: '" + id + "'");
+      throw new IllegalArgumentException("category id must not be empty: '" + id + "'");
     }
     this.id = id;
   }
@@ -41,7 +41,8 @@ public class CategoryId {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
     CategoryId other = (CategoryId) o;
-    return id.equals(other.id);
+    if (!id.equals(other.id)) return false;
+    return true;
   }
 
   @Override

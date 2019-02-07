@@ -1,6 +1,6 @@
-/* LanguageTool, a natural language style checker
+/* LanguageTool, a natural language style checker 
  * Copyright (C) 2005 Daniel Naber (http://www.danielnaber.de)
- *
+ * 
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -23,8 +23,6 @@ import org.jetbrains.annotations.Nullable;
 import org.languagetool.JLanguageTool;
 import org.languagetool.Language;
 import org.languagetool.Languages;
-import org.languagetool.LinguServices;
-import org.languagetool.UserConfig;
 import org.languagetool.rules.ITSIssueType;
 import org.languagetool.rules.Rule;
 
@@ -36,16 +34,16 @@ import java.util.List;
 /**
  * Configuration like list of disabled rule IDs, server mode etc.
  * Configuration is loaded from and stored to a properties file.
- *
+ * 
  * @author Daniel Naber
  */
 public class Configuration {
-
+  
   static final int DEFAULT_SERVER_PORT = 8081;  // should be HTTPServerConfig.DEFAULT_PORT but we don't have that dependency
   static final int DEFAULT_NUM_CHECK_PARAS = 5;  //  default number of parameters to be checked by TextLevelRules in LO/OO 
   static final int FONT_STYLE_INVALID = -1;
   static final int FONT_SIZE_INVALID = -1;
-  static final Color STYLE_COLOR = new Color(0, 175, 0);
+  static final Color STYLE_COLOR = new Color( 0, 175, 0);
 
   private static final String CONFIG_FILE = ".languagetool.cfg";
 
@@ -72,14 +70,13 @@ public class Configuration {
   private static final String ERROR_COLORS_KEY = "errorColors";
   private static final String UNDERLINE_COLORS_KEY = "underlineColors";
   private static final String CONFIGURABLE_RULE_VALUES_KEY = "configurableRuleValues";
-  private static final String LT_SWITCHED_OFF_KEY = "ltSwitchedOff";
 
   private static final String DELIMITER = ",";
   // find all comma followed by zero or more white space characters that are preceded by ":" AND a valid 6-digit hex code
   // example: ":#44ffee,"
   private static final String COLOR_SPLITTER_REGEXP = "(?<=:#[0-9A-Fa-f]{6}),\\s*";
-  //find all colon followed by a valid 6-digit hex code, e.g., ":#44ffee"
-  private static final String COLOR_SPLITTER_REGEXP_COLON = ":(?=#[0-9A-Fa-f]{6})";
+ //find all colon followed by a valid 6-digit hex code, e.g., ":#44ffee"
+ private static final String COLOR_SPLITTER_REGEXP_COLON = ":(?=#[0-9A-Fa-f]{6})";
   // find all comma followed by zero or more white space characters that are preceded by at least one digit
   // example: "4,"
   private static final String CONFIGURABLE_RULE_SPLITTER_REGEXP = "(?<=[0-9]),\\s*";
@@ -114,13 +111,11 @@ public class Configuration {
   private boolean doResetCheck = false;
   private String externalRuleDirectory;
   private String lookAndFeelName;
-  private boolean switchOff = false;
 
   /**
    * Uses the configuration file from the default location.
-   *
-   * @param lang The language for the configuration, used to distinguish
-   *             rules that are enabled or disabled per language.
+   * @param lang The language for the configuration, used to distinguish 
+   * rules that are enabled or disabled per language.
    */
   public Configuration(Language lang) throws IOException {
     this(new File(System.getProperty("user.home")), CONFIG_FILE, lang);
@@ -131,15 +126,13 @@ public class Configuration {
   }
 
   public Configuration(File baseDir, String filename, Language lang) throws IOException {
-    this(baseDir, filename, lang, null);
-  }
-
-  public Configuration(File baseDir, String filename, Language lang, LinguServices linguServices) throws IOException {
     if (baseDir == null || !baseDir.isDirectory()) {
       throw new IllegalArgumentException("Cannot open file " + filename + " in directory " + baseDir);
     }
     configFile = new File(baseDir, filename);
     loadConfiguration(lang);
+    // initialize style like categories
+    initStyleCategories(lang);
   }
 
   private Configuration() {
@@ -200,11 +193,14 @@ public class Configuration {
       this.configurableRuleValues.put(entry.getKey(), entry.getValue());
     }
     this.styleLikeCategories.clear();
-    this.styleLikeCategories.addAll(configuration.styleLikeCategories);
+    for (String entry : configuration.styleLikeCategories) {
+      this.styleLikeCategories.add(entry);
+    }
     this.specialTabCategories.clear();
     for (Map.Entry<String, String> entry : configuration.specialTabCategories.entrySet()) {
       this.specialTabCategories.put(entry.getKey(), entry.getValue());
     }
+    
   }
 
   public Set<String> getDisabledRuleIds() {
@@ -261,32 +257,35 @@ public class Configuration {
   }
 
   public boolean getAutoDetect() {
-    return autoDetect;
+      return autoDetect;
   }
 
   public void setAutoDetect(boolean autoDetect) {
-    this.autoDetect = autoDetect;
+      this.autoDetect = autoDetect;
   }
 
   /**
    * Determines whether the tagger window will also print the disambiguation
    * log.
+   *
    * @return true if the tagger window will print the disambiguation log,
    * false otherwise
    * @since 3.3
    */
   public boolean getTaggerShowsDisambigLog() {
-    return taggerShowsDisambigLog;
+      return taggerShowsDisambigLog;
   }
 
   /**
    * Enables or disables the disambiguation log on the tagger window,
    * depending on the value of the parameter taggerShowsDisambigLog.
+   *
    * @param taggerShowsDisambigLog If true, the tagger window will print the
+   * disambiguation log
    * @since 3.3
    */
   public void setTaggerShowsDisambigLog(boolean taggerShowsDisambigLog) {
-    this.taggerShowsDisambigLog = taggerShowsDisambigLog;
+      this.taggerShowsDisambigLog = taggerShowsDisambigLog;
   }
 
   public boolean getRunServer() {
@@ -322,7 +321,7 @@ public class Configuration {
   }
 
   /**
-   * get the number of paragraphs to be checked for TextLevelRules
+   * get the number of paragraphs to be checked for TextLevelRules 
    * @since 4.0
    */
   public int getNumParasToCheck() {
@@ -330,13 +329,13 @@ public class Configuration {
   }
 
   /**
-   * set the number of paragraphs to be checked for TextLevelRules
+   * set the number of paragraphs to be checked for TextLevelRules 
    * @since 4.0
    */
   public void setNumParasToCheck(int numParas) {
     this.numParasToCheck = numParas;
   }
-
+  
   /**
    * will all paragraphs check after every change of text?
    * @since 4.2
@@ -352,12 +351,12 @@ public class Configuration {
   public void setDoResetCheck(boolean resetCheck) {
     this.doResetCheck = resetCheck;
   }
-
+  
   /**
    * Returns the name of the GUI's editing textarea font.
    * @return the name of the font.
-   * @see Font#getFamily()
    * @since 2.6
+   * @see Font#getFamily()
    */
   public String getFontName() {
     return fontName;
@@ -366,8 +365,8 @@ public class Configuration {
   /**
    * Sets the name of the GUI's editing textarea font.
    * @param fontName the name of the font.
-   * @see Font#getFamily()
    * @since 2.6
+   * @see Font#getFamily()
    */
   public void setFontName(String fontName) {
     this.fontName = fontName;
@@ -376,8 +375,8 @@ public class Configuration {
   /**
    * Returns the style of the GUI's editing textarea font.
    * @return the style of the font.
-   * @see Font#getStyle()
    * @since 2.6
+   * @see Font#getStyle()
    */
   public int getFontStyle() {
     return fontStyle;
@@ -386,8 +385,8 @@ public class Configuration {
   /**
    * Sets the style of the GUI's editing textarea font.
    * @param fontStyle the style of the font.
-   * @see Font#getStyle()
    * @since 2.6
+   * @see Font#getStyle()
    */
   public void setFontStyle(int fontStyle) {
     this.fontStyle = fontStyle;
@@ -396,8 +395,8 @@ public class Configuration {
   /**
    * Returns the size of the GUI's editing textarea font.
    * @return the size of the font.
-   * @see Font#getSize()
    * @since 2.6
+   * @see Font#getSize()
    */
   public int getFontSize() {
     return fontSize;
@@ -406,8 +405,8 @@ public class Configuration {
   /**
    * Sets the size of the GUI's editing textarea font.
    * @param fontSize the size of the font.
-   * @see Font#getSize()
    * @since 2.6
+   * @see Font#getSize()
    */
   public void setFontSize(int fontSize) {
     this.fontSize = fontSize;
@@ -416,8 +415,8 @@ public class Configuration {
   /**
    * Returns the name of the GUI's LaF.
    * @return the name of the LaF.
-   * @see javax.swing.UIManager.LookAndFeelInfo#getName()
    * @since 2.6
+   * @see javax.swing.UIManager.LookAndFeelInfo#getName()
    */
   public String getLookAndFeelName() {
     return this.lookAndFeelName;
@@ -426,8 +425,8 @@ public class Configuration {
   /**
    * Sets the name of the GUI's LaF.
    * @param lookAndFeelName the name of the LaF.
-   * @see javax.swing.UIManager.LookAndFeelInfo#getName()
    * @since 2.6 @see
+   * @see javax.swing.UIManager.LookAndFeelInfo#getName()
    */
   public void setLookAndFeelName(String lookAndFeelName) {
     this.lookAndFeelName = lookAndFeelName;
@@ -483,21 +482,29 @@ public class Configuration {
   }
 
   /**
-   * @since 4.4
+   * @since 4.3
    * Initialize set of style like categories
    */
-  public void initStyleCategories(List<Rule> allRules) {
+  private void initStyleCategories(Language lang) {
+    if (lang == null) {
+      lang = language;
+      if (lang == null) {
+        return;
+      }
+    }
+    JLanguageTool langTool = new JLanguageTool(lang, motherTongue);
+    List<Rule> allRules = langTool.getAllRules();
     for (Rule rule : allRules) {
-      if (rule.getCategory().getTabName() != null) {
-        if (!specialTabCategories.containsKey(rule.getCategory().getName())) {
+      if(rule.getCategory().getTabName() != null) {
+        if(!specialTabCategories.containsKey(rule.getCategory().getName())) {
           specialTabCategories.put(rule.getCategory().getName(), rule.getCategory().getTabName());
         }
       }
-      if (rule.getLocQualityIssueType().toString().equalsIgnoreCase("STYLE")
-              || rule.getLocQualityIssueType().toString().equalsIgnoreCase("REGISTER")
-              || rule.getCategory().getId().toString().equals("STYLE")
-              || rule.getCategory().getId().toString().equals("TYPOGRAPHY")) {
-        if (!styleLikeCategories.contains(rule.getCategory().getName())) {
+      if(rule.getLocQualityIssueType().toString().equalsIgnoreCase("STYLE")
+          || rule.getLocQualityIssueType().toString().equalsIgnoreCase("REGISTER")
+          || rule.getCategory().getId().toString().equals("STYLE")
+          || rule.getCategory().getId().toString().equals("TYPOGRAPHY")) {
+        if(!styleLikeCategories.contains(rule.getCategory().getName())) {
           styleLikeCategories.add(rule.getCategory().getName());
         }
       }
@@ -530,7 +537,7 @@ public class Configuration {
   public String[] getSpecialTabNames() {
     Set<String> tabNames = new HashSet<>();
     for (Map.Entry<String, String> entry : specialTabCategories.entrySet()) {
-      if (!tabNames.contains(entry.getValue())) {
+      if(!tabNames.contains(entry.getValue())) {
         tabNames.add(entry.getValue());
       }
     }
@@ -544,7 +551,7 @@ public class Configuration {
   public Set<String> getSpecialTabCategories(String tabName) {
     Set<String> tabCategories = new HashSet<>();
     for (Map.Entry<String, String> entry : specialTabCategories.entrySet()) {
-      if (entry.getKey().equals(tabName)) {
+      if(entry.getKey().equals(tabName)) {
         tabCategories.add(entry.getKey());
       }
     }
@@ -563,7 +570,7 @@ public class Configuration {
    * Get the color to underline a rule match by the Name of its category
    */
   public Color getUnderlineColor(String category) {
-    if (underlineColors.containsKey(category)) {
+    if(underlineColors.containsKey(category)) {
       return underlineColors.get(category);
     }
     if (styleLikeCategories.contains(category)) {
@@ -602,7 +609,7 @@ public class Configuration {
    * returns -1 if no value is set by configuration
    */
   public int getConfigurableValue(String ruleID) {
-    if (configurableRuleValues.containsKey(ruleID)) {
+    if(configurableRuleValues.containsKey(ruleID)) {
       return configurableRuleValues.get(ruleID);
     }
     return -1;
@@ -614,25 +621,6 @@ public class Configuration {
    */
   public void setConfigurableValue(String ruleID, int value) {
     configurableRuleValues.put(ruleID, value);
-  }
-
-  /**
-   * @since 4.4
-   * if true: LT is switched Off, else: LT is switched On
-   */
-  public boolean isSwitchedOff() {
-    return switchOff;
-  }
-
-  /**
-   * @throws IOException 
-   * @since 4.4
-   * Set LT is switched Off or On
-   * save configuration
-   */
-  public void setSwitchedOff(boolean switchOff, Language lang) throws IOException {
-    this.switchOff = switchOff;
-    saveConfiguration(lang);
   }
 
   private void loadConfiguration(Language lang) throws IOException {
@@ -702,17 +690,12 @@ public class Configuration {
       if (paraCheckString != null) {
         numParasToCheck = Integer.parseInt(paraCheckString);
       }
-
+      
       String resetCheckString = (String) props.get(RESET_CHECK_KEY);
       if (resetCheckString != null) {
         doResetCheck = Boolean.parseBoolean(resetCheckString);
       }
-
-      String switchOffString = (String) props.get(LT_SWITCHED_OFF_KEY);
-      if (switchOffString != null) {
-        switchOff = Boolean.parseBoolean(switchOffString);
-      }
-
+      
       String rulesValuesString = (String) props.get(CONFIGURABLE_RULE_VALUES_KEY);
       parseConfigurableRuleValues(rulesValuesString);
 
@@ -724,7 +707,7 @@ public class Configuration {
 
       //store config for other languages
       loadConfigForOtherLanguages(lang, props);
-
+      
     } catch (FileNotFoundException e) {
       // file not found: okay, leave disabledRuleIds empty
     }
@@ -834,9 +817,6 @@ public class Configuration {
     props.setProperty(SERVER_PORT_KEY, Integer.toString(serverPort));
     props.setProperty(PARA_CHECK_KEY, Integer.toString(numParasToCheck));
     props.setProperty(RESET_CHECK_KEY, Boolean.toString(doResetCheck));
-    if(switchOff) {
-      props.setProperty(LT_SWITCHED_OFF_KEY, Boolean.toString(switchOff));
-    }
     if (fontName != null) {
       props.setProperty(FONT_NAME_KEY, fontName);
     }
@@ -887,8 +867,8 @@ public class Configuration {
     if (list == null) {
       props.setProperty(key, "");
     } else {
-      props.setProperty(key, String.join(DELIMITER, list));
+      props.setProperty(key, String.join(DELIMITER,  list));
     }
   }
-
+  
 }

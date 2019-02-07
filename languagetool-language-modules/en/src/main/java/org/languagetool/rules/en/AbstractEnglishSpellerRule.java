@@ -36,14 +36,14 @@ public abstract class AbstractEnglishSpellerRule extends MorfologikSpellerRule {
   private final EnglishSynthesizer synthesizer = new EnglishSynthesizer();
 
   public AbstractEnglishSpellerRule(ResourceBundle messages, Language language) throws IOException {
-    this(messages, language, null, Collections.emptyList());
+    this(messages, language, null);
   }
 
   /**
-   * @since 4.4
+   * @since 4.2
    */
-  public AbstractEnglishSpellerRule(ResourceBundle messages, Language language, UserConfig userConfig, List<Language> altLanguages) throws IOException {
-    super(messages, language, userConfig, altLanguages);
+  public AbstractEnglishSpellerRule(ResourceBundle messages, Language language, UserConfig userConfig) throws IOException {
+    super(messages, language, userConfig);
     setCheckCompound(true);
     addExamplePair(Example.wrong("This <marker>sentenc</marker> contains a spelling mistake."),
                    Example.fixed("This <marker>sentence</marker> contains a spelling mistake."));

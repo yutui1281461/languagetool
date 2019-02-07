@@ -25,7 +25,6 @@ import org.languagetool.language.Asturian;
 import org.languagetool.rules.RuleMatch;
 
 import java.io.IOException;
-import java.util.Collections;
 
 import static org.junit.Assert.assertEquals;
 
@@ -34,7 +33,7 @@ public class MorfologikAsturianSpellerRuleTest {
   @Test
   public void testMorfologikSpeller() throws IOException {
     Asturian language = new Asturian();
-    MorfologikAsturianSpellerRule rule = new MorfologikAsturianSpellerRule(TestTools.getMessages("en"), language, null, Collections.emptyList());
+    MorfologikAsturianSpellerRule rule = new MorfologikAsturianSpellerRule(TestTools.getMessages("en"), language, null);
     JLanguageTool langTool = new JLanguageTool(language);
 
     assertEquals(0, rule.match(langTool.getAnalyzedSentence("¿Festeyate colos correutores gramaticales?")).length);

@@ -20,7 +20,6 @@ package org.languagetool.server;
 
 import com.sun.net.httpserver.HttpExchange;
 import org.jetbrains.annotations.NotNull;
-import org.languagetool.DetectedLanguage;
 import org.languagetool.Language;
 import org.languagetool.Languages;
 import org.languagetool.markup.AnnotatedText;
@@ -53,7 +52,8 @@ class V2TextChecker extends TextChecker {
   protected String getResponse(AnnotatedText text, DetectedLanguage lang, Language motherTongue, List<RuleMatch> matches,
                                List<RuleMatch> hiddenMatches, String incompleteResultsReason) {
     RuleMatchesAsJsonSerializer serializer = new RuleMatchesAsJsonSerializer();
-    return serializer.ruleMatchesToJson(matches, hiddenMatches, text, CONTEXT_SIZE, lang, incompleteResultsReason);
+    return serializer.ruleMatchesToJson(matches, hiddenMatches, text, CONTEXT_SIZE,
+            lang.getGivenLanguage(), lang.getDetectedLanguage(), incompleteResultsReason);
   }
 
   @NotNull
@@ -100,17 +100,16 @@ class V2TextChecker extends TextChecker {
   
   @Override
   @NotNull
-  protected DetectedLanguage getLanguage(String text, Map<String, String> parameters, List<String> preferredVariants,
-                                         List<String> noopLangs) {
+  protected DetectedLanguage getLanguage(String text, Map<String, String> parameters, List<String> preferredVariants) {
     String langParam = parameters.get("language");
-    DetectedLanguage detectedLang = detectLanguageOfString(text, null, preferredVariants, noopLangs);
+    Language detectedLang = detectLanguageOfString(text, null, preferredVariants);
     Language givenLang;
     if (getLanguageAutoDetect(parameters)) {
-      givenLang = detectedLang.getDetectedLanguage();
+      givenLang = detectedLang;
     } else {
       givenLang = Languages.getLanguageForShortCode(langParam);
     }
-    return new DetectedLanguage(givenLang, detectedLang.getDetectedLanguage(), detectedLang.getDetectionConfidence());
+    return new DetectedLanguage(givenLang, detectedLang);
   }
 
   @Override

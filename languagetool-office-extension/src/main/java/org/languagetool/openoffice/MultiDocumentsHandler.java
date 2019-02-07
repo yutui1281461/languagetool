@@ -19,7 +19,6 @@
 package org.languagetool.openoffice;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -37,8 +36,6 @@ import org.languagetool.rules.CategoryId;
 import org.languagetool.rules.Rule;
 import org.languagetool.tools.Tools;
 
-import com.sun.star.awt.XMenuBar;
-import com.sun.star.awt.XPopupMenu;
 import com.sun.star.beans.XPropertySet;
 import com.sun.star.frame.XModel;
 import com.sun.star.lang.Locale;
@@ -60,23 +57,16 @@ public class MultiDocumentsHandler {
   // LibreOffice (since 4.2.0) special tag for locale with variant 
   // e.g. language ="qlt" country="ES" variant="ca-ES-valencia":
   private static final String LIBREOFFICE_SPECIAL_LANGUAGE_TAG = "qlt";
-  
-  // If anything on the position of LT menu is changed the following has to be changed
-  private static final String TOOLS_COMMAND = ".uno:ToolsMenu";             //  Command to open tools menu
-  private static final String WORD_COUNT_COMMAND = ".uno:WordCountDialog";  //  Command to open words count menu (LT menu is installed before)
-                                                    //  Command to Switch Off/On LT
-  private static final String LT_SWITCH_OFF_COMMAND = "service:org.languagetool.openoffice.Main?switchOff";   
-  
+
   private static final boolean debugMode = false;   //  should be false except for testing
   
   private JLanguageTool langTool = null;
-  private Language docLanguage = null;
-  private final ResourceBundle messages;
-  private final XEventListener xEventListener;
+  private Language docLanguage;
+  private ResourceBundle MESSAGES;
+  private XEventListener xEventListener;
   private final File configDir;
   private final String configFile;
-  private Configuration config = null;
-  private LinguisticServices linguServices = null;
+  private Configuration config;
   
   private XComponentContext xContext;       //  The context of the document
   private List<SingleDocument> documents;   //  The List of LO documents to be checked
@@ -86,18 +76,17 @@ public class MultiDocumentsHandler {
   private boolean recheck = true;
   private int docNum;                       //  number of the current document
 
-  private boolean switchOff = false;        //  is LT switched off
-
   private boolean testMode = false;
 
 
   MultiDocumentsHandler(XComponentContext xContext, File configDir, String configFile,
-      ResourceBundle messages, XEventListener xEventListener) {
+      ResourceBundle MESSAGES, XEventListener xEventListener) {
     this.xContext = xContext;
     this.configDir = configDir;
     this.configFile = configFile;
-    this.messages = messages;
+    this.MESSAGES = MESSAGES;
     this.xEventListener = xEventListener;
+    
     documents = new ArrayList<>();
   }
   
@@ -112,16 +101,16 @@ public class MultiDocumentsHandler {
       initLanguageTool();
       initCheck();
     }
+
     if (proofIsRunning) {
       isParallelThread = true;          //  parallel Thread (right-click or dialog-box while background iteration is running)
     } else {
       proofIsRunning = true;  // main thread is running
     }
+    
     docNum = getNumDoc(paRes.aDocumentIdentifier);
-    if(switchOff) {
-      return paRes;
-    }
     paRes = documents.get(docNum).getCheckResults(paraText, locale, paRes, footnotePositions, isParallelThread, langTool);
+    
     if(isParallelThread) {
       isParallelThread = false;
     } else {
@@ -142,7 +131,6 @@ public class MultiDocumentsHandler {
    */
   void setComponentContext(XComponentContext xContext) {
     this.xContext = xContext;
-    setRecheck();
   }
   
   /**
@@ -157,24 +145,6 @@ public class MultiDocumentsHandler {
    */
   JLanguageTool getLanguageTool() {
     return langTool;
-  }
-  
-  /**
-   *  get Configuration
-   */
-  Configuration getConfiguration() {
-    try {
-      if (config == null) {
-        if(xContext != null) {
-          linguServices = new LinguisticServices(xContext);
-        }
-        docLanguage = getLanguage();
-        initLanguageTool();
-      }
-    } catch (Throwable t) {
-      MessageHandler.showError(t);
-    }
-    return config;
   }
   
   /**
@@ -260,7 +230,7 @@ public class MultiDocumentsHandler {
         }
       }
       if (!langIsSupported) {
-        String message = Tools.i18n(messages, "language_not_supported", charLocale.Language);
+        String message = Tools.i18n(MESSAGES, "language_not_supported", charLocale.Language);
         JOptionPane.showMessageDialog(null, message);
         return null;
       }
@@ -349,7 +319,6 @@ public class MultiDocumentsHandler {
       }
     }
     documents.add(new SingleDocument(xContext, config, docID, xComponent));
-    setMenuTextForSwitchOff(xContext);
     if (debugMode) {
       MessageHandler.printToLogFile("Document " + docNum + " created; docID = " + docID);
     }
@@ -390,15 +359,10 @@ public class MultiDocumentsHandler {
 
   private void initLanguageTool() {
     try {
-      if(xContext != null) {
-        linguServices = new LinguisticServices(xContext);
-      }
-      config = new Configuration(configDir, configFile, docLanguage, linguServices);
-      switchOff = config.isSwitchedOff();
+      config = new Configuration(configDir, configFile, docLanguage);
       // not using MultiThreadedJLanguageTool here fixes "osl::Thread::Create failed", see https://bugs.documentfoundation.org/show_bug.cgi?id=90740:
       langTool = new JLanguageTool(docLanguage, config.getMotherTongue(), null, 
-          new UserConfig(config.getConfigurableValues(), linguServices));
-      config.initStyleCategories(langTool.getAllRules());
+          new UserConfig(config.getConfigurableValues()));
       docLanguage.getSentenceTokenizer().setSingleLineBreaksMarksParagraph(true);
       File ngramDirectory = config.getNgramDirectory();
       if (ngramDirectory != null) {
@@ -421,7 +385,7 @@ public class MultiDocumentsHandler {
     }
   }
 
-  void initCheck() {
+  private void initCheck() {
     Set<String> disabledRuleIds = config.getDisabledRuleIds();
     if (disabledRuleIds != null) {
       // copy as the config thread may access this as well
@@ -451,104 +415,5 @@ public class MultiDocumentsHandler {
     }
     recheck = false;
   }
-  
-/**
- * Set or remove a check mark to the LT menu item Switch Off 
- * return true if text should be rechecked
- */
-  public boolean setMenuTextForSwitchOff(XComponentContext xContext) {
-    boolean ret = true;
-    XMenuBar menubar = OfficeTools.getMenuBar(xContext);
-    if (menubar == null) {
-      MessageHandler.printToLogFile("Menubar is null");
-      return ret;
-    }
-    XPopupMenu toolsMenu = null;
-    XPopupMenu ltMenu = null;
-    short toolsId = 0;
-    short ltId = 0;
-    try {
-      for (short i = 0; i < menubar.getItemCount(); i++) {
-        toolsId = menubar.getItemId(i);
-        String command = menubar.getCommand(toolsId);
-        if(TOOLS_COMMAND.equals(command)) {
-          toolsMenu = menubar.getPopupMenu(toolsId);
-          break;
-        }
-      }
-      if (toolsMenu == null) {
-        MessageHandler.printToLogFile("Tools Menu is null");
-        return ret;
-      }
-      for (short i = 0; i < toolsMenu.getItemCount(); i++) {
-        String command = toolsMenu.getCommand(toolsMenu.getItemId(i));
-        if(WORD_COUNT_COMMAND.equals(command)) {
-          ltId = toolsMenu.getItemId((short) (i - 1));
-          ltMenu = toolsMenu.getPopupMenu(ltId);
-          break;
-        }
-      }
-      if (ltMenu == null) {
-        MessageHandler.printToLogFile("LT Menu is null");
-        return ret;
-      }
-      short switchOffId = 0;
-      for (short i = 0; i < ltMenu.getItemCount(); i++) {
-        String command = ltMenu.getCommand(ltMenu.getItemId(i));
-        if(LT_SWITCH_OFF_COMMAND.equals(command)) {
-          switchOffId = ltMenu.getItemId(i);
-          break;
-        }
-      }
-      if (switchOffId == 0) {
-        MessageHandler.printToLogFile("switchOffId not found");
-        return ret;
-      }
-      
-      boolean isSwitchOff = ltMenu.isItemChecked(switchOffId);
-      if((switchOff && isSwitchOff) || (!switchOff && !isSwitchOff)) {
-        ret = false;
-      }
-      
-      ltMenu.setItemText(switchOffId, messages.getString("loMenuSwitchOff"));
-      
-      if(switchOff) {
-        ltMenu.checkItem(switchOffId, true);
-      } else {
-        ltMenu.checkItem(switchOffId, false);
-      }
-    } catch (Throwable t) {
-      MessageHandler.printException(t);
-    }
-    toolsMenu.setPopupMenu(ltId, ltMenu);
-    menubar.setPopupMenu(toolsId, toolsMenu);
-    return ret;
-  }
-  
-  public boolean isSwitchedOff() {
-    return switchOff;
-  }
-
-/**
- *  Toggle Switch Off / On of LT
- *  return true if toggle was done 
- */
-  public boolean toggleSwitchedOff() throws IOException {
-    if(docLanguage == null) {
-      docLanguage = getLanguage();
-    }
-    if (config == null) {
-      config = new Configuration(configDir, configFile, docLanguage, linguServices);
-    }
-    switchOff = !switchOff;
-    boolean ret = setMenuTextForSwitchOff(xContext);
-    if(!ret) {
-      switchOff = !switchOff;
-    }
-    langTool = null;
-    config.setSwitchedOff(switchOff, docLanguage);
-    return ret;
-  }
-
 
 }

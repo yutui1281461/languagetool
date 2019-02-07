@@ -38,8 +38,6 @@ import static org.languagetool.JLanguageTool.*;
  */
 public final class AnalyzedTokenReadings implements Iterable<AnalyzedToken> {
 
-  private static final Pattern NON_WORD_REGEX = Pattern.compile("[.?!…:;,~’'\"„“”»«‚‘›‹()\\[\\]\\-–—*×∗·+÷/=]");
-
   private final boolean isWhitespace;
   private final boolean isLinebreak;
   private final boolean isSentStart;
@@ -572,14 +570,6 @@ public final class AnalyzedTokenReadings implements Iterable<AnalyzedToken> {
    */
   public boolean hasSameLemmas() {
     return hasSameLemmas;
-  }
-
-  /**
-   * @return true if AnalyzedTokenReadings is a punctuation mark, bracket, etc
-   * @since 4.4
-   */
-  public boolean isNonWord() {
-    return NON_WORD_REGEX.matcher(token).matches();
   }
 
   @Override

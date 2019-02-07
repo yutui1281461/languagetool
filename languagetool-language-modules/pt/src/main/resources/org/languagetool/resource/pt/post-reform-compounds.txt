@@ -1,10 +1,10 @@
 # LanguageTool, a natural language style checker (http://www.languagetool.org)
-# Copyright © 2005–2014 Daniel Naber (http://www.danielnaber.de) 
+# Copyright (C) 2005-2014 Daniel Naber (http://www.danielnaber.de) 
 
 # Portuguese post-reform compound words that are usually not written as
 # separate words.
-# Copyright © 2016–2018 Tiago F. Santos (tiagofsantos@sapo.pt)
-# Copyright © 2016–2018 Marco A.G.Pinto (www.marcoagpinto.com)
+# Copyright (C) 2016-2017 Tiago F. Santos (tiagofsantos@sapo.pt)
+# Copyright (C) 2016 Marco A.G.Pinto (www.marcoagpinto.com)
 # Freely available under the LGPL 2.1 or later.
 # Encoding: UTF-8
 #
@@ -1199,7 +1199,6 @@ cobra-de-água*
 Cobra-de-água*
 cobra-rateira*
 Cobra-rateira*
-Coca-Cola*
 comandante-chefe*
 Comandante-chefe*
 comboio-correio*
@@ -2374,10 +2373,6 @@ pombo-correio*
 Pombo-correio*
 pombos-correio*
 Pombos-correio*
-ponto-chave*
-Ponto-chave*
-pontos-chave*
-Pontos-chave*
 porquinho-da-índia*
 Porquinho-da-índia*
 porta-aviões*
@@ -3083,14 +3078,6 @@ vales-transporte*
 Vales-transporte*
 vales-transporte*
 Vales-transporte*
-variavel-chave*
-Variavel-chave*
-variável-chave*
-Variável-chave*
-variaveis-chave*
-Variaveis-chave*
-variáveis-chave*
-Variáveis-chave*
 verde-alface*
 Verde-alface*
 verde-amarelado*

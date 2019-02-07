@@ -21,7 +21,6 @@ package org.languagetool.rules.en;
 import static org.junit.Assert.assertEquals;
 
 import java.io.IOException;
-import java.util.Collections;
 
 import org.junit.Test;
 import org.languagetool.JLanguageTool;
@@ -36,7 +35,7 @@ public class MorfologikNewZealandSpellerRuleTest extends AbstractEnglishSpellerR
   @Test
   public void testSuggestions() throws IOException {
     Language language = new NewZealandEnglish();
-    Rule rule = new MorfologikNewZealandSpellerRule(TestTools.getMessages("en"), language, null, Collections.emptyList());
+    Rule rule = new MorfologikNewZealandSpellerRule(TestTools.getMessages("en"), language, null);
     super.testNonVariantSpecificSuggestions(rule, language);
   }
 
@@ -44,7 +43,7 @@ public class MorfologikNewZealandSpellerRuleTest extends AbstractEnglishSpellerR
   public void testMorfologikSpeller() throws IOException {
     NewZealandEnglish language = new NewZealandEnglish();
     MorfologikNewZealandSpellerRule rule =
-            new MorfologikNewZealandSpellerRule(TestTools.getMessages("en"), language, null, Collections.emptyList());
+            new MorfologikNewZealandSpellerRule(TestTools.getMessages("en"), language, null);
 
     JLanguageTool langTool = new JLanguageTool(language);
 

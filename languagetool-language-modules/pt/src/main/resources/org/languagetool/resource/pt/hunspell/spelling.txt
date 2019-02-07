@@ -1,10 +1,8 @@
 # After validation, add here words suggested by users
-#
-# Portuguese words of all variants
-# DO NOT add variant specific words
-#
-# For specific variant words, comment the word before adding it,
-# so it will be added to the specific dictionary later.
+# General portuguese words
+# Do not add variant specific words
+# For specific variant words, comment the word before adding it. 
+# It will be added to the specific dictionary later.
 afear
 baseball
 basketball
@@ -18,7 +16,7 @@ laptops
 management
 premio
 #
-# Words handled by foreign word replacement lists
+# Words handled by foreign words replacement lists
 #
 abat-jour
 abat-jours
@@ -2326,6 +2324,8 @@ take-offs
 takeaway
 takeaways
 takes
+taliban
+talibans
 talk-show
 talk-shows
 tandem
@@ -3968,7 +3968,7 @@ zoófilas
 Zuckerberg
 # Países e Capitais
 # https://pt.wikipedia.org/wiki/Lista_de_capitais_nacionais
-# Selecionados apenas os que tem grafias relativamente consensuais
+# Selecionados apenas os que tem grafias relativamente consensuais 
 Abecásia
 Sucumi
 Tshwane
@@ -6437,11 +6437,8 @@ assexual
 assexuais
 assimbolia
 assimbolias
-Aston Villa
 Avanca
 Austro-Húngaro
-Bayer Leverkusen
-Bayern Munich
 biodiesel
 biodieseis
 bioética
@@ -6451,8 +6448,6 @@ biofilmes
 biomedicina
 biomedicinas
 Bizâncio
-Borussia Dortmund
-Borussia Mönchengladbach
 assepsia
 assepsias
 Azeredo
@@ -6461,9 +6456,6 @@ campaniças
 campaniço
 campaniços
 choninhas
-clientelismo
-clientelismos
-Club Brugge
 CNBC
 colagénio
 Coriolis
@@ -6483,8 +6475,6 @@ dissensão
 dissensões
 dreno
 drenos
-EAU
-Eintracht Frankfurt
 Elidérico
 EMEL
 endotraqueal
@@ -6500,7 +6490,6 @@ factualidade
 factualidades
 felídeo
 felídeos
-Feyenoord
 frenesi
 frenesis
 Friedrich
@@ -6529,8 +6518,6 @@ hipersexualizados
 histoplasmose
 histoplasmoses
 histrionismo
-houthi
-houthis
 Idanha
 IMAX
 inadequação
@@ -6547,7 +6534,6 @@ imunossupressores
 irredutivelmente
 Johnson
 Jumbo
-Juventus
 Karen
 Karlowitz
 Kumar
@@ -6558,11 +6544,8 @@ lânguido
 lânguidos
 laxista
 laxistas
-Leeds United
 leptospirose
 leptospiroses
-libertarianismo
-libertarianismos
 McCain
 Medvedev
 megaoperação
@@ -6592,16 +6575,10 @@ negacionista
 negacionistas
 Nestlé
 noodles
-nordestina
-nordestinas
-nordestino
-nordestinos
-Nottingham Forest
 Novichok
 oligossacarídeo
 oligossacarídeos
 oportunisticamente
-Panathinaikos
 paraolímpica
 paraolímpicas
 paraolímpico
@@ -6632,29 +6609,21 @@ psicotrópica
 psicotrópicas
 psicotrópico
 psicotrópicos
-PSV Eindhoven
 purpurina
 purpurinas
-rebarbadora
-rebarbadoras
 recidivante
 recidivantes
-Red Star Belgrade
-Reich
 rooftop
 rooftops
+Reich
 Romanov
 RGPD
-salafista
-salafistas
 Salisbury
 senciência
 senciente
 sencientes
 Skripal
 SONAE
-Saint-Étienne
-Steaua București
 Sumatra
 supracional
 supracionais
@@ -6670,265 +6639,3 @@ WONCA
 Yosemite
 Zapatero
 Zézinha
-################################
-# Sugestões dos utilizadores 6 #
-################################
-Abidjan
-Abrunhosa
-aeronavais
-aeronaval
-ajuizamento
-Ajuizamentos
-Alagoinhas
-aleivosia
-aleivosias
-alíquota
-alíquotas
-anticíclica
-anticíclicas
-anticíclico
-antropomorfização
-antropomorfizações
-ASAU
-atávica
-atávicas
-atávico
-atávicos
-autopreservação
-AZERTY
-Bakunin
-Bastiat
-Begonha
-bioeconomia
-bioinformática
-Böhm-Bawerk
-Bolsonaro
-bráquete
-bráquetes
-BRICS
-Cabify
-candomblé
-cardiorrespiratória
-cardiorrespiratórias
-cardiorrespiratório
-cardiorrespiratórios
-Carrefour
-casuístico
-casuísticos
-catecolaminérgica
-catecolaminérgicas
-catecolaminérgico
-catecolaminérgicos
-Chaffeur Privé
-clientelar
-clientelares
-comatosa
-comatosas
-comatoso
-comatosos
-construtivismo
-contornável
-dedutibilidade
-demonização
-demonizações
-DDoS # Estrangeirismo
-DIRPF
-Dropbox
-ébola
-energúmena
-energúmenas
-energúmeno
-energúmenos
-ensaística
-ensaísticas
-ensaístico
-ensaísticos
-epifania
-epifanias
-epítome
-epítomes
-etnicismo
-exclusivista
-exclusivistas
-eximiamente
-exponenciada
-exponenciadas
-exponenciado
-exponenciados
-expropriativa
-expropriativas
-expropriativo
-expropriativos
-FAPLA
-Farfetch
-forfetária
-forfetárias
-forfetário
-forfetários
-gabonês
-gabonesa
-gabonesas
-gaboneses
-Genilson
-genotóxica
-genotóxicas
-genotoxicidade
-genotóxico
-genotóxicos
-gentrificação
-Gestalt
-grupais
-grupal
-Guangdong
-hatchback # Estrangeirismo
-hatchbacks # Estrangeirismo
-Hayek
-hidroclimática
-hidroclimáticas
-hidroclimático
-hidroclimáticos
-hipertermia
-hipertermias
-hipotermia
-hipotermias
-IBAN
-iCloud
-ideação
-ideações
-IFMG
-IFPR
-impreparada
-impreparadas
-impreparado
-impreparados
-influenciador
-influenciadores
-instituinte
-instituintes
-interbancária
-interbancárias
-interbancário
-interbancários
-interfacetária
-interfacetárias
-interfacetário
-interfacetários
-interparlamentar
-interparlamentares
-Interpol
-IoT
-IPCC
-ISPs
-IURD
-Jair
-JPMorgan
-Kindle
-kVA
-Levpay
-Lindóia
-longarina
-longarinas
-maluquinha
-maluquinhas
-maluquinho
-maluquinhos
-MBWay
-mentoria
-mentorias
-microeconomia
-Microeconomia
-millennial # Estrangeirismo
-millennials # Estrangeirismo
-mocassins # Estrangeirismo
-motivacional
-Mozilla
-MST
-MTE
-multiparentalidade
-Mussulo
-nanotubo
-nanotubos
-não-Hodgkin
-neurobiologia
-Nikolai
-nosocomiais
-nosocomial
-ok
-Ok
-OK
-Owen
-perequação
-perequações
-Peterson
-Piaget
-precipitáveis
-precipitável
-Proudhon
-provocatoriamente
-psicótica
-psicóticas
-psicótico
-psicóticos
-quantiqualitativa
-quantiqualitativas
-quantiqualitativo
-quantiqualitativos
-Quirino
-QWERTY
-QWERTZ
-recalibrar
-revanche # Estrangeirismo
-revanches # Estrangeirismo
-revocatória
-revocatórias
-revocatório
-revocatórios
-Rivera
-Saturnália
-Schumpeter
-senioridade
-Serrão
-Silvano
-Sonangol
-Sophie
-Sowell
-SQL
-sub-reptícia
-sub-reptícias
-sub-reptício
-sub-reptícios
-supletivamente
-SWIFT
-talibã
-talibãs
-Taperuaba
-taróloga
-tarólogas
-tarólogo
-tarólogos
-Taxify
-TdC
-teatralização
-teatralizações
-termopolimerizáveis
-termopolimerizável
-transnacionalidade
-tríptico
-trípticos
-Tsé-Tung
-tuia-gigante
-tuias-gigantes
-Uber
-umbundo
-usucapião
-usucapiar
-usucapiendo
-usucapiendos
-usucapiente
-usucapientes
-usucapto
-usucaptos
-www
-WWW
-Xbox
-

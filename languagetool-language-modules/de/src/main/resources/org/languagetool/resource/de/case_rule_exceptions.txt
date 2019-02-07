@@ -8,7 +8,7 @@ Allgemeine[nr]? Deutsche[nr]? Automobilclub
 Alt und Jung
 Amnesty International
 Apokalyptische[nr]? Reiters?
-Astronomischen? Einheit(en)?|Union
+Astronomischen? Einheit(en)?
 Arabischen? Halbinsel|Liga|Emiraten?
 Arabische[nr]? Frühlings?
 Arte
@@ -24,7 +24,6 @@ Blaue[nr]? Reiters?|Band(s|es)?|Planet(en)?|Brief[es]?|Moschee|Enzians?
 Bögen
 Botanische[rn]? Gartens?
 Braune[rn]? Zwerge?s?
-Brandenburgischen? Konzert[es]n?
 Britischen? Inseln
 Bundeskanzlers? Kurz
 Bundesminister(s?|iums?|in) für Arbeit und Soziales
@@ -51,7 +50,7 @@ ein absolutes Muss
 [eE]ine (gute|glatte|schlechte) Eins|Zwei|Drei|Vier|Fünf|Sechs
 [eE]ine Eins|Zwei|Drei|Vier|Fünf|Sechs
 Eiserne[ns]? Kreuz
-Eiserne[nr]? Kreuzes?|Vorhangs?
+Eisernen? Kreuzes?|Vorhangs?
 Erste[rn]? Mai|Liga
 Erste[rnm]? (Weltkriege?s?|Bürgermeisters?)
 Essener
@@ -67,7 +66,7 @@ Freiwillige[sn]? Soziale[sn]? Jahrs?
 Fränkische[nr]? Schweiz
 Geheimen? Staatspolizei
 Gelben? Karten?|Trikots?|Rüben?|Meer(e?s)?
-Gelbe[nr]? Fluss(es)?|Engel[ns]?|Seiten?|Sacks?|Tonnen?
+Gelbe[nr]? Fluss(es)?|Engel[ns]?|Seiten?|Sacks?
 Gelobten? Lands?
 Gewerbetreibende[rn]?
 Gleich und Gleich
@@ -111,7 +110,7 @@ Inoffizielle[rn]? Mitarbeiter[sn]?
 International Airlines
 Internationalen? Filmfestspielen?|Atomenergie(-Organisation|behörde|organisation)|Fernmeldeunion|Komitees?|.*tag|Raumstation|Energieagentur
 Internationale[mnr]? Währungsfonds|(Seeg|Strafg|Sportg|Militärg|G)erichtshof(e?s)?|Fonds|Klassifikation
-Internationale[ns]? Astronomischen?|Olympische[ns]?|Komitees?|Filmfestivals?|Einheitensystems?
+Internationale[ns]? Olympische[ns]?|Komitees?|Filmfestivals?|Einheitensystems?
 Islamische[rn]? Staat
 Islamischen Staate?s
 Italienische[nr]? Republik|Salat
@@ -119,10 +118,10 @@ Japanische[ns]? Alpen|Meer
 Jung und Alt
 Jüngste[ns]? Tags?|Gerichts?
 Kaps? der Guten Hoffnung
-Kalte[mnr]? Krieg(e?s)?
+Kalten Kriege?s
+Kalte[mnr]? Krieg
 Kanzler Kurz
 Katholischen? Liga|Universität
-Kaukasische[nr]? Kreidekreis
 kaum Neues
 Kleinen? Antillen|Anfragen?|Zeitung
 Kleiner? Bär
@@ -142,7 +141,6 @@ Mittwochfrüh
 (Mon|D(ien|onner)s|Frei|S(ams|onn))tagfrüh
 Muttersprachler[ns]?
 Nahe[nr]? Ostens?
-National Institute of
 Nationale[nr]? Sicherheitsrat(e?s)?|Volksarmee
 Neuen? Medien
 Niels Bohr
@@ -158,7 +156,6 @@ Osmanischen? Reich(es|s)?
 Palästinensischen? Autonomie.+
 Parlamentarische[rn]? Rats?|Rates|Kontrollgremiums?|Untersuchungsausschuss(es)?
 Persische[nr]? Golfs?
-Physikalischen? Gesellschaft
 Real Bamako|Madrid
 Regierenden Bürgermeisters
 Regierende[mnr]? Bürgermeister(in)?
@@ -221,8 +218,6 @@ Wenn und Aber
 Westfälischen? Frieden?|Friedens|Pforte
 Wilde[nr]? Westens?
 Wissenschaftlichen? Dienst(e?s)?
-Wohltemperierten? Klaviers?
-Woody Allen
 Zehn Geboten?
 Zweite Deutsche Fernsehen
 Zweite[mnr]? Weltkrieg(e?s)?

@@ -265,8 +265,7 @@ title="Easy editing stylesheet" ?>
           <token postag='V.[PG].*' postag_regexp='yes'/>
       </antipattern>
       <pattern>
-          <token regexp='yes'>&pronomes_nao_ambiguos;
-            <exception scope='previous'>Deus</exception></token>
+          <token regexp='yes'>&pronomes_nao_ambiguos;</token>
           <token postag='V.+' postag_regexp='yes'>
             <exception regexp='yes'>mortos?</exception></token>
     <!--NOTE DO NOT INCLUDE a,o,as,os,se,nos,nas,mas. They produce too many
@@ -285,7 +284,6 @@ title="Easy editing stylesheet" ?>
       <example>Só te tirei o brinquedo, porque te portaste mal</example>
       <example>Nenhum lugar te recorda daquelas férias?</example>
       <example>...que eu vos peça expressamente...</example>
-      <example>Deus me livre!</example>
     </rule>
     <rule>
       <pattern>
@@ -591,7 +589,9 @@ title="Easy editing stylesheet" ?>
       <short>Utilize a contração.</short>
       <antipattern>
           <token regexp='yes'>antes|apesar|capacidade|depois|expec?tativas?|facto|objec?tivo|possibilidade|risco|intenção</token>
-          <token>de</token>
+          <token skip='-1'>de
+            <exception scope='next' postag='_PUNCT'/></token>
+          <token postag='VMN0000'/>
       </antipattern>
       <antipattern>
           <token regexp='yes'>aos?</token>
@@ -890,13 +890,6 @@ title="Easy editing stylesheet" ?>
       <message>Esta é uma expressão de Português do Brasil para <suggestion>equipa<match no='1' regexp_match='time(s?)' regexp_replace='$1' include_skipped='all'/></suggestion>, ou inglesa para <suggestion>tempo<match no='1' regexp_match='time(s?)' regexp_replace='$1' include_skipped='all'/></suggestion>.</message>
       <example correction='equipas|tempos'>Nossos <marker>times</marker> vão jogar hoje.</example>
       <example>O jornal The <marker>Times</marker> é britânica.</example>
-    </rule>
-    <rule id='BRASILEIRISMO_20_REVISAR' name='Brasileirismo: revisar - rever'>
-      <pattern>
-          <token inflected='yes'>revisar</token>
-      </pattern>
-      <message>Esta é uma expressão de Português do Brasil para <suggestion><match no='1' postag='V.+' postag_regexp='yes'>rever</match></suggestion>.</message>
-      <example correction='(Rever)'><marker>Revisaste</marker> o texto antes de enviar.</example>
     </rule>
   </rulegroup>
 
@@ -1575,10 +1568,6 @@ title="Easy editing stylesheet" ?>
           <token>Revolução</token>
           <token>de</token>
           <token>Outubro</token>
-      </antipattern>
-      <antipattern>
-          <token>Primavera</token>
-          <token>Árabe</token>
       </antipattern>
       <antipattern>
           <token regexp='yes'>Jan|Fev|Abr|Mai|Jun|Jul|Ago|Set|Out|Nov</token>

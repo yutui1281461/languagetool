@@ -25,10 +25,8 @@ import org.languagetool.language.Malayalam;
 import org.languagetool.rules.RuleMatch;
 
 import java.io.IOException;
-import java.util.Collections;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 public class MorfologikMalayalamSpellerRuleTest {
 
@@ -36,7 +34,7 @@ public class MorfologikMalayalamSpellerRuleTest {
   public void testMorfologikSpeller() throws IOException {
     final Malayalam language = new Malayalam();
     final MorfologikMalayalamSpellerRule rule =
-            new MorfologikMalayalamSpellerRule (TestTools.getMessages("ml"), language, null, Collections.emptyList());
+            new MorfologikMalayalamSpellerRule (TestTools.getMessages("ml"), language, null);
 
     RuleMatch[] matches;
     final JLanguageTool langTool = new JLanguageTool(language);
@@ -56,7 +54,7 @@ public class MorfologikMalayalamSpellerRuleTest {
     assertEquals(1, matches.length);
     assertEquals(0, matches[0].getFromPos());
     assertEquals(4, matches[0].getToPos());
-    assertTrue(matches[0].getSuggestedReplacements().isEmpty());
+    assertEquals(matches[0].getSuggestedReplacements().isEmpty(), true);
 
     matches = rule.match(langTool.getAnalyzedSentence("എaങ്ങനെ"));
     assertEquals(1, matches.length);

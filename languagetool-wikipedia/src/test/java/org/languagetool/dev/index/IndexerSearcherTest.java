@@ -40,12 +40,11 @@ import org.languagetool.JLanguageTool;
 import org.languagetool.Language;
 import org.languagetool.language.English;
 import org.languagetool.language.German;
-import org.languagetool.language.GermanyGerman;
 import org.languagetool.rules.IncorrectExample;
 import org.languagetool.rules.Rule;
 import org.languagetool.rules.RuleMatch;
-import org.languagetool.rules.patterns.PatternRule;
 import org.languagetool.rules.patterns.PatternToken;
+import org.languagetool.rules.patterns.PatternRule;
 
 public class IndexerSearcherTest extends LuceneTestCase {
 
@@ -184,7 +183,7 @@ public class IndexerSearcherTest extends LuceneTestCase {
     // Note that the second sentence ends with "lid" instead of "lids" (the inflated one)
     //createIndex("I thin so");
     useRealIndex();
-    German language = new GermanyGerman();
+    German language = new German();
     PatternRule rule = getFirstRule("I_THIN", language);
     SearcherResult searcherResult = errorSearcher.findRuleMatchesOnIndex(rule, language);
     System.out.println("Matches: " + searcherResult.getMatchingSentences());

@@ -21,7 +21,6 @@
 
 package org.languagetool.server;
 
-import org.apache.commons.lang3.StringUtils;
 import org.languagetool.Language;
 
 import java.text.SimpleDateFormat;
@@ -38,12 +37,9 @@ class DatabaseCheckLogEntry extends DatabaseLogEntry {
   private final int computationTime;
   private final Long textSessionId;
   private final Calendar date;
-  private final String checkMode;
-  private DatabaseRuleMatchLogEntry ruleMatches = null;
+  private final List<DatabaseRuleMatchLogEntry> ruleMatches = new ArrayList<>();
 
-  public DatabaseCheckLogEntry(Long userId, Long client, Long server, int textSize, int matches,
-                               Language lang, Language langDetected, int computationTime,
-                               Long textSessionId, String checkMode) {
+  public DatabaseCheckLogEntry(Long userId, Long client, Long server, int textSize, int matches, Language lang, Language langDetected, int computationTime, Long textSessionId) {
     this.userId = userId;
     this.client = client;
     this.server = server;
@@ -53,29 +49,27 @@ class DatabaseCheckLogEntry extends DatabaseLogEntry {
     this.langDetected = langDetected;
     this.computationTime = computationTime;
     this.textSessionId = textSessionId;
-    this.checkMode = checkMode;
     this.date = Calendar.getInstance();
   }
 
-  public void setRuleMatches(DatabaseRuleMatchLogEntry entry) {
-    ruleMatches = entry;
+  public void addRuleMatch(DatabaseRuleMatchLogEntry entry) {
+    ruleMatches.add(entry);
   }
 
   @Override
   public Map<Object, Object> getMapping() {
     HashMap<Object, Object> map = new HashMap<>();
     SimpleDateFormat dayFormat = new SimpleDateFormat("yyyy-MM-dd");
-    dayFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     map.put("day", dayFormat.format(date.getTime()));
-    map.put("date", ServerTools.getSQLDatetimeString(date));
+    map.put("date", dateFormat.format(date.getTime()));
     map.put("user_id", userId);
     map.put("textsize", textSize);
     map.put("matches", matches);
-    map.put("language", StringUtils.abbreviate(lang.getShortCodeWithCountryAndVariant(), 30));
-    map.put("language_detected", StringUtils.abbreviate(langDetected.getShortCodeWithCountryAndVariant(), 30));
+    map.put("language", lang.getShortCodeWithCountryAndVariant());
+    map.put("language_detected", langDetected.getShortCodeWithCountryAndVariant());
     map.put("computation_time", computationTime);
     map.put("text_session_id", textSessionId);
-    map.put("check_mode", StringUtils.abbreviate(checkMode, 32));
     map.put("server", server);
     map.put("client", client);
     return map;
@@ -87,14 +81,21 @@ class DatabaseCheckLogEntry extends DatabaseLogEntry {
   }
 
   @Override
-  public DatabaseLogEntry followup() {
-    if (ruleMatches == null) {
-      throw new IllegalStateException("No rule matches provided for check_log entry: " + getMapping());
+  public void followup(Map<Object, Object> parameters) {
+    Long checkId = (Long) parameters.get("id");
+    if (checkId == null) {
+      System.err.println("Could not get generated key for check log entry in database.");
+      return;
     }
-    if (ruleMatches.getMatchCount() == 0) {
-      return null;
+    DatabaseLogger logger = DatabaseLogger.getInstance();
+    for (DatabaseRuleMatchLogEntry entry : ruleMatches) {
+      entry.setCheckId(checkId);
+      logger.log(entry);
     }
-    return ruleMatches;
   }
 
+  //@Override
+  //public void print(PrintStream out) {
+  // TODO
+  //}
 }

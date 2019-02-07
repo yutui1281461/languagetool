@@ -19,7 +19,6 @@
 package org.languagetool.openoffice;
 
 import java.awt.Color;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -71,8 +70,7 @@ class SingleDocument {
   private static final int MAX_SUGGESTIONS = 15;
 
 
-  private static int debugMode = 0;               //  should be 0 except for testing; 1 = low level; 2 = advanced level
-  private static boolean specialOptimization = true;   //  special optimization switched on; TODO: test this version and delete switch, if it is OK
+  private static int debugMode = 0;         //  should be 0 except for testing; 1 = low level; 2 = advanced level
   
   private Configuration config;
 
@@ -83,7 +81,9 @@ class SingleDocument {
   private XComponentContext xContext;             //  The context of the document
   private String docID;                           //  docID of the document
   private XComponent xComponent;                  //  XComponent of the open document
+  private Locale locale;                          //  Language of the document
 
+  private LinguisticServices linguServices = null;//  Linguistic services for the document
   private List<String> allParas = null;           //  List of paragraphs (only readable by parallel thread)
   private DocumentCursorTools docCursor = null;   //  Save Cursor for the single documents
 //  private FlatParagraphTools flatPara = null;   //  Save FlatParagraph for the single documents
@@ -107,6 +107,9 @@ class SingleDocument {
     this.sentencesCache = new ResultCache();
     this.paragraphsCache = new ResultCache();
     this.singleParaCache = new ResultCache();
+    if (xContext != null) {
+      this.linguServices = new LinguisticServices(xContext);
+    }
   }
   
   /**  get the result for a check of a single document 
@@ -120,6 +123,7 @@ class SingleDocument {
   ProofreadingResult getCheckResults(String paraText, Locale locale, ProofreadingResult paRes, 
       int[] footnotePositions, boolean isParallelThread, JLanguageTool langTool) {
     try {
+      this.locale = locale;
       SingleProofreadingError[] sErrors = null;
       int paraNum = getParaPos(paraText, isParallelThread);
       // Don't use Cache for check in single paragraph mode
@@ -144,9 +148,7 @@ class SingleDocument {
         paRes.nBehindEndOfSentencePosition = paRes.nStartOfNextSentencePosition;
         sErrors = checkSentence(sentence, paRes.nStartOfSentencePosition, paRes.nStartOfNextSentencePosition, 
             paraNum, footnotePositions, isParallelThread, langTool);
-        if(specialOptimization) {
-          setFirstCheckDone();
-        }
+        setFirstCheckDone();
       }
       SingleProofreadingError[] pErrors = checkParaRules(paraText, paraNum, paRes.nStartOfSentencePosition,
           paRes.nStartOfNextSentencePosition, isParallelThread, langTool);
@@ -177,6 +179,9 @@ class SingleDocument {
   void setXComponent(XComponentContext xContext, XComponent xComponent) {
     this.xContext = xContext;
     this.xComponent = xComponent;
+    if (xContext != null) {
+      this.linguServices = new LinguisticServices(xContext);
+    }
   }
   
   /** Get xComponent of the document
@@ -246,6 +251,8 @@ class SingleDocument {
     boolean isReset = false;
     textIsChanged = false;
     resetCheck = false;
+    resetFrom = 0;
+    resetTo = 0;
 
     if (allParas == null || allParas.size() < 1) {
       if (isParallelThread) {              //  if numThread > 0: Thread may only read allParas
@@ -725,22 +732,27 @@ class SingleDocument {
     aError.aShortComment = org.languagetool.gui.Tools.shortenComment(aError.aShortComment);
     int numSuggestions;
     String[] allSuggestions;
-    numSuggestions = ruleMatch.getSuggestedReplacements().size();
-    allSuggestions = ruleMatch.getSuggestedReplacements().toArray(new String[numSuggestions]);
-    //  Filter: remove suggestions for override dot at the end of sentences
-    //  needed because of error in dialog
-    if (lastChar == '.' && (ruleMatch.getToPos() + startIndex) == sentencesLength) {
-      int i = 0;
-      while (i < numSuggestions && i < MAX_SUGGESTIONS
-          && allSuggestions[i].length() > 0 && allSuggestions[i].charAt(allSuggestions[i].length()-1) == '.') {
-        i++;
+    if(ruleMatch.getSynonymsFor() == null) {
+      numSuggestions = ruleMatch.getSuggestedReplacements().size();
+      allSuggestions = ruleMatch.getSuggestedReplacements().toArray(new String[numSuggestions]);
+      //  Filter: remove suggestions for override dot at the end of sentences
+      //  needed because of error in dialog
+      if (lastChar == '.' && (ruleMatch.getToPos() + startIndex) == sentencesLength) {
+        int i = 0;
+        while (i < numSuggestions && i < MAX_SUGGESTIONS
+            && allSuggestions[i].length() > 0 && allSuggestions[i].charAt(allSuggestions[i].length()-1) == '.') {
+          i++;
+        }
+        if (i < numSuggestions && i < MAX_SUGGESTIONS) {
+        numSuggestions = 0;
+        allSuggestions = new String[0];
+        }
       }
-      if (i < numSuggestions && i < MAX_SUGGESTIONS) {
-      numSuggestions = 0;
-      allSuggestions = new String[0];
-      }
+      //  End of Filter
+    } else {
+      allSuggestions = getSynonymsAsSuggestions(ruleMatch.getSynonymsFor());
+      numSuggestions = allSuggestions.length;
     }
-    //  End of Filter
     if (numSuggestions > MAX_SUGGESTIONS) {
       aError.aSuggestions = Arrays.copyOfRange(allSuggestions, 0, MAX_SUGGESTIONS);
     } else {
@@ -754,24 +766,22 @@ class SingleDocument {
     // LibreOffice since version 6.2 supports the change of underline style (key: "LineType", value: short (DASHED = 5))
     // older version will simply ignore the properties
     Color underlineColor = config.getUnderlineColor(ruleMatch.getRule().getCategory().getName());
-    URL url = ruleMatch.getUrl();
-    if (url == null) {                      // match URL overrides rule URL 
-      url = ruleMatch.getRule().getUrl();
-    }
     if(underlineColor != Color.blue) {
       int ucolor = underlineColor.getRGB() & 0xFFFFFF;
-      if (url != null) {
+      if (ruleMatch.getRule().getUrl() != null) {
         aError.aProperties = new PropertyValue[] { new PropertyValue(
-            "FullCommentURL", -1, url.toString(), PropertyState.DIRECT_VALUE),
+            "FullCommentURL", -1, ruleMatch.getRule().getUrl().toString(),
+            PropertyState.DIRECT_VALUE),
             new PropertyValue("LineColor", -1, ucolor, PropertyState.DIRECT_VALUE) };
       } else {
         aError.aProperties = new PropertyValue[] {
             new PropertyValue("LineColor", -1, ucolor, PropertyState.DIRECT_VALUE) };
       }
     } else {
-      if (url != null) {
+      if (ruleMatch.getRule().getUrl() != null) {
         aError.aProperties = new PropertyValue[] { new PropertyValue(
-            "FullCommentURL", -1, url.toString(), PropertyState.DIRECT_VALUE) };
+            "FullCommentURL", -1, ruleMatch.getRule().getUrl().toString(),
+            PropertyState.DIRECT_VALUE) };
       } else {
         aError.aProperties = new PropertyValue[0];
       }
@@ -833,4 +843,21 @@ class SingleDocument {
     }
   }
 
+  private String[] getSynonymsAsSuggestions(List<String> words) {
+    if (words == null || linguServices == null) {
+      return new String[0];
+    }
+    List<String> allSynonyms = new ArrayList<String>();
+    for (String word : words) {
+      List<String> synonyms = linguServices.getSynonyms(word, locale);
+      for (String synonym : synonyms) {
+        synonym = synonym.replaceAll("\\(.*\\)", "").trim();
+        if (!allSynonyms.contains(synonym)) {
+          allSynonyms.add(synonym);
+        }
+      }
+    }
+    return allSynonyms.toArray(new String[allSynonyms.size()]);
+  }
+  
 }

@@ -44,8 +44,8 @@ public class SuggestionsOrderer {
 
   private boolean mlAvailable = true;
 
-  private NGramUtil nGramUtil = null;
-  private Predictor predictor;
+  private static NGramUtil nGramUtil = null;
+  private static Predictor predictor;
 
   public boolean isMlAvailable() {
     return mlAvailable && SuggestionsOrdererConfig.isMLSuggestionsOrderingEnabled();
@@ -63,6 +63,7 @@ public class SuggestionsOrderer {
       } else {
         languageModelFileName = ngramBasedModelFilename;
       }
+
       try (InputStream modelsPath = this.getClass().getClassLoader().getResourceAsStream(languageModelFileName)) {
         predictor = new Predictor(modelsPath);
       } catch (IOException | NullPointerException e) {
@@ -81,7 +82,7 @@ public class SuggestionsOrderer {
     }
   }
 
-  private float processRow(String sentence, String correctedSentence, String covered, String replacement,
+  private static float processRow(String sentence, String correctedSentence, String covered, String replacement,
                                   Integer contextLength) {
 
     Pair<String, String> context = Pair.of("", "");
@@ -161,7 +162,7 @@ public class SuggestionsOrderer {
 
   private static class NGramUtil {
 
-    private final Language language;
+    private Language language;
     private LanguageModel languageModel;
     private boolean mockLanguageModel = false;
 
@@ -202,13 +203,13 @@ public class SuggestionsOrderer {
   private static class ContextUtils {
 
     private static String leftContext(String originalSentence, int errorStartIdx, String errorString, int contextLength) {
-      String regex = repeat(contextLength, "\\w+\\W+") + Pattern.quote(errorString) + "$";
+      String regex = repeat(contextLength, "\\w+\\W+") + errorString + "$";
       String stringToSearch = originalSentence.substring(0, errorStartIdx + errorString.length());
       return findFirstRegexMatch(regex, stringToSearch);
     }
 
     private static String rightContext(String originalSentence, int errorStartIdx, String errorString, int contextLength) {
-      String regex = "^" + Pattern.quote(errorString) + repeat(contextLength, "\\W+\\w+");
+      String regex = "^" + errorString + repeat(contextLength, "\\W+\\w+");
       String stringToSearch = originalSentence.substring(errorStartIdx);
       return findFirstRegexMatch(regex, stringToSearch);
     }

@@ -167,7 +167,7 @@ public class English extends Language implements AutoCloseable {
   }
 
   @Override
-  public List<Rule> getRelevantRules(ResourceBundle messages, UserConfig userConfig, List<Language> altLanguages) throws IOException {
+  public List<Rule> getRelevantRules(ResourceBundle messages, UserConfig userConfig) throws IOException {
     return Arrays.asList(
         new CommaWhitespaceRule(messages,
                 Example.wrong("We had coffee<marker> ,</marker> cheese and crackers and grapes."),
@@ -195,9 +195,7 @@ public class English extends Language implements AutoCloseable {
         new ContractionSpellingRule(messages),
         new EnglishWrongWordInContextRule(messages),
         new EnglishDashRule(),
-        new WordCoherencyRule(messages),
-        new ReadabilityRule(messages, this, userConfig, false),
-        new ReadabilityRule(messages, this, userConfig, true)
+        new WordCoherencyRule(messages)
     );
   }
 
@@ -228,7 +226,6 @@ public class English extends Language implements AutoCloseable {
   @Override
   public int getPriorityForId(String id) {
     switch (id) {
-      case "MISSING_HYPHEN":            return 5;
       case "TWO_CONNECTED_MODAL_VERBS": return -5;
       case "CONFUSION_RULE":            return -10;
       case LongSentenceRule.RULE_ID:    return -997;

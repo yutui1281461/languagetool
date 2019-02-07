@@ -39,7 +39,6 @@ import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.net.URL;
 import java.util.*;
 import java.util.List;
 import java.util.concurrent.ScheduledExecutorService;
@@ -157,7 +156,6 @@ class LanguageToolSupport {
     Language language = languageTool.getLanguage();
     languageTool = new MultiThreadedJLanguageTool(language, config.getMotherTongue(), 
         new UserConfig(config.getConfigurableValues()));
-    config.initStyleCategories(languageTool.getAllRules());
 
     Set<String> disabledRules = config.getDisabledRuleIds();
     if (disabledRules == null) {
@@ -253,7 +251,6 @@ class LanguageToolSupport {
       //}
       languageTool = new MultiThreadedJLanguageTool(language, config.getMotherTongue(), 
           new UserConfig(config.getConfigurableValues()));
-      config.initStyleCategories(languageTool.getAllRules());
       languageTool.setCleanOverlappingMatches(false);
       Tools.configureFromRules(languageTool, config);
       activateLanguageModelRules(language);
@@ -524,7 +521,7 @@ class LanguageToolSupport {
       popup.add(new JSeparator());
 
       JMenuItem moreItem = new JMenuItem(messages.getString("guiMore"));
-      moreItem.addActionListener(e -> showDialog(textComponent, span.msg, span.desc, span.rule, span.url));
+      moreItem.addActionListener(e -> showDialog(textComponent, span.msg, span.desc, span.rule));
       popup.add(moreItem);
 
       JMenuItem ignoreItem = new JMenuItem(messages.getString("guiTurnOffRule"));
@@ -861,8 +858,8 @@ class LanguageToolSupport {
     }
   }
 
-  private void showDialog(Component parent, String title, String message, Rule rule, URL url) {
-    Tools.showRuleInfoDialog(parent, title, message, rule, url, messages, languageTool.getLanguage().getShortCodeWithCountryAndVariant());
+  private void showDialog(Component parent, String title, String message, Rule rule) {
+    Tools.showRuleInfoDialog(parent, title, message, rule, messages, languageTool.getLanguage().getShortCodeWithCountryAndVariant());
   }
 
   private static class ReplaceMenuItem extends JMenuItem {
@@ -885,7 +882,6 @@ class LanguageToolSupport {
     private final String desc;
     private final List<String> replacement;
     private final Rule rule;
-    private final URL url;
 
     private Span(RuleMatch match) {
       start = match.getFromPos();
@@ -900,7 +896,6 @@ class LanguageToolSupport {
       List<String> repl = match.getSuggestedReplacements();
       replacement.addAll(repl.subList(0, Math.min(MAX_SUGGESTIONS, repl.size())));
       rule = match.getRule();
-      url = match.getUrl() != null ? match.getUrl() : rule.getUrl();
     }
   }
 

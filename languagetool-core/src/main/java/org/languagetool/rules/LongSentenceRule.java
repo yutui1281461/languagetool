@@ -23,6 +23,7 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.regex.Pattern;
 
 import org.languagetool.AnalyzedSentence;
 import org.languagetool.AnalyzedTokenReadings;
@@ -36,6 +37,7 @@ public class LongSentenceRule extends Rule {
   public static final String RULE_ID = "TOO_LONG_SENTENCE";
   
   private static final int DEFAULT_MAX_WORDS = 50;
+  private static final Pattern NON_WORD_REGEX = Pattern.compile("[.?!…:;,~’'\"„“”»«‚‘›‹()\\[\\]\\-–—*×∗·+÷/=]");
   private static final boolean DEFAULT_ACTIVATION = false;
 
   protected int maxWords = DEFAULT_MAX_WORDS;
@@ -150,7 +152,8 @@ public class LongSentenceRule extends Rule {
       int startPos = 0;
       int prevStartPos;
       for (AnalyzedTokenReadings aToken : tokens) {
-        if (!aToken.isSentenceStart() && !aToken.isSentenceEnd() && !aToken.isNonWord()) {
+        String token = aToken.getToken();
+        if (!aToken.isSentenceStart() && !aToken.isSentenceEnd() && !NON_WORD_REGEX.matcher(token).matches()) {
           numWords++;
           prevStartPos = startPos;
           startPos = aToken.getStartPos();

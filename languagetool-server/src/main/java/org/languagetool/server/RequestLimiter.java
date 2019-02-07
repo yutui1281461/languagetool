@@ -20,7 +20,9 @@ package org.languagetool.server;
 
 import org.languagetool.JLanguageTool;
 
-import java.util.*;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
@@ -28,13 +30,10 @@ import java.util.concurrent.CopyOnWriteArrayList;
  */
 class RequestLimiter {
 
-  // TODO: this only works if the period covered is larger than requestLimitPeriodInSeconds -
-  // we should add a sanity check that warns if that's not the case
   static final int REQUEST_QUEUE_SIZE = 1000;
 
   final List<RequestEvent> requestEvents = new CopyOnWriteArrayList<>();
   
-  private final int ipFingerprintFactor;
   private final int requestLimit;
   private final int requestLimitInBytes;
   private final int requestLimitPeriodInSeconds;
@@ -44,14 +43,11 @@ class RequestLimiter {
   /**
    * @param requestLimit the maximum number of request per <tt>requestLimitPeriodInSeconds</tt>
    * @param requestLimitPeriodInSeconds the time period over which requests are considered, in seconds
-   * @param ipFingerprintFactor allow limits x times larger per ip when fingerprints differ
-   *                            (i.e. assume there may be a maximum of x users behind the same ip)
    */
-  RequestLimiter(int requestLimit, int requestLimitInBytes, int requestLimitPeriodInSeconds, int ipFingerprintFactor) {
+  RequestLimiter(int requestLimit, int requestLimitInBytes, int requestLimitPeriodInSeconds) {
     this.requestLimit = requestLimit;
     this.requestLimitInBytes = requestLimitInBytes;
     this.requestLimitPeriodInSeconds = requestLimitPeriodInSeconds;
-    this.ipFingerprintFactor = ipFingerprintFactor;
     this.logger = DatabaseLogger.getInstance();
     if (this.logger.isLogging()) {
       DatabaseAccess db = DatabaseAccess.getInstance();
@@ -59,10 +55,6 @@ class RequestLimiter {
     } else {
       this.server = null;
     }
-  }
-
-  RequestLimiter(int requestLimit, int requestLimitInBytes, int requestLimitPeriodInSeconds) {
-    this(requestLimit, requestLimitInBytes, requestLimitPeriodInSeconds, 1);
   }
 
   /**
@@ -87,28 +79,17 @@ class RequestLimiter {
     return requestLimitPeriodInSeconds;
   }
 
-  String computeFingerprint(Map<String, List<String>> httpHeader, Map<String, String> parameters) {
-    List<String> empty = Collections.singletonList("");
-    String separator = "|";
-    List<String> fields = new LinkedList<>();
-    fields.add(String.join(separator, httpHeader.getOrDefault("User-Agent", empty)));
-    fields.add(String.join(separator, httpHeader.getOrDefault("Accept-Language", empty)));
-    fields.add(String.join(separator, httpHeader.getOrDefault("Referer", empty)));
-    fields.add(String.join(separator, parameters.getOrDefault("textSessionId", "")));
-    return String.join(separator, fields);
-  }
-
   /**
    * @param ipAddress the client's IP address
    * @throws TooManyRequestsException if access is not allowed because the request limit is reached
    */
-  void checkAccess(String ipAddress, Map<String, String> params, Map<String, List<String>> httpHeader) {
-    int reqSize = getRequestSize(params);
+  void checkAccess(String ipAddress, Map<String, String> parameters) {
+    int reqSize = getRequestSize(parameters);
     while (requestEvents.size() > REQUEST_QUEUE_SIZE) {
       requestEvents.remove(0);
     }
-    requestEvents.add(new RequestEvent(ipAddress, new Date(), reqSize, computeFingerprint(httpHeader, params), ServerTools.getMode(params)));
-    checkLimit(ipAddress, params, httpHeader);
+    requestEvents.add(new RequestEvent(ipAddress, new Date(), reqSize));
+    checkLimit(ipAddress, ServerTools.getMode(parameters));
   }
 
   private int getRequestSize(Map<String, String> params) {
@@ -124,93 +105,32 @@ class RequestLimiter {
     return 0;
   }
 
-  private Long getClientId(Map<String, String> parameters) {
-    if (logger.isLogging()) {
-      DatabaseAccess db = DatabaseAccess.getInstance();
-      String paramValue = parameters.get("useragent");
-      if (paramValue == null) {
-        return null;
-      }
-      Long agentId = db.getOrCreateClientId(paramValue);
-      return agentId;
-    } else {
-      return null;
-    }
-  }
-
-  private String getReferer(Map<String, List<String>> httpHeader) {
-    List<String> values = httpHeader.get("Referer");
-    if (values == null || values.size() == 0) {
-      return null;
-    }
-    return values.get(0);
-  }
-
-  private String getUserAgent(Map<String, List<String>> httpHeader) {
-    List<String> values = httpHeader.get("User-Agent");
-    if (values == null || values.size() == 0) {
-      return null;
-    }
-    return values.get(0);
-  }
-
-  void checkLimit(String ipAddress, Map<String, String> parameters, Map<String, List<String>> httpHeader) {
+  void checkLimit(String ipAddress, JLanguageTool.Mode mode) {
     int requestsByIp = 0;
     int requestSizeByIp = 0;
-    int requestsByFingerprint = 0;
-    int requestSizeByFingerprint = 0;
     // all requests before this date are considered old:
-    Date thresholdDate = new Date(System.currentTimeMillis() - requestLimitPeriodInSeconds * 1000L);
-    String fingerprint = computeFingerprint(httpHeader, parameters);
-    String referer = getReferer(httpHeader);
-    String userAgent = getUserAgent(httpHeader);
-    Long clientId = getClientId(parameters);
-    for (RequestEvent event : requestEvents) {
-      if (event.ip.equals(ipAddress) && event.date.after(thresholdDate)) {
-        // text level rules cause much less load, so count them accordingly
-        float modeFactor = event.mode == JLanguageTool.Mode.TEXTLEVEL_ONLY ? 0.1f : 1f;
+    Date thresholdDate = new Date(System.currentTimeMillis() - requestLimitPeriodInSeconds * 1000);
+    for (RequestEvent requestEvent : requestEvents) {
+      if (requestEvent.ip.equals(ipAddress) && requestEvent.date.after(thresholdDate)) {
         requestsByIp++;
-        requestSizeByIp += event.getSizeInBytes() * modeFactor;
-        if (event.fingerprint.equals(fingerprint)) {
-          requestsByFingerprint++;
-          requestSizeByFingerprint += event.getSizeInBytes() * modeFactor;
+        if (requestLimit > 0 && requestsByIp > requestLimit) {
+          logger.log(new DatabaseAccessLimitLogEntry("MaxRequestPerPeriod", server, null, null, null, null, "limit: " + requestLimit + " / " + requestLimitPeriodInSeconds + ", requests: "  + requestsByIp + ", ip: " + ipAddress));
+          throw new TooManyRequestsException("Request limit of " + requestLimit + " requests per " +
+                  requestLimitPeriodInSeconds + " seconds exceeded");
         }
-        if (requestLimit > 0 && requestsByFingerprint > requestLimit) {
-          String msg = "limit: " + requestLimit + " / " + requestLimitPeriodInSeconds + ", requests: "  + requestsByIp + ", ip: " + ipAddress + ", fingerprint: " + fingerprint;
-          logger.log(new DatabaseAccessLimitLogEntry("MaxRequestPerPeriodFingerprint", server, clientId, null, msg, referer, userAgent));
-          throw new TooManyRequestsException("Client request limit of " + requestLimit + " requests per " +
-            requestLimitPeriodInSeconds + " seconds exceeded"); }
-        if (requestLimit > 0 && requestsByIp > requestLimit * ipFingerprintFactor) {
-          String msg = "limit: " + requestLimit * ipFingerprintFactor + " / " + requestLimitPeriodInSeconds + ", requests: "  + requestsByIp + ", ip: " + ipAddress + ", fingerprint: " + fingerprint;
-          logger.log(new DatabaseAccessLimitLogEntry("MaxRequestPerPeriodIp", server, clientId, null, msg, referer, userAgent));
-          throw new TooManyRequestsException("IP request limit of " + requestLimit * ipFingerprintFactor + " requests per " +
-            requestLimitPeriodInSeconds + " seconds exceeded");
-        }
-        if (event.mode == JLanguageTool.Mode.TEXTLEVEL_ONLY) {
-          if (requestLimitInBytes > 0 && requestSizeByFingerprint > requestLimitInBytes) {
-            String msg = "limit in Mode.TEXTLEVEL_ONLY: " + requestLimitInBytes + " / " + requestLimitPeriodInSeconds + ", request size: "  + requestSizeByIp + ", ip: " + ipAddress + ", fingerprint: " + fingerprint;
-            logger.log(new DatabaseAccessLimitLogEntry("MaxRequestSizePerPeriodFingerprint", server, clientId, null, msg, referer, userAgent));
-            throw new TooManyRequestsException("Client request size limit of " + requestLimitInBytes + " bytes per " +
-              requestLimitPeriodInSeconds + " seconds exceeded in text-level checks");
-          }
-          if (requestLimitInBytes > 0 && requestSizeByIp > requestLimitInBytes * ipFingerprintFactor) {
-            String msg = "limit in Mode.TEXTLEVEL_ONLY: " + requestLimitInBytes * ipFingerprintFactor + " / " + requestLimitPeriodInSeconds + ", request size: "  + requestSizeByIp + ", ip: " + ipAddress + ", fingerprint: " + fingerprint;
-            logger.log(new DatabaseAccessLimitLogEntry("MaxRequestSizePerPeriodIp", server, clientId, null, msg, referer, userAgent));
-            throw new TooManyRequestsException("IP request size limit of " + requestLimitInBytes * ipFingerprintFactor + " bytes per " +
-              requestLimitPeriodInSeconds + " seconds exceeded in text-level checks");
+        requestSizeByIp += requestEvent.getSizeInBytes();
+        if (mode == JLanguageTool.Mode.TEXTLEVEL_ONLY) {
+          int tmpLimit = requestLimitInBytes * 10;
+          if (requestLimitInBytes > 0 && requestSizeByIp > tmpLimit) {
+            logger.log(new DatabaseAccessLimitLogEntry("MaxRequestSizePerPeriod", server, null, null, null, null, "limit: " + tmpLimit + " / " + requestLimitPeriodInSeconds + ", request size: "  + requestSizeByIp + ", ip: " + ipAddress));
+            throw new TooManyRequestsException("Request size limit of " + tmpLimit + " (requestLimitInBytes*10) bytes per " +
+                    requestLimitPeriodInSeconds + " seconds exceeded for text-level checks");
           }
         } else {
-          if (requestLimitInBytes > 0 && requestSizeByFingerprint > requestLimitInBytes) {
-            String msg = "limit: " + requestLimitInBytes + " / " + requestLimitPeriodInSeconds + ", request size: "  + requestSizeByIp + ", ip: " + ipAddress + ", fingerprint: " + fingerprint;
-            logger.log(new DatabaseAccessLimitLogEntry("MaxRequestSizePerPeriodFingerprint", server, clientId, null, msg, referer, userAgent));
-            throw new TooManyRequestsException("Client request size limit of " + requestLimitInBytes + " bytes per " +
-              requestLimitPeriodInSeconds + " seconds exceeded");
-          }
-          if (requestLimitInBytes > 0 && requestSizeByIp > requestLimitInBytes * ipFingerprintFactor) {
-            String msg = "limit: " + requestLimitInBytes * ipFingerprintFactor + " / " + requestLimitPeriodInSeconds + ", request size: "  + requestSizeByIp + ", ip: " + ipAddress + ", fingerprint: " + fingerprint;
-            logger.log(new DatabaseAccessLimitLogEntry("MaxRequestSizePerPeriodIp", server, clientId, null, msg, referer, userAgent));
-            throw new TooManyRequestsException("IP request size limit of " + requestLimitInBytes * ipFingerprintFactor + " bytes per " +
-              requestLimitPeriodInSeconds + " seconds exceeded");
+          if (requestLimitInBytes > 0 && requestSizeByIp > requestLimitInBytes) {
+            logger.log(new DatabaseAccessLimitLogEntry("MaxRequestSizePerPeriod", server, null, null, null, null, "limit: " + requestLimitInBytes + " / " + requestLimitPeriodInSeconds + ", request size: "  + requestSizeByIp + ", ip: " + ipAddress));
+            throw new TooManyRequestsException("Request size limit of " + requestLimitInBytes + " bytes per " +
+                    requestLimitPeriodInSeconds + " seconds exceeded");
           }
         }
       }
@@ -222,15 +142,11 @@ class RequestLimiter {
     private final String ip;
     private final Date date;
     private final int sizeInBytes;
-    private final String fingerprint;
-    private final JLanguageTool.Mode mode;
 
-    RequestEvent(String ip, Date date, int sizeInBytes, String fingerprint, JLanguageTool.Mode mode) {
+    RequestEvent(String ip, Date date, int sizeInBytes) {
       this.ip = ip;
       this.date = new Date(date.getTime());
       this.sizeInBytes = sizeInBytes;
-      this.fingerprint = fingerprint;
-      this.mode = mode;
     }
 
     protected Date getDate() {

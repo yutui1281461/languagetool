@@ -38,7 +38,7 @@ import org.languagetool.Language;
 public class ParagraphRepeatBeginningRule extends TextLevelRule {
 
   private final Language lang;
-  private static final Pattern QUOTES_REGEX = Pattern.compile("[’'\"„“”»«‚‘›‹()\\[\\]]");
+  private static final Pattern NON_WORD_REGEX = Pattern.compile("[’'\"„“”»«‚‘›‹()\\[\\]]");
 
   public ParagraphRepeatBeginningRule(ResourceBundle messages, Language lang) {
     super(messages);
@@ -63,24 +63,19 @@ public class ParagraphRepeatBeginningRule extends TextLevelRule {
   }
   
   private int numCharEqualBeginning(AnalyzedTokenReadings[] lastTokens, AnalyzedTokenReadings[] nextTokens) throws IOException {
-    if(lastTokens.length < 2 || nextTokens.length < 2 
-        || lastTokens[1].isWhitespace() || nextTokens[1].isWhitespace()) {
+    if(lastTokens.length < 2 || nextTokens.length < 2) {
       return 0;
     }
     int nToken = 1;
     String lastToken = lastTokens[nToken].getToken();
-    String nextToken = nextTokens[nToken].getToken();
-    if (QUOTES_REGEX.matcher(lastToken).matches() && lastToken.equals(nextToken)) {
+    if (NON_WORD_REGEX.matcher(lastToken).matches()) {
       if(lastTokens.length <= nToken + 1 || nextTokens.length <= nToken + 1) {
         return 0;
       }
       nToken++;
       lastToken = lastTokens[nToken].getToken();
-      nextToken = nextTokens[nToken].getToken();
     }
-    if(!Character.isLetter(lastToken.charAt(0))) {
-      return 0;
-    }
+    String nextToken = nextTokens[nToken].getToken();
     if (lastTokens.length > nToken + 1 && isArticle(lastTokens[nToken]) && lastToken.equals(nextToken)) {
       if(lastTokens.length <= nToken + 1 || nextTokens.length <= nToken + 1) {
         return 0;
@@ -89,13 +84,11 @@ public class ParagraphRepeatBeginningRule extends TextLevelRule {
       lastToken = lastTokens[nToken].getToken();
       nextToken = nextTokens[nToken].getToken();
     }
-    if(!Character.isLetter(lastToken.charAt(0))) {
-      return 0;
-    }
     if (lastToken.equals(nextToken)) {
       return lastTokens[nToken].getEndPos();
     }
     return 0;
+
   }
 
   @Override

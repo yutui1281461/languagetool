@@ -18,20 +18,20 @@
  */
 package org.languagetool.rules.de;
 
-import static org.junit.Assert.assertEquals;
-
-import java.io.IOException;
-
 import org.junit.Test;
 import org.languagetool.JLanguageTool;
 import org.languagetool.TestTools;
-import org.languagetool.language.GermanyGerman;
+import org.languagetool.language.German;
+
+import java.io.IOException;
+
+import static org.junit.Assert.assertEquals;
 
 public class UppercaseSentenceStartRuleTest {
 
   @Test
   public void testRule() throws IOException {
-    JLanguageTool lt = new JLanguageTool(new GermanyGerman());
+    JLanguageTool lt = new JLanguageTool(new German());
     TestTools.disableAllRulesExcept(lt, "UPPERCASE_SENTENCE_START");
     
     assertEquals(2, lt.check("etwas beginnen. und der auch nicht").size());

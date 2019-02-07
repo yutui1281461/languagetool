@@ -42,9 +42,14 @@ public class PatternTokenMatcher {
   public PatternTokenMatcher(PatternToken patternToken) {
     basePatternToken = patternToken;
     this.patternToken = basePatternToken;
+    resolveGroup();
+  }
+
+  private void resolveGroup() {
     if (basePatternToken.hasAndGroup()) {
       List<PatternToken> patternTokenAndGroup = basePatternToken.getAndGroup();
       andGroup = new ArrayList<>(patternTokenAndGroup.size());
+
       for (PatternToken el : patternTokenAndGroup) {
         PatternTokenMatcher matcher = new PatternTokenMatcher(el);
         andGroup.add(matcher);
@@ -53,11 +58,14 @@ public class PatternTokenMatcher {
   }
 
   public void resolveReference(int firstMatchToken,
-      AnalyzedTokenReadings[] tokens, Language language) throws IOException {
+      AnalyzedTokenReadings[] tokens, Language language)
+          throws IOException {
     if (basePatternToken.isReferenceElement()) {
-      int refPos = firstMatchToken + basePatternToken.getMatch().getTokenRef();
+      int refPos = firstMatchToken
+          + basePatternToken.getMatch().getTokenRef();
       if (refPos < tokens.length) {
-        patternToken = basePatternToken.compile(tokens[refPos], language.getSynthesizer());
+        patternToken = basePatternToken.compile(tokens[refPos],
+            language.getSynthesizer());
       }
     }
   }

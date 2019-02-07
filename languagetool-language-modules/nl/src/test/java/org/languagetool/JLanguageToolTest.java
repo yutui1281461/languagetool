@@ -30,10 +30,8 @@ public class JLanguageToolTest {
   @Test
   public void testDutch() throws IOException {
     final JLanguageTool tool = new JLanguageTool(new Dutch());
-    /* this is in the way, since I am using rules to experiment with possible disambiguation pattern, to check if they are good enough
     assertEquals(0, tool.check("Een test, die geen fouten mag geven.").size());
-    */
-    //assertEquals(1, tool.check("Dit is fout.!").size());
+    assertEquals(1, tool.check("Dit is fout.!").size());
     //test uppercasing rule:
     /*  
     matches = tool.check("De Afdeling Beheer kan het");
@@ -41,7 +39,7 @@ public class JLanguageToolTest {
     assertEquals("Als Afdeling geen deel uitmaakt van de naam, dan is juist:<suggestion>afdeling</suggestion>", matches.get(0).getMessage());
      */
     // Dutch rule has no effect with English error but they are spelling mistakes:
-    assertEquals(3, tool.check("I can give you more a detailed description.").size());
+    assertEquals(5, tool.check("I can give you more a detailed description.").size());
   }
   
 }

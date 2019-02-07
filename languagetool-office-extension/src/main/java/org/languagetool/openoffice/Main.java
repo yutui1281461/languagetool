@@ -71,17 +71,19 @@ public class Main extends WeakBase implements XJobExecutor,
 
   private static final ResourceBundle MESSAGES = JLanguageTool.getMessageBundle();
 
+  
   // LibreOffice (since 4.2.0) special tag for locale with variant 
   // e.g. language ="qlt" country="ES" variant="ca-ES-valencia":
   private static final String LIBREOFFICE_SPECIAL_LANGUAGE_TAG = "qlt";
 
   private final List<XLinguServiceEventListener> xEventListeners;
 
+  private Configuration config;
+
   // Rules disabled using the config dialog box rather than Spelling dialog box
   // or the context menu.
-  private Set<String> disabledRules = null;
+  private Set<String> disabledRules;
   private Set<String> disabledRulesUI;
-  private String lastPara = null;
 
   private XComponentContext xContext;
   
@@ -97,22 +99,17 @@ public class Main extends WeakBase implements XJobExecutor,
     documents = new MultiDocumentsHandler(xContext, getHomeDir(), CONFIG_FILE, MESSAGES, this);
   }
 
-  private Configuration prepareConfig() {
+  private void prepareConfig(Language lang) {
     try {
-      Configuration config = documents.getConfiguration();
-      if (config != null) {
-        disabledRules = config.getDisabledRuleIds();
-      }
+      config = new Configuration(getHomeDir(), CONFIG_FILE, lang);
+      disabledRules = config.getDisabledRuleIds();
       if (disabledRules == null) {
         disabledRules = new HashSet<>();
       }
       disabledRulesUI = new HashSet<>(disabledRules);
-      return config;
-
     } catch (Throwable t) {
       MessageHandler.showError(t);
     }
-    return null;
   }
 
   void changeContext(XComponentContext xCompContext) {
@@ -149,17 +146,9 @@ public class Main extends WeakBase implements XJobExecutor,
     try {
       int[] footnotePositions = getPropertyValues("FootnotePositions", propertyValues);  // since LO 4.3
       paRes = documents.getCheckResults(paraText, locale, paRes, footnotePositions);
-      if (disabledRules == null) {
-        prepareConfig();
-      }
       if(documents.doResetCheck()) {
         resetCheck();
         documents.optimizeReset();
-        lastPara = paraText;
-      } else if(lastPara != null && !paraText.equals(lastPara)) {
-        resetCheck();
-        documents.optimizeReset();
-        lastPara = null;
       }
     } catch (Throwable t) {
       MessageHandler.showError(t);
@@ -197,8 +186,8 @@ public class Main extends WeakBase implements XJobExecutor,
     if (lang == null) {
       return;
     }
-    Configuration config = prepareConfig();
-    ConfigThread configThread = new ConfigThread(documents.getLanguageTool(), lang, config, this);
+    prepareConfig(lang);
+    ConfigThread configThread = new ConfigThread(lang, config, this);
     configThread.start();
   }
 
@@ -300,7 +289,6 @@ public class Main extends WeakBase implements XJobExecutor,
    */
   void resetDocument() {
     if (resetCheck()) {
-      Configuration config = documents.getConfiguration();
       documents.setRecheck();
       disabledRules = config.getDisabledRuleIds();
       if (disabledRules == null) {
@@ -359,10 +347,6 @@ public class Main extends WeakBase implements XJobExecutor,
       } else if ("about".equals(sEvent)) {
         AboutDialogThread aboutThread = new AboutDialogThread(MESSAGES);
         aboutThread.start();
-      } else if ("switchOff".equals(sEvent)) {
-        if(documents.toggleSwitchedOff()) {
-          resetCheck();
-        }
       } else {
         MessageHandler.printToLogFile("Sorry, don't know what to do, sEvent = " + sEvent);
       }
@@ -437,12 +421,10 @@ public class Main extends WeakBase implements XJobExecutor,
   @Override
   public void ignoreRule(String ruleId, Locale locale) {
     /* TODO: config should be locale-dependent */
-    Configuration config = documents.getConfiguration();
     disabledRulesUI.add(ruleId);
     config.setDisabledRuleIds(disabledRulesUI);
     try {
       JLanguageTool langTool = documents.getLanguageTool();
-      documents.initCheck();
       config.saveConfiguration(langTool.getLanguage());
     } catch (Throwable t) {
       MessageHandler.showError(t);
@@ -458,11 +440,9 @@ public class Main extends WeakBase implements XJobExecutor,
    */
   @Override
   public void resetIgnoreRules() {
-    Configuration config = documents.getConfiguration();
     config.setDisabledRuleIds(disabledRules);
     try {
       JLanguageTool langTool = documents.getLanguageTool();
-      documents.initCheck();
       config.saveConfiguration(langTool.getLanguage());
     } catch (Throwable t) {
       MessageHandler.showError(t);
@@ -486,5 +466,6 @@ public class Main extends WeakBase implements XJobExecutor,
     documents.setContextOfClosedDoc(goneContext);
     goneContext.removeEventListener(this); 
   }
+
 
 }

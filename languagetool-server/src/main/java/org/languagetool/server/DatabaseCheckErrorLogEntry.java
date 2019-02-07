@@ -21,9 +21,9 @@
 
 package org.languagetool.server;
 
-import org.apache.commons.lang3.StringUtils;
 import org.languagetool.Language;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
@@ -54,20 +54,26 @@ public class DatabaseCheckErrorLogEntry extends DatabaseLogEntry {
   @Override
   public Map<Object, Object> getMapping() {
     HashMap<Object, Object> parameters = new HashMap<>();
-    parameters.put("type", StringUtils.abbreviate(type, 64));
-    parameters.put("date", ServerTools.getSQLDatetimeString(date));
+    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    parameters.put("type", type);
+    parameters.put("date", dateFormat.format(date.getTime()));
     parameters.put("server", server);
     parameters.put("client", client);
     parameters.put("user", user);
-    parameters.put("language", StringUtils.abbreviate(languageSet.getShortCodeWithCountryAndVariant(), 30));
-    parameters.put("language_detected", StringUtils.abbreviate(languageDetected.getShortCodeWithCountryAndVariant(), 30));
+    parameters.put("language_set", languageSet.getShortCodeWithCountryAndVariant());
+    parameters.put("language_detected", languageDetected.getShortCodeWithCountryAndVariant());
     parameters.put("text_length", textLength);
-    parameters.put("extra", StringUtils.abbreviate(extra, 256));
+    parameters.put("extra", extra);
     return parameters;
   }
 
   @Override
   public String getMappingIdentifier() {
     return "org.languagetool.server.LogMapper.checkError";
+  }
+
+  @Override
+  public void followup(Map<Object, Object> parameters) {
+    // nothing to be done
   }
 }

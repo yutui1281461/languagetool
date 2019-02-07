@@ -24,7 +24,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
-import java.util.Collections;
 
 import org.junit.Test;
 import org.languagetool.JLanguageTool;
@@ -39,7 +38,7 @@ public class MorfologikCanadianSpellerRuleTest extends AbstractEnglishSpellerRul
   @Test
   public void testSuggestions() throws IOException {
     Language language = new CanadianEnglish();
-    Rule rule = new MorfologikCanadianSpellerRule(TestTools.getMessages("en"), language, null, Collections.emptyList());
+    Rule rule = new MorfologikCanadianSpellerRule(TestTools.getMessages("en"), language, null);
     super.testNonVariantSpecificSuggestions(rule, language);
 
     JLanguageTool langTool = new JLanguageTool(language);
@@ -51,7 +50,7 @@ public class MorfologikCanadianSpellerRuleTest extends AbstractEnglishSpellerRul
   public void testMorfologikSpeller() throws IOException {
     CanadianEnglish language = new CanadianEnglish();
     MorfologikBritishSpellerRule rule =
-            new MorfologikBritishSpellerRule(TestTools.getMessages("en"), language, null, Collections.emptyList());
+            new MorfologikBritishSpellerRule(TestTools.getMessages("en"), language, null);
 
     JLanguageTool langTool = new JLanguageTool(language);
 
@@ -62,7 +61,6 @@ public class MorfologikCanadianSpellerRuleTest extends AbstractEnglishSpellerRul
     assertEquals(0, rule.match(langTool.getAnalyzedSentence("He doesn't know what to do.")).length);
     assertEquals(0, rule.match(langTool.getAnalyzedSentence(",")).length);
     assertEquals(0, rule.match(langTool.getAnalyzedSentence("123454")).length);
-    assertEquals(0, rule.match(langTool.getAnalyzedSentence("I like my emoji (😥)...")).length);
 
     //incorrect sentences:
 
@@ -71,7 +69,7 @@ public class MorfologikCanadianSpellerRuleTest extends AbstractEnglishSpellerRul
     assertEquals(1, matches.length);
     assertEquals(0, matches[0].getFromPos());
     assertEquals(5, matches[0].getToPos());
-    assertTrue(matches[0].getSuggestedReplacements().contains("arbour"));
+    assertEquals("arbour", matches[0].getSuggestedReplacements().get(0));
 
     assertEquals(1, rule.match(langTool.getAnalyzedSentence("aõh")).length);
     assertEquals(0, rule.match(langTool.getAnalyzedSentence("a")).length);

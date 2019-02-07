@@ -86,9 +86,7 @@ public class AnnotatedText {
   public String getTextWithMarkup() {
     StringBuilder sb = new StringBuilder();
     for (TextPart part : parts) {
-      if (part.getType() != TextPart.Type.FAKE_CONTENT) {
-        sb.append(part.getPart());
-      }
+      sb.append(part.getPart());
     }
     return sb.toString();
   }

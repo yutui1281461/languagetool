@@ -28,5 +28,6 @@ public class TagalogWordTokenizer extends WordTokenizer {
   @Override
   public String getTokenizingCharacters() {
     return super.getTokenizingCharacters() + "-";
-  } 
+  }
+  
 }
