@@ -171,6 +171,7 @@ bestializing
 bingeable
 biohacking
 bioinformatics
+biomedicine
 biometric
 biosynthesize
 biosynthesized
@@ -383,6 +384,9 @@ cyanize
 cyanized
 cyanizes
 cyanizing
+cyberattack
+cyberespionage
+cybersecurity
 dacquoise
 dacquoises
 damageability
@@ -655,6 +659,7 @@ dolomitized
 dolomitizes
 dolomitizing
 dramatizable
+drawdown
 dualize
 dualized
 dualizes
@@ -856,6 +861,7 @@ Gothicized
 Gothicizes
 Gothicizing
 grayscale
+habeas corpus
 Hamas
 hangry
 harmonizable
@@ -1057,6 +1063,8 @@ keratinize
 keratinized
 keratinizes
 keratinizing
+Klansmen
+Ku Klux Klan
 labialization
 laicization
 laicize
@@ -1085,6 +1093,8 @@ lexicalizes
 lexicalizing
 liberalizer
 liberalizers
+licensure
+licensures
 ligations
 linearize
 linearized
@@ -1099,6 +1109,7 @@ logicize
 logicized
 logicizes
 logicizing
+lookups
 luteinization
 lyophilize
 lyophilized
@@ -1712,6 +1723,7 @@ proletarianize
 proletarianized
 proletarianizes
 proletarianizing
+prosecutorial
 proselytization
 provincialization
 Prussianization
@@ -1744,6 +1756,7 @@ racializes
 racializing
 raisable
 raiseable
+Ramstein
 rasterize
 rasterized
 rasterizes
@@ -2252,6 +2265,7 @@ teraliter
 teraliters
 terameter
 terameters
+tergiversation
 territorialize
 territorialized
 territorializes
@@ -2267,6 +2281,7 @@ tetanize
 tetanized
 tetanizes
 tetanizing
+tête-à-tête
 Teutonization
 Teutonize
 Teutonized

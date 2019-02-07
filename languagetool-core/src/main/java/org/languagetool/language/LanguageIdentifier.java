@@ -60,7 +60,10 @@ public class LanguageIdentifier {
   // languages that we offer profiles for as they are not yet supported by language-detector:
   private static final List<String> externalLangCodes = Arrays.asList("eo");
   // fall back to checking against list of common words if fasttext probability is lower than this:
-  private static final float THRESHOLD = 0.9f;
+  private static final float THRESHOLD = 0.9f;      // 7.656
+  //private static final float THRESHOLD = 0.95f;   // 7.39
+  //private static final float THRESHOLD = 0.975f;  // 7.228 
+  //private static final float THRESHOLD = 1.0f;    // 7.0
 
   private final LanguageDetector languageDetector;
   private final TextObjectFactory textObjectFactory;
@@ -164,6 +167,19 @@ public class LanguageIdentifier {
   
   /**
    * @return language or {@code null} if language could not be identified
+   */
+  @Nullable
+  @Experimental
+  DetectedLanguage detectLanguageWithDetails(String text) {
+    DetectedLanguage detectedLanguage = detectLanguage(text, Collections.emptyList());
+    if (detectedLanguage == null) {
+      return null;
+    }
+    return detectedLanguage;
+  }
+  
+  /**
+   * @return language or {@code null} if language could not be identified
    * @param noopLangs list of codes that are detected but will lead to the NoopLanguage that has no rules
    * @since 4.4 (new parameter noopLangs, changed return type to DetectedLanguage)
    */
@@ -180,6 +196,7 @@ public class LanguageIdentifier {
           //System.out.println(text + " ->" + result.getValue().floatValue() + " " + result.getKey());
           CommonWords commonWords = new CommonWords();
           Map<Language, Integer> lang2Count = commonWords.getKnownWordsPerLanguage(text);
+          //System.out.println("-> "+ lang2Count);
           for (Map.Entry<Language, Integer> entry : lang2Count.entrySet()) {
             String langCode = entry.getKey().getShortCode();
             if (scores.containsKey(langCode)) {
@@ -195,6 +212,8 @@ public class LanguageIdentifier {
         // wrong for short text (e.g. 0.99 for a test that's misclassified). Don't
         // use 1.0 because we can never be totally sure...
         double newScore = 0.99 / (30.0 / Math.min(text.length(), 30));
+        //System.out.println("fasttext  : " + result);
+        //System.out.println("newScore  : " + newScore);
         result = new AbstractMap.SimpleImmutableEntry<>(result.getKey(), newScore);
       } catch (Exception e) {
         fasttextEnabled = false;

@@ -85,12 +85,16 @@ public class HTTPServerConfig {
   protected List<String> blockedReferrers = new ArrayList<>();
   protected String hiddenMatchesServer;
   protected int hiddenMatchesServerTimeout;
+  protected int hiddenMatchesServerFailTimeout;
   protected List<Language> hiddenMatchesLanguages = new ArrayList<>();
   protected String dbDriver = null;
   protected String dbUrl = null;
   protected String dbUsername = null;
   protected String dbPassword = null;
   protected boolean dbLogging;
+  protected boolean skipLoggingRuleMatches = false;
+
+  protected int slowRuleLoggingThreshold = -1; // threshold in milliseconds, used by SlowRuleLogger; < 0 - disabled
 
   protected String abTest = null;
   /**
@@ -248,6 +252,7 @@ public class HTTPServerConfig {
         blockedReferrers = Arrays.asList(getOptionalProperty(props, "blockedReferrers", "").split(",\\s*"));
         hiddenMatchesServer = getOptionalProperty(props, "hiddenMatchesServer", null);
         hiddenMatchesServerTimeout = Integer.parseInt(getOptionalProperty(props, "hiddenMatchesServerTimeout", "1000"));
+        hiddenMatchesServerFailTimeout = Integer.parseInt(getOptionalProperty(props, "hiddenMatchesServerFailTimeout", "10000"));
         String langCodes = getOptionalProperty(props, "hiddenMatchesLanguages", "");
         for (String code : langCodes.split(",\\s*")) {
           if (!code.isEmpty()) {
@@ -259,9 +264,12 @@ public class HTTPServerConfig {
         dbUsername = getOptionalProperty(props, "dbUsername", null);
         dbPassword = getOptionalProperty(props, "dbPassword", null);
         dbLogging = Boolean.valueOf(getOptionalProperty(props, "dbLogging", "false"));
+        skipLoggingRuleMatches = Boolean.valueOf(getOptionalProperty(props, "skipLoggingRuleMatches", "false"));
         if (dbLogging && (dbDriver == null || dbUrl == null || dbUsername == null || dbPassword == null)) {
           throw new IllegalArgumentException("dbLogging can only be true if dbDriver, dbUrl, dbUsername, and dbPassword are all set");
         }
+        slowRuleLoggingThreshold = Integer.valueOf(getOptionalProperty(props,
+          "slowRuleLoggingThreshold", "-1"));
 
         setAbTest(getOptionalProperty(props, "abTest", null));
       }
@@ -672,6 +680,15 @@ public class HTTPServerConfig {
   }
 
   /**
+   * Period to skip requests to hidden matches server after a timeout (in milliseconds)
+   * @since 4.5
+   */
+  @Experimental
+  int getHiddenMatchesServerFailTimeout() {
+    return hiddenMatchesServerFailTimeout;
+  }
+
+  /**
    * Languages for which {@link #getHiddenMatchesServer()} will be queried.
    * @since 4.0
    */
@@ -776,6 +793,23 @@ public class HTTPServerConfig {
   @Experimental
   boolean getDatabaseLogging() {
     return this.dbLogging;
+  }
+
+  /**
+   * @since 4.5
+   * @return threshold for rule computation time until a warning gets logged, in milliseconds
+   */
+  @Experimental
+  public int getSlowRuleLoggingThreshold() {
+    return slowRuleLoggingThreshold;
+  }
+
+  /**
+   * @since 4.5
+   */
+  @Experimental
+  boolean isSkipLoggingRuleMatches() {
+    return this.skipLoggingRuleMatches;
   }
 
 

@@ -328,6 +328,7 @@ public class GermanSpellerRuleTest {
     assertFirstSuggestion("verheielte", "verheilte", rule, lt);
     assertFirstSuggestion("ausgewönlich", "außergewöhnlich", rule, lt);
     assertFirstSuggestion("unausweichbaren", "unausweichlichen", rule, lt);
+    assertFirstSuggestion("Dampfschiffahrtskapitän", "Dampfschifffahrtskapitän", rule, lt);
   }
 
   @Test
@@ -439,7 +440,7 @@ public class GermanSpellerRuleTest {
     assertThat(ruleSwiss.getSuggestions("Ligafußboll").toString(), is("[Ligafussball, Ligafussballs]"));
     assertThat(ruleSwiss.getSuggestions("konfliktbereid").toString(), is("[konfliktbereit, konfliktbereite]"));
     assertThat(ruleSwiss.getSuggestions("konfliktbereitel").toString(),
-               is("[konfliktbereiten, konfliktbereite, konfliktbereiter, konfliktbereitem, konfliktbereites, konfliktbereit]"));
+               is("[konfliktbereite, konfliktbereiten, konfliktbereitem, konfliktbereiter, konfliktbereites, konfliktbereit]"));
   }
 
   @Test
@@ -623,7 +624,7 @@ public class GermanSpellerRuleTest {
     assertCorrectionsByOrder(rule, "heisst", "heißt");  // "heißt" should be first
     assertCorrectionsByOrder(rule, "heissen", "heißen");
     assertCorrectionsByOrder(rule, "müßte", "musste", "müsste");
-    assertCorrectionsByOrder(rule, "schmohren", "Lehmohren", "schmoren");
+    assertCorrectionsByOrder(rule, "schmohren", "schmoren", "Lehmohren");
     assertCorrectionsByOrder(rule, "Fänomen", "Phänomen");
     assertCorrectionsByOrder(rule, "homofob", "homophob");
     assertCorrectionsByOrder(rule, "ueber", "über");
@@ -732,5 +733,4 @@ public class GermanSpellerRuleTest {
       i++;
     }
   }
-  
 }
