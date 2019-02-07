@@ -118,14 +118,14 @@ public class AgreementRule extends Rule {
       new PatternTokenBuilder().posRegex("ADJ:AKK:.*").build()  // "Ein für viele wichtiges Anliegen."
     ),
     Arrays.asList(
-      new PatternTokenBuilder().tokenRegex("machen|jagen").matchInflectedForms().build(),
+      new PatternTokenBuilder().tokenRegex("flößen|machen|jagen").matchInflectedForms().build(),
       new PatternTokenBuilder().token("einem").build(),
       new PatternTokenBuilder().token("Angst").build()  // "Dinge, die/ Etwas, das einem Angst macht"
     ),
     Arrays.asList(
       new PatternTokenBuilder().token("einem").build(),
       new PatternTokenBuilder().token("Angst").build(),  // "Was einem Angst macht"
-      new PatternTokenBuilder().tokenRegex("machen|einjagen").matchInflectedForms().build()
+      new PatternTokenBuilder().tokenRegex("machen|ein(flößen|jagen)").matchInflectedForms().build()
     ),
     Arrays.asList(
       new PatternTokenBuilder().token("einem").build(),
@@ -136,6 +136,11 @@ public class AgreementRule extends Rule {
       new PatternTokenBuilder().token("kein").build(),
       new PatternTokenBuilder().token("schöner").build(),
       new PatternTokenBuilder().token("Land").build()  // https://de.wikipedia.org/wiki/Kein_sch%C3%B6ner_Land
+    ),
+    Arrays.asList(
+      new PatternTokenBuilder().tokenRegex("die|der|das").build(),
+      new PatternTokenBuilder().tokenRegex("Anfang|Ende").build(),
+      new PatternTokenBuilder().tokenRegex("Januar|Jänner|Februar|März|April|Mai|Ju[ln]i|August|September|Oktober|November|Dezember|[12][0-9]{3}").build()
     ),
     Arrays.asList(
       new PatternTokenBuilder().pos(JLanguageTool.SENTENCE_START_TAGNAME).build(),

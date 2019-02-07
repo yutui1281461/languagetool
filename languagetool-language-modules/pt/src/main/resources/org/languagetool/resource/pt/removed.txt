@@ -4,6 +4,9 @@
 # Format: fullform baseform postags (tab separated)
 #
 a	a	NCMS000
+# aceita/o: forma rara
+aceito	aceito	AQ0MS0
+aceita	aceito	AQ0FS0
 álbum	álbum	NCFS000
 álbuns	álbum	NCFP000
 antecedência	antecedência	NCMS000
@@ -138,6 +141,7 @@ regata	regata	NCMS000
 regatas	regata	NCMP000
 rodrigues	rodrigar	VMM02S0
 rodrigues	rodrigar	VMSP2S0
+Ruanda	Ruanda	NPFSG00
 # são	são	AQ0MS0
 # são	são	NCMS000
 # São - Both forms are correct but will be dealt by disambiguation later

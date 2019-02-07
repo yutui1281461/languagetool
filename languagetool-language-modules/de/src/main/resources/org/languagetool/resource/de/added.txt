@@ -6471,11 +6471,9 @@ rege	rege	ADJ:NOM:PLU:MAS:GRU:SOL
 rege	rege	ADJ:AKK:PLU:NEU:GRU:SOL
 rege	rege	ADJ:NOM:PLU:NEU:GRU:SOL
 Beamter	Beamte	SUB:NOM:SIN:MAS
-Beamte	Beamte	SUB:NOM:PLU:MAS
 Beamten	Beamte	SUB:NOM:PLU:MAS
 Beamten	Beamte	SUB:GEN:PLU:MAS
 Beamten	Beamte	SUB:DAT:PLU:MAS
-Beamte	Beamte	SUB:AKK:PLU:MAS
 Beamten	Beamte	SUB:AKK:PLU:MAS
 manchen	manch	PRO:IND:GEN:SIN:MAS:B/S
 manchen	manch	PRO:IND:GEN:SIN:NEU:B/S
@@ -7854,3 +7852,15 @@ Securitys	Security	SUB:AKK:PLU:FEM
 Securitys	Security	SUB:DAT:PLU:FEM
 Securitys	Security	SUB:GEN:PLU:FEM
 Securitys	Security	SUB:NOM:PLU:FEM
+Damenumkleiden	Damenumkleide	SUB:AKK:PLU:FEM:INF
+Damenumkleiden	Damenumkleide	SUB:DAT:PLU:FEM:INF
+Damenumkleiden	Damenumkleide	SUB:GEN:PLU:FEM:INF
+Damenumkleiden	Damenumkleide	SUB:NOM:PLU:FEM:INF
+Herrenumkleiden	Herrenumkleide	SUB:AKK:PLU:FEM:INF
+Herrenumkleiden	Herrenumkleide	SUB:DAT:PLU:FEM:INF
+Herrenumkleiden	Herrenumkleide	SUB:GEN:PLU:FEM:INF
+Herrenumkleiden	Herrenumkleide	SUB:NOM:PLU:FEM:INF
+Umkleiden	Umkleide	SUB:AKK:PLU:FEM:INF
+Umkleiden	Umkleide	SUB:DAT:PLU:FEM:INF
+Umkleiden	Umkleide	SUB:GEN:PLU:FEM:INF
+Umkleiden	Umkleide	SUB:NOM:PLU:FEM:INF

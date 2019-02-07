@@ -13,6 +13,8 @@ Brothers
 Cantor
 Cantor-Medaille
 Challenge
+Cochrane
+Corporation
 De-luxe-*
 Do-it-yourself
 Dual-Use-*
@@ -21,6 +23,7 @@ EVN
 Fair-Trade-*
 Groucho
 Gustaf
+Hadamard-*
 High-End-*
 Jane
 Jimi
@@ -46,10 +49,10 @@ Selbert
 Stand-alone-*
 Star-Wars-*
 Til
+Toffoli-*
 Tonner
 Tonners
 Unitymedia
-Weisband
 wöchige
 wöchigem
 wöchigen

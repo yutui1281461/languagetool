@@ -28,6 +28,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.*;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
@@ -115,9 +116,14 @@ public class HunspellRule extends SpellingCheckRule {
             len, len + word.length(),
             messages.getString("spelling"),
             messages.getString("desc_spelling_short"));
+        ruleMatch.setType(RuleMatch.Type.UnknownWord);
         if (userConfig == null || userConfig.getMaxSpellingSuggestions() == 0 || ruleMatches.size() <= userConfig.getMaxSpellingSuggestions()) {
           List<String> suggestions = getSuggestions(word);
           List<String> additionalTopSuggestions = getAdditionalTopSuggestions(suggestions, word);
+          if (additionalTopSuggestions.size() == 0 && word.endsWith(".")) {
+            additionalTopSuggestions = getAdditionalTopSuggestions(suggestions, word.substring(0, word.length()-1)).
+                    stream().map(k -> k + ".").collect(Collectors.toList());
+          }
           Collections.reverse(additionalTopSuggestions);
           for (String additionalTopSuggestion : additionalTopSuggestions) {
             if (!word.equals(additionalTopSuggestion)) {
