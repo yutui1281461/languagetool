@@ -89,6 +89,7 @@ antineutrino
 antineutrinos
 antiproton
 antiprotons
+ANOVA
 aphorize
 aphorized
 aphorizes
@@ -909,6 +910,7 @@ invariance
 involvedness
 iOS
 iPhone
+iPhones
 ipso facto
 irrecusably
 irreducibility
@@ -981,6 +983,7 @@ kilovolts
 kiloweber
 kilowebers
 Kirklees
+knifelike
 kombucha
 Kremenchuk
 Kropyvnytskyi
@@ -2002,6 +2005,8 @@ Wychavon
 Wycombe
 XMetaL
 XMLmind
+Yazidi
+Yezidi
 yoctoampere
 yoctoamperes
 yoctobecquerel

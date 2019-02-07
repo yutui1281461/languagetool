@@ -142,7 +142,7 @@ abstract class TextChecker {
       for (String langCode : altLangParams) {
         Language altLang = Languages.getLanguageForShortCode(langCode);
         altLanguages.add(altLang);
-        if (altLang.hasVariant()) {
+        if (altLang.hasVariant() && !altLang.isVariant()) {
           throw new IllegalArgumentException("You specified altLanguage '" + langCode + "', but for this language you need to specify a variant, e.g. 'en-GB' instead of just 'en'");
         }
       }
@@ -173,7 +173,8 @@ abstract class TextChecker {
       if (parameters.containsKey("textSessionId")) {
         textSessionId = Long.valueOf(parameters.get("textSessionId"));
       }
-    } catch(NumberFormatException ignored) {
+    } catch (NumberFormatException ex) {
+      print("Could not parse textSessionId '" + parameters.get("textSessionId") + "' as long: " + ex.getMessage());
     }
     int textSize = aText.getPlainText().length();
 
@@ -218,7 +219,7 @@ abstract class TextChecker {
         Path loadFile = Paths.get("/proc/loadavg");  // works in Linux only(?)
         String loadInfo = loadFile.toFile().exists() ? Files.readAllLines(loadFile).toString() : "(unknown)";
         if (errorRequestLimiter != null) {
-          errorRequestLimiter.logAccess(remoteAddress);
+          errorRequestLimiter.logAccess(remoteAddress, httpExchange.getRequestHeaders());
         }
         String message = "Text checking took longer than allowed maximum of " + limits.getMaxCheckTimeMillis() +
                          " milliseconds (cancelled: " + cancelled +
@@ -226,6 +227,7 @@ abstract class TextChecker {
                          ", detected: " + detLang +
                          ", #" + count +
                          ", " + aText.getPlainText().length() + " characters of text" +
+                         ", mode: " + mode.toString().toLowerCase() +
                          ", h: " + reqCounter.getHandleCount() + ", r: " + reqCounter.getRequestCount() + ", system load: " + loadInfo + ")";
         if (params.allowIncompleteResults) {
           print(message + " - returning " + ruleMatchesSoFar.size() + " matches found so far");
@@ -276,8 +278,8 @@ abstract class TextChecker {
             + matches.size() + " matches, "
             + computationTime + "ms, agent:" + agent
             + ", " + messageSent + ", q:" + (workQueue != null ? workQueue.size() : "?")
-            + ", h:" + reqCounter.getHandleCount() + ", distinctH:" + reqCounter.getDistinctIps()
-            + ", r:" + reqCounter.getRequestCount());
+            + ", h:" + reqCounter.getHandleCount() + ", dH:" + reqCounter.getDistinctIps()
+            + ", m:" + mode.toString().toLowerCase());
 
     int matchCount = matches.size();
     DatabaseCheckLogEntry logEntry = new DatabaseCheckLogEntry(userId, agentId, logServerId, textSize, matchCount,

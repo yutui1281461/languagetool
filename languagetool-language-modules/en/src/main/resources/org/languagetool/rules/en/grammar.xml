@@ -2047,14 +2047,26 @@ USA
         </rulegroup>
         <rule id="NUT_NOT" name="nut (not)">
             <antipattern>
+                <token postag="NN.*" postag_regexp="yes"></token>
+                <token regexp="yes">['´`]</token>
+                <token>s</token>
+                <token>nut</token>
+            </antipattern>
+            <antipattern>
                 <token regexp="yes">areca|beech|betel|brazil|cashew|kola|macadamia|monkey|palm|barrel|cage|clip-on|collar|coupling|flange|hex|split|wing</token><!-- Only a subset that are unlikely to cause false negatives. -->
                 <token>nut</token>
+            </antipattern>
+            <antipattern>
+                <token postag="DT"></token>
+                <token postag="JJ.?" postag_regexp="yes" min="0"></token>
+                <token>nut</token>
+                <token postag="NN.*|IN" postag_regexp="yes"></token>
             </antipattern>
             <pattern>
                 <marker>
                     <token>nut</token>
                 </marker>
-                <token postag="(RB|JJ|NN|NN:.*)" postag_regexp="yes"><exception inflected="yes" regexp="yes">case|tree|job|butter|mixture|flour|bread|oil|shell|cracker|allergy|cake</exception></token>
+                <token postag="(RB|JJ|NN|NN:.*)" postag_regexp="yes"><exception inflected="yes" regexp="yes">the|case|tree|job|butter|mixture|flour|bread|oil|shell|cracker|allergy|cake|may|can</exception></token>
             </pattern>
             <message>Did you mean <suggestion>not</suggestion>?</message>
             <short>Possible typo</short>
@@ -2066,6 +2078,8 @@ USA
             <example>Since 2007, <marker>Brazil nut</marker> production in the area has increased 20%.</example>
             <example>This new <marker>monkey nut</marker> sampling system is excellent.</example>
             <example>The <marker>barrel nut</marker> test device caused problems.</example>
+            <example>It was to be expected … but he reckoned that the faucet’s nut needed only one more turn.</example>
+            <example>To maintain a high nut quality...</example>
         </rule>
         <rule id="AND_SO_ONE" name="and so one (on)">
             <pattern>
@@ -6823,6 +6837,11 @@ USA
             <example correction="answer">Please <marker>answers</marker> quickly!</example>
         </rule>
         <rule id="BE_WILL" name="will follows be ('he is would')">
+            <antipattern>
+                <token>those</token>
+                <token>that</token>
+                <token regexp="yes">are|were</token>
+            </antipattern>
             <pattern>
                 <token postag="W(RB|P)" postag_regexp="yes"/>
                 <marker>
@@ -6832,6 +6851,8 @@ USA
             </pattern>
             <message>Please check whether one of these words is redundant.</message>
             <example correction="">How <marker>is would</marker> this approach be useful?</example>
+            <example>How <marker>would</marker> this approach be useful?</example>
+            <example>Vehicles should not be parked at these locations and those that <marker>are will</marker> be ticketed and subject to being towed.</example>
         </rule>
         <rule id="CAN_ABLE_TO" name="can able to (can)">
             <pattern>
@@ -7804,7 +7825,7 @@ USA
                     <token>not</token>
                     <token>need</token>
                     <marker>
-                        <token postag='VB'><exception regexp='yes'>proof|fake|help</exception></token>
+                        <token postag='VB'><exception regexp='yes'>proof|fake|help|luck</exception></token>
                     </marker>
                 </pattern>
                 <message>Did you mean <suggestion>to <match no="4"/></suggestion>?</message>
@@ -7817,7 +7838,7 @@ USA
                     <token>t</token>
                     <token>need</token>
                     <marker>
-                        <token postag='VB'><exception regexp='yes'>proof|fake|help</exception></token>
+                        <token postag='VB'><exception regexp='yes'>proof|fake|help|luck</exception></token>
                     </marker>
                 </pattern>
                 <message>Did you mean <suggestion>to <match no="5"/></suggestion>?</message>
@@ -7972,7 +7993,7 @@ USA
                 <pattern>
                     <token inflected="yes" regexp="yes">afford|choose|deserve|pretend|str(iv|uggl)e|learn</token>
                     <marker>
-                        <token postag="VB"><exception postag="JJR?" postag_regexp="yes"/><exception>reward</exception></token>
+                        <token postag="VB"><exception postag="JJR?|NN.*" postag_regexp="yes"/><exception>reward</exception></token>
                     </marker>
                 </pattern>
                 <message>This verb is used with the infinitive: <suggestion>to <match no="2" postag="VB"/></suggestion></message>
@@ -7983,6 +8004,8 @@ USA
                 <example>...that gorillas are intelligent enough to learn sign language.</example>
                 <example>I choose uniform objects.</example>
                 <example>I failed him and he deserved better.</example>
+                <example>These carefully chosen marketing images ...</example>
+                <example>Old people deserve respect.</example>
             </rule>
             <rule>
                 <pattern>
@@ -10819,9 +10842,9 @@ USA
                 <pattern>
                     <marker>
                         <token>to</token>
-                        <token postag_regexp="yes" postag="VB[DN]"><exception postag="VB|NN.*" postag_regexp="yes"/></token>
+                        <token postag_regexp="yes" postag="VB[DN]"><exception postag="VB[PS]?" postag_regexp="yes"/></token>
                     </marker>
-                    <token postag="DT"/>
+                    <token postag="DT"><exception>that</exception></token>
                 </pattern>
                 <message>Did you mean <suggestion>\1 <match no="2" postag="VB"/></suggestion>?</message>
                 <example correction="to rename">I've decided <marker>to renamed</marker> the project.</example>
@@ -10829,6 +10852,22 @@ USA
                 <example>Refer all servicing to qualified service personnel.</example>
                 <example>They vary in their shape from round to flattened.</example>
                 <example>The last person I told my idea to thought I was nuts.</example>
+                <example correction="to win">What is needed <marker>to won</marker> the ticket?</example>
+                <example>The students we talked to said that Tom is easy to get along with.</example>
+            </rule>
+            <rule>
+                <pattern>
+                    <marker>
+                        <token>to</token>
+                        <token postag_regexp="yes" postag="VB[DN]"><exception postag="VB[PS]?|JJ|NN:UN" postag_regexp="yes"/></token>
+                    </marker>
+                    <token postag="SENT_END"></token>
+                </pattern>
+                <message>Did you mean <suggestion>\1 <match no="2" postag="VB"/></suggestion>?</message>
+                <example correction="to buy">I've decided <marker>to bought</marker>.</example>
+                <example>Arabic is written from right to left.</example>
+                <example correction="to notice">Tom was the only one who seemed <marker>to noticed</marker>.</example>
+                <example>Desire is understood to be prior to thought.</example>
             </rule>
         </rulegroup>
         <rulegroup id="MANY_FEW_UNCOUNTABLE" name="'many/few' + uncountable noun, e.g. 'many (much) food'">
@@ -14256,6 +14295,36 @@ USA
                 <example correction="tips"><marker>tip</marker> and tricks</example>
             </rule>
         </rulegroup>
+        <rulegroup id="AD_AND" name="ad (and)">
+            <rule>
+                <pattern>
+                    <token postag="JJ"></token>
+                    <token>,</token>
+                    <token postag="JJ"></token>
+                    <marker>
+                        <token>ad</token>
+                    </marker>
+                    <token postag="JJ"></token>
+                </pattern>
+                <message>Did you mean <suggestion>and</suggestion>?</message>
+                <short>Possible typo</short>
+                <example correction="and">They discussed the environmental, economic <marker>ad</marker> social aspects.</example>
+            </rule>
+        </rulegroup>
+        <rulegroup id="GOOD_GOOF" name="goof (good)">
+            <rule>
+                <pattern case_sensitive="yes">
+                    <token inflected="yes" regexp="yes">be|have</token>
+                    <token min="0" regexp="yes">as|not</token>
+                    <marker>
+                        <token>goof</token>
+                    </marker>
+                </pattern>
+                <message>Did you mean <suggestion>good</suggestion>?</message>
+                <short>Possible typo</short>
+                <example correction="good">It wasn't the best game, but it was <marker>goof</marker>.</example>
+            </rule>
+        </rulegroup>
         <rulegroup id="SENTENCE_FRAGMENT" name="Sentence is a fragment">
             <url>http://www.chompchomp.com/rules/fragrules.htm</url>
             <!--rule R0.1A Single word list, likely to start a fragment -->
@@ -14925,7 +14994,7 @@ USA
                 <example>What impresses me the most about China is Chinese food.</example>
             </rule>
         </rulegroup>
-        <rule id="BE_I_BE_GERUND" name="'BE I BE GERUND'"><!-- https://github.com/languagetool-org/languagetool/issues/754 -->
+        <rule id="BE_I_BE_GERUND" name="'was I am doing' (etc.)"><!-- https://github.com/languagetool-org/languagetool/issues/754 -->
             <pattern>
                 <token inflected="yes">be</token>
                 <token>I</token>
@@ -18045,7 +18114,21 @@ USA
                     <token>in</token>
                     <token>case</token>
                 </antipattern>
-                 <pattern>
+                <antipattern>
+                     <token postag='SENT_START'></token>
+                     <token postag='IN'></token>
+                     <token/>
+                     <token regexp="yes" case_sensitive="yes">I|you|s?he|it|we|they</token>
+                     <token postag='IN'></token>
+                </antipattern>
+                <antipattern>
+                     <token postag='SENT_START'></token>
+                     <token postag='IN'></token>
+                     <token postag='VBG'/>
+                     <token>it</token>
+                     <token>,</token>
+                </antipattern>
+                <pattern>
                      <token postag='SENT_START'></token>
                      <token postag='IN'></token>
                      <marker>
@@ -18059,6 +18142,8 @@ USA
                  <example correction='years, I'>For <marker>years I</marker> have been travelling.</example>
                  <example>At least they believed me.</example>
                  <example>To see you is always a great pleasure.</example>
+                 <example>While setting it up correctly, he heard some strange noises.</example>
+                 <example>After circling it, he knew that they were dealing with a WW2-era explosive.</example>
             </rule>
         </rulegroup>
         <rulegroup id="INTERJECTIONS_PUNCTUATION" name="Missing comma after introductory phrase">
@@ -19079,7 +19164,13 @@ USA
                     <token>far</token>
                 </antipattern>
                 <antipattern>
-                    <marker><token>however</token></marker>
+                    <token postag="SENT_START"></token>
+                    <token/>
+                    <token postag="JJ"/>
+                    <token>,</token>
+                </antipattern>
+                <antipattern case_sensitive="yes">
+                    <token>However</token>
                     <token postag="JJ"/>
                 </antipattern>
                 <antipattern>
@@ -19129,6 +19220,7 @@ USA
                 <example>Alas! Her heart belonged to another.</example>
                 <example>Further to this previous point, it is difficult to fully respect a high-ranking business official if their grammar isn’t up to par.</example>
                 <example>Thus far, the tests are in agreement with the observations made.</example>
+                <example>Finally outside, she caused a bit of shock amongst the Assisians.</example>
             </rule>
             <rule>
                 <pattern>
@@ -23983,6 +24075,18 @@ USA
                 <message>Did you mean <suggestion>three</suggestion>?</message>
                 <short>Possible typo</short>
                 <example correction="three">I've lived in Barcelona for <marker>tree</marker> years.</example>
+            </rule>
+        </rulegroup>
+        <rulegroup id="NEEDLES_NEEDLESS" name="needles (needless)">
+            <rule>
+                <pattern>
+                    <marker><token>needles</token></marker>
+                    <token>to</token>
+                    <token regexp="yes">add|mention|say</token>
+                </pattern>
+                <message>Did you mean <suggestion>\1s</suggestion>?</message>
+                <short>Possible typo</short>
+                <example correction="Needless"><marker>Needles</marker> to say, she liked it.</example>
             </rule>
         </rulegroup>
         <rule id="ACCUSED_OF_A_CHARGE_CHARGED_WITH" name="accused of a charge (charged with)">

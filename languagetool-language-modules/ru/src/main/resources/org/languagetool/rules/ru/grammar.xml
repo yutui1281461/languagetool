@@ -8000,13 +8000,16 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA
         </rule>
         
         <rule default="on" id="Verb_and_PREP" name="Глагол и предлог">
-            <pattern case_sensitive="yes">
+            <pattern case_sensitive="no">
                 <!--              PREP VB:.*    -->
                 <!--              excluded prep "по" for another rule    -->
+                <or>
                 <token postag="PREP">
                     <exception negate_pos="yes" postag="PREP"></exception>
-                    <exception regexp="yes">спустя|ради|по|[А-ЯЁ][А-ЯЁ]*</exception>
+                    <exception regexp="yes">спустя|ради|по</exception>   <!--  |[А-ЯЁ]* -->
                 </token>
+                <token regexp="yes">у|при</token>
+                </or>
                 <token postag="VB:.*" postag_regexp="yes">
                     <exception negate_pos="yes" postag="VB:.*" postag_regexp="yes"></exception>
                     <exception>трём</exception>
@@ -9010,7 +9013,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA
         <rule id="Many_PREP" name="Два предлога подряд">        
             <pattern>
                 <marker>
-                  <token postag="PREP"><exception postag="PREP|ABR:.*" negate_pos="yes"  postag_regexp="yes" /><exception case_sensitive="yes" regexp="yes">К|По|У</exception><exception regexp="yes">минус|изо|насчёт|насчет|ради|перед</exception><exception postag="SENT_START" negate_pos="yes" case_sensitive="yes" regexp="yes">[А-Я].*</exception></token>
+                  <token postag="PREP"><exception postag="PREP|ABR:.*" negate_pos="yes"  postag_regexp="yes" /><exception case_sensitive="yes" regexp="yes">К|По|У</exception><exception regexp="yes">минус|изо|насчёт|насчет|ради|перед</exception><exception postag="SENT_START" negate_pos="yes" case_sensitive="yes" regexp="yes">[АБГ-ЖИ-НПРСТФ-Я].*</exception></token>
                   <token postag="PREP"><exception postag="PREP|ABR:.*" negate_pos="yes"  postag_regexp="yes" /><exception case_sensitive="yes" regexp="yes">[А-Я].*</exception><exception case_sensitive="yes" regexp="yes">ПО|свыше</exception><exception regexp="yes">минус|изо|без|перед</exception></token>
                 </marker>
                 <token negate="yes" regexp="yes">;|:|[\p{Punct}]</token>
@@ -9027,6 +9030,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA
             <example>Она преподаёт изо в школе.</example>
             <example>Разбил в аварии перед у машины</example>
             <example>К ИЗО ученик подготовился.</example>
+            <example correction="В|К"><marker>В к</marker> ране.</example>
         </rule>
                         
         <rule id="Many_PNN" name="Избыточность употребления местоимений">

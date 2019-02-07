@@ -1712,10 +1712,11 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA
                 </marker>
                 <token postag="SENT_END" regexp="yes">[.!?]+</token>
             </pattern>
-            <message>Meinten Sie die Form <suggestion><match no="2" regexp_match="(e|em|en|es|ere|eren|erem|erer|eres|ste|stem|ster|stes)$" regexp_replace=""/></suggestion>?</message>
+            <message>Meinten Sie die Form <suggestion><match no="2" postag="ADJ:PRD:GRU"/></suggestion>?</message>
             <short>Möglicher Tippfehler</short>
             <example correction="schlau">Die sind <marker>schlauen</marker>.</example>
             <example correction="schnell">Er war <marker>schnelle</marker>.</example>
+            <example correction="inakzeptabel">Das war <marker>inakzeptable</marker>.</example>
             <example>Er war <marker>schneller</marker>.</example>
             <example>Sein Vater ist <marker>Japaner</marker>.</example>
             <example>Die ersten Erdbändiger waren blinde Dachsmaulwürfe.</example>
@@ -3874,6 +3875,31 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA
             <message>Hinweis: Gewehr = Schusswaffe, <suggestion>Gewähr</suggestion> = Garantie/Gewährleistung/Sicherheit</message>
             <example correction="Gewähr">Alle Angaben ohne <marker>Gewehr</marker>.</example>
         </rule>
+        <rulegroup id="SEHEN_STEHEN" name="sehen/stehen">
+            <rule>
+                <pattern case_sensitive="yes">
+                    <token inflected="yes">Rückfrage</token>
+                    <marker>
+                        <token inflected="yes">sehen</token>
+                    </marker>
+                </pattern>
+                <message>Meinten Sie <suggestion><match no="2" regexp_match="^se" regexp_replace="ste"/></suggestion>?</message>
+                <example correction="stehe">Für Rückfragen <marker>sehe</marker> ich gerne zur Verfügung.</example>
+            </rule>
+        </rulegroup>
+        <rulegroup id="VEREIST_VERREIST" name="vereist/verreist">
+            <rule>
+                <pattern case_sensitive="yes">
+                    <token inflected="yes" regexp="yes">Tag|Woche(nende)?|Monat|geschäfltich|dienstlich|Diktat</token>
+                    <marker>
+                        <token>vereist</token>
+                    </marker>
+                </pattern>
+                <message>Meinten Sie <suggestion><match no="2" regexp_match="ere" regexp_replace="erre"/></suggestion>?</message>
+                <example correction="verreist">Ich war übers Wochenende <marker>vereist</marker>.</example>
+                <example correction="verreist">Mein Herz ist total vereist, nach Diktat <marker>vereist</marker>.</example>
+            </rule>
+        </rulegroup>
         <rulegroup id="LASEN_LASSEN" name="lasen/lassen">
             <rule>
                 <pattern case_sensitive="yes">
@@ -3911,23 +3937,47 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA
                 <example>Sie <marker>verlasen</marker> das Urteil.</example>
             </rule>
         </rulegroup>
-        <rule id="DENN_DEN" name="'aber denn (dann)'">
-            <pattern>
-                <token regexp="yes">aber|doch|und</token>
-                <marker>
-                    <token>denn</token>
-                </marker>
+        <rulegroup id="DENN_DEN" name="'aber denn (dann)'">
+            <rule>
+                <pattern>
+                    <token regexp="yes">aber|doch|und</token>
+                    <marker>
+                        <token>denn</token>
+                    </marker>
+                </pattern>
+                <message>Meinten Sie <suggestion>den</suggestion> oder <suggestion>dann</suggestion>?</message>
+                <example>Aber <marker>dann</marker> ging es los.</example>
+                <example correction="den|dann">Aber <marker>denn</marker> haben Sie ja schon.</example>
+            </rule>
+            <rule>
+                <pattern>
+                    <token><exception postag="ADJ:.+" postag_regexp="yes"></exception></token>
+                    <token postag="PRP:.+" postag_regexp="yes"></token>
+                    <marker><token>denn</token></marker>
+                </pattern>
+                <message>Meinten Sie <suggestion>den</suggestion> oder fehlt ein Satzzeichen (z. B. ein Strichpunkt) vor 'denn'?</message>
+                <example correction="den">Sie ging in <marker>denn</marker> Garten.</example>
+            </rule>
+        </rulegroup>
+        <rule id="AL_ALS" name="al (als)">
+            <pattern case_sensitive="yes">
+                <marker><token>al</token></marker>
+                <token>
+                    <exception postag="UNKNOWN"></exception>
+                    <exception postag="PKT"></exception>
+                    <exception>Pesto</exception>
+                </token>
             </pattern>
-            <message>Meinten Sie <suggestion>den</suggestion> oder <suggestion>dann</suggestion>?</message>
-            <example>Aber <marker>dann</marker> ging es los.</example>
-            <example correction="den|dann">Aber <marker>denn</marker> haben Sie ja schon.</example>
+            <message>Meinten Sie <suggestion>als</suggestion>?</message>
+            <example correction="als">Sie mag mich nur <marker>al</marker> Freund.</example>
+            <example>Spaghetti <marker>al</marker> dente.</example>
         </rule>
         <rule id="BESCHEIDE_BESCHEID" name="'Bescheide/Bescheid'">
             <pattern>
                 <marker>
                     <token regexp="yes">Bescheid[es]</token>
                 </marker>
-                <token regexp="yes">sagen|sags?t|wissen|weißt|wisst|geben|gebt</token>
+                <token inflected="yes" regexp="yes">sagen|wissen|geben</token>
             </pattern>
             <message>Meinten Sie <suggestion>Bescheid</suggestion>?</message>
             <example correction="Bescheid">Da würde ich auch <marker>Bescheide</marker> sagen.</example>
@@ -3958,16 +4008,28 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA
                 <example correction="Wider"><marker>Wieder</marker> Erwarten.</example>
             </rule>
         </rulegroup>
-        <rule id="ICH_VERALTE" name="'ich veralte (verwalte/verhalte)'">
-            <pattern>
-                <token>ich</token>
-                <marker>
-                    <token>veralte</token>
-                </marker>
-            </pattern>
-            <message>Meinten Sie <suggestion>verhalte</suggestion> oder <suggestion>verwalte</suggestion>?</message>
-            <example correction="verhalte|verwalte">Ich <marker>veralte</marker> auf diese Weise so 100 E-Mail-Adressen.</example>
-        </rule>
+        <rulegroup id="ICH_VERALTE" name="'ich veralte (verwalte/verhalte)'">
+            <rule>
+                <pattern>
+                    <token>ich</token>
+                    <marker>
+                        <token>veralte</token>
+                    </marker>
+                </pattern>
+                <message>Meinten Sie <suggestion>verhalte</suggestion> oder <suggestion>verwalte</suggestion>?</message>
+                <example correction="verhalte|verwalte">Ich <marker>veralte</marker> auf diese Weise so 100 E-Mail-Adressen.</example>
+            </rule>
+            <rule>
+                <pattern>
+                    <marker>
+                        <token>veralte</token>
+                    </marker>
+                    <token regexp="yes">[dm]ich</token>
+                </pattern>
+                <message>Meinten Sie <suggestion>verhalte</suggestion> oder <suggestion>verwalte</suggestion>?</message>
+                <example correction="verhalte|verwalte">Dann <marker>veralte</marker> dich nicht so!</example>
+            </rule>
+        </rulegroup>
         <rule id="MITTELOHRENZUENDUNG" name="'Mittelohrenzündung (Mittelohrentzündung)'">
             <regexp>Mittelohrenzündung(en)?</regexp>
             <message>Meinten Sie <suggestion><match no="0" regexp_match="enz" regexp_replace="entz"/></suggestion>?</message>
@@ -4071,7 +4133,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA
              <rule>
                 <pattern>
                     <token postag="PA2:PRD:GRU:VER"></token>
-                    <marker><token regexp="yes" case_sensitive="yes">erden?</token></marker>
+                    <marker><token regexp="yes" case_sensitive="yes">erde[nt]?</token></marker>
                 </pattern>
                 <message>Meinten Sie <suggestion>w\2</suggestion> (Hilfsverb für das Perfekt / Passiv) statt '\2' &odkomma;?</message>
                 <example correction="werden">Er soll bestraft <marker>erden</marker>.</example>
@@ -4081,7 +4143,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA
         <rule id="GEROCHEN_GEBROCHEN" name="gerochen (gebrochen)">
             <pattern>
                 <marker><token inflected="yes" case_sensitive="yes">gerochen</token></marker>
-                <token regexp="yes">&sprachadj1;|Arm|Bein</token>
+                <token regexp="yes">&sprachadj1;|Arm|Bein|Finger|Zeh</token>
             </pattern>
             <message>Meinten Sie <suggestion><match no="1" regexp_match="ger" regexp_replace="gebr"/></suggestion>?</message>
             <example correction="gebrochenem">Er antwortete in <marker>gerochenem</marker> Englisch.</example>
@@ -8942,6 +9004,12 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA
                     <token regexp="yes">(charakteristisch|erklärlich|typisch|zulässig)er</token>
                     <token>Weise</token>
                 </antipattern>
+                <antipattern>
+                    <token>in</token>
+                    <token postag="ADV:MOD"></token>
+                    <token/>
+                    <token>Weise</token>
+                </antipattern>
                 <pattern>
                     <marker>
                         <token regexp="yes">(absurd|auffällig|bedauerlich|bedauernswert|begreiflich|beklagenswert|bemerkenswert|berechtigt|betrüblich|bevorzugt|bezeichnend|billig|blöd|charakteristisch|dankenswert|drollig|ehrlich|eigenartig|eigenmächtig|eigentümlich|entgegenkommend|enttäuschend|erfreulich|erklärlich|erklärter|erstaunlich|evident|fair|fälschlich|fatal|folgend|frech|freundlich|gebührend|gemein|gerecht|gewöhnlich|gleich|glied|glücklich|gnädig|günstig|heimlich|heimtückisch|herkömmlich|ideal|idiotisch|inkonsequent|inkorrekt|interessant|ironisch|irreführend|irrig|irritierend|irrtümlich|klar|klassisch|kleck|klug|komisch|konsequent|kontingent|korrekt|kurios|laienhaft|legitim|leichtsinnig|liebenswürdig|listig|lobenswert|löblich|logisch|lustig|merkwürdig|missverständlich|möglich|naheliegend|naiv|natürlich|nett|normal|notwendig|originell|paradox|passend|pikant|plausibl|praktisch|realistisch|richtig|riskant|schlau|seltsam|sinnig|sinnvoll|solch|sonderbar|traditionell|tragisch|traurig|trickreich|trivial|typisch|unachtsam|unerklärlich|unerlaubt|unerwartet|ungeschickt|unglücklich|unnötig|unstrittig|unverdient|unvermeidlich|unverständlich|unvorsichtig|verboten|verdient|vernünftig|verständlich|widersinnig|wunderbar|wunderlich|zufällig|zulässig|zweckmäßig)er|Berge
@@ -12992,7 +13060,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA
                 <message>&redundanz;</message>
                 <suggestion>\2</suggestion>
                 <suggestion>von wo</suggestion>
-                <short>&redundanz;</short>
                 <example correction="woher|von wo">Man merkte gleich, <marker>von woher</marker> sie herkam.</example>
                 <example>Man merkte gleich, <marker>wo</marker> sie herkam.</example>
                 <example>Man merkte gleich, <marker>woher</marker> sie kam.</example>
@@ -13687,7 +13754,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA
                 <message>Diese Wendung ist möglicherweise umgangssprachlich.</message>
                 <suggestion>\1e \2verbindung</suggestion>
                 <suggestion>\1 \2zugang</suggestion>
-                <short>Diese Wendung ist möglicherweise umgangssprachlich.</short>
                 <example correction="Meine Internetverbindung|Mein Internetzugang"><marker>Mein Internet</marker> geht nicht.</example>
                 <example><marker>Meine Internetverbindung</marker> ist gestört.</example>
             </rule>
@@ -16222,7 +16288,10 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA
         </rule>
         <rule id="KRAFT_MEINES_AMTES" name="'Kraft (kraft) meines Amtes'">
             <pattern case_sensitive="yes">
-                <token negate_pos="yes" postag="SENT_START"/>
+                <token>
+                    <exception postag="SENT_START"/>
+                    <exception regexp="yes">&anf;</exception>
+                </token>
                 <marker>
                     <token>Kraft</token>
                 </marker>
@@ -16233,6 +16302,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA
             <short>&prgk;.</short>
             <example correction="kraft">Der Pfleger ist <marker>Kraft</marker> seines Amtes dazu nicht berechtigt.</example>
             <example><marker>Kraft</marker> meines Amtes verfüge ich folgendes.</example>
+            <example>Sie sprach: „<marker>Kraft</marker> meines Amtes erkläre ich euch zu Mann und Frau.“</example>
         </rule>
         <rulegroup id="DAS_INFINITIV_VON" name="'das importieren (Importieren) von' etc.">
             <!-- Jan: Die Regel hieß vorher IMPORTIEREN_SUBST, ist aber jetzt verallgemeinert auf alle Verben -->
@@ -19999,6 +20069,20 @@ Andere Projekte</example>
                 <example correction="Anklang">Seine Vorschläge fanden <marker>anklang</marker>.</example>
                 <example correction="Anklang">Seine Vorschläge fanden keinen <marker>anklang</marker>.</example>
                 <example correction="Anklang">Seine Vorschläge fanden keinen großen <marker>anklang</marker>.</example>
+            </rule>
+        </rulegroup>
+        <rulegroup id="WERT_ADV" name="'Wert (wert) sein' etc.">
+            <rule>
+                <pattern case_sensitive="yes">
+                    <token inflected="yes" skip="1">sein</token>
+                    <token regexp="yes">nichts|viel|mehr|mir|dir|ihm|ihnen</token>
+                    <marker>
+                        <token>Wert</token>
+                    </marker>
+                </pattern>
+                <message>&subanfang;<suggestion><match no="3" case_conversion="startlower"/></suggestion>&advende;</message>
+                <short>&prgk;.</short>
+                <example correction="wert">Das ist es mir <marker>Wert</marker>!</example>
             </rule>
         </rulegroup>
         <rulegroup id="WERT_SUBST" name="'wert (Wert) legen' etc.">
@@ -29851,6 +29935,17 @@ Andere Projekte</example>
           <example correction="ihm">Sie schenkt <marker>ihn</marker> ihre volle Aufmerksamkeit.</example>
           <example correction="ihm">Ich vertraue <marker>ihn</marker> nicht.</example>
         </rule>
+        <rule id="ZEITANGABE_DATIV" name="'Dativ mit Zeitangaben">
+          <pattern case_sensitive="yes">
+            <token>in</token>
+            <marker><token regexp="yes">eine[nms]?</token></marker>
+            <token regexp="yes">Minute|Stunde|Woche|Sekunde</token>
+            <token postag="PKT"/>
+          </pattern>
+          <message>Kasusfehler: Für eine Zeitangabe sollte der Dativ verwendet werden.</message>
+          <suggestion>einer</suggestion>
+          <example correction="einer">Sie kommt in <marker>eine</marker> Stunde.</example>
+        </rule>
         <!-- TODO: too many false alarms
         <rulegroup id="SEIT_PREP_TEILGRUPPE_MIT_NACH_ETC" name="'seit/nach/... des (dem)'">
           <rule>
@@ -30861,6 +30956,25 @@ Andere Projekte</example>
                 <example><marker>Meine Mutter</marker> ist unglücklich gestürzt.</example>
             </rule>
         </rulegroup>
+        <rule id="DER_ABGEORDNETER" name="Falscher Artikel bei substantivierten Adjektiven">
+            <pattern>
+                <token postag="SENT_START" />
+                <token postag='ART:DEF:NOM:SIN:MAS'></token>
+                <marker>
+                <token regexp='yes' postag='SUB:NOM:SIN:MAS:ADJ'>.*er\b</token>
+                </marker>
+            </pattern>
+            <message>Artikel und Substantiv stimmen grammatikalisch nicht überein. Meinten Sie <suggestion><match no="3" case_conversion="preserve" regexp_match="er\b" regexp_replace="e"></match></suggestion>?</message>
+            <example correction='Abgeordnete'>Der <marker>Abgeordneter</marker> ging nach Hause.</example>
+            <example correction='Jugendliche'>Der <marker>Jugendlicher</marker> ist bockig.</example>
+            <example correction='Verrückte'>Der <marker>Verrückter</marker> ist wieder unterwegs.</example>
+            <example correction='Angestellte'>Der <marker>Angestellter</marker> streikt.</example>
+            <example correction='Verurteilte'>Der <marker>Verurteilter</marker> wurde freigesprochen.</example>
+            <example>Der Abgeordnete ging nach Hause.</example>
+            <example>Der Bauarbeiter ist auf der Baustelle.</example>
+            <example>Die Sitzung, der Abgeordneter Müller fernblieb, war beendet.</example>
+            <example>Justizvollzugsbeamter Müller betrat den Zeugenstand.</example>
+        </rule>  
         <rulegroup id="OBJECT_AGREEMENT" name="falscher Kasus des Objekts">
             <rule>
                 <pattern>
@@ -34678,6 +34792,24 @@ Andere Projekte</example>
                 <example correction="weit,">So <marker>weit</marker> so gut.</example>
             </rule>
         </rulegroup>
+        <rulegroup id="FEHLENDER_PUNKT_BEI_DATUM" name="Fehlender Punkt bei Datumsangabe (24.12)">
+            <rule>
+                <pattern>
+                    <token postag="PRP:LOK\+TMP.*:DAT" postag_regexp="yes"/>
+                    <token regexp='yes'>[01]?[0-9]</token>
+                    <token spacebefore="no">.</token>
+                    <marker>
+                        <token regexp='yes' spacebefore="no">[01]?[0-9]</token>
+                    </marker>
+                    <token><exception>.</exception></token>
+                </pattern>
+                <message>Bei mehrteiligen Datumsangaben steht hinter der Monatsangabe ein Punkt.</message>
+                <suggestion>\4.</suggestion>
+                <short>Fehlender Punkt</short>
+                <example correction="12.">Ich komme am 13.<marker>12</marker> um 12 Uhr.</example>
+                <example correction="1.">Ferien sind vom 1.<marker>1</marker> bis 31.1.</example>
+            </rule>
+        </rulegroup>
         <rulegroup id="KOMMA_DATUM_WOCHENTAG" name="Fehlendes Komma zwischen Wochentag und Datumsangabe">
             <url>http://www.canoo.net/services/GermanSpelling/Regeln/Interpunktion/Komma/Angaben.html#Anchor-Bei-49575</url>
             <rule>
@@ -35689,7 +35821,6 @@ Andere Projekte</example>
                 <message>Auf Auslassungspunkte folgt kein Schlusspunkt.</message>
                 <suggestion>…</suggestion>
                 <url>http://www.duden.de/sprachwissen/rechtschreibregeln/auslassungspunkte#K18</url>
-                <short>Auf Auslassungspunkte folgt kein Schlusspunkt.</short>
                 <example correction="…">Er geht nach Hause <marker>….</marker></example>
             </rule>
             <rule>
@@ -36148,12 +36279,13 @@ Andere Projekte</example>
             </rule>
             <rule>
                 <pattern>
-                    <token regexp="yes">vor|seit</token>
-                    <token regexp="yes">kurzer|einiger</token>
-                    <token>Zeit</token>
+                    <token regexp='yes'>vor|seit</token>
+                    <token inflected='yes' regexp='yes'>kurz|einig</token>
+                    <token regexp='yes'>Zeit|Jahren|Monaten</token>
                 </pattern>
                 <message>Eine relative Zeitangabe wie 'seit kurzer Zeit' ist für Wikipedia-Artikel nicht gut geeignet und sollte möglicherweise durch eine absolute Zeitangabe ersetzt werden.</message>
                 <example correction=""><marker>Seit einiger Zeit</marker> ist sie Bundeskanzlerin.</example>
+                <example correction=""><marker>Seit einigen Jahren</marker> ist sie Bundeskanzlerin.</example>
                 <example>Seit März 2009 ist sie Bundeskanzlerin.</example>
             </rule>
             <rule>

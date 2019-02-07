@@ -82,6 +82,8 @@ public class Main extends WeakBase implements XJobExecutor,
   // or the context menu.
   private Set<String> disabledRules = null;
   private Set<String> disabledRulesUI;
+  private String lastPara = null;
+  private boolean switchOff = false;
 
   private XComponentContext xContext;
   
@@ -145,6 +147,9 @@ public class Main extends WeakBase implements XJobExecutor,
     paRes.aText = paraText;
     paRes.aProperties = propertyValues;
     try {
+      if(switchOff) {
+        return paRes;
+      }
       int[] footnotePositions = getPropertyValues("FootnotePositions", propertyValues);  // since LO 4.3
       paRes = documents.getCheckResults(paraText, locale, paRes, footnotePositions);
       if (disabledRules == null) {
@@ -153,6 +158,11 @@ public class Main extends WeakBase implements XJobExecutor,
       if(documents.doResetCheck()) {
         resetCheck();
         documents.optimizeReset();
+        lastPara = paraText;
+      } else if(lastPara != null && !paraText.equals(lastPara)) {
+        resetCheck();
+        documents.optimizeReset();
+        lastPara = null;
       }
     } catch (Throwable t) {
       MessageHandler.showError(t);
@@ -191,7 +201,7 @@ public class Main extends WeakBase implements XJobExecutor,
       return;
     }
     Configuration config = prepareConfig();
-    ConfigThread configThread = new ConfigThread(lang, config, this);
+    ConfigThread configThread = new ConfigThread(documents.getLanguageTool(), lang, config, this);
     configThread.start();
   }
 
@@ -352,6 +362,9 @@ public class Main extends WeakBase implements XJobExecutor,
       } else if ("about".equals(sEvent)) {
         AboutDialogThread aboutThread = new AboutDialogThread(MESSAGES);
         aboutThread.start();
+      } else if ("switchOff".equals(sEvent)) {
+        switchOff = !switchOff;
+        resetCheck();
       } else {
         MessageHandler.printToLogFile("Sorry, don't know what to do, sEvent = " + sEvent);
       }

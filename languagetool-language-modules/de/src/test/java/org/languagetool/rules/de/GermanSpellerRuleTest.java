@@ -281,6 +281,19 @@ public class GermanSpellerRuleTest {
     assertFirstSuggestion("unverzeilige", "unverzeihliche", rule, lt);
     assertFirstSuggestion("Addons", "Add-ons", rule, lt);
     assertFirstSuggestion("Mitgliederinnen", "Mitglieder", rule, lt);
+    assertFirstSuggestion("Feinleiner", "Fineliner", rule, lt);
+    assertFirstSuggestion("größester", "größter", rule, lt);
+    assertFirstSuggestion("verhäufte", "gehäufte", rule, lt);
+    assertFirstSuggestion("naheste", "nächste", rule, lt);
+    assertFirstSuggestion("fluoreszenzierend", "fluoreszierend", rule, lt);
+    assertFirstSuggestion("revalierender", "rivalisierender", rule, lt);
+    assertFirstSuggestion("häherne", "härene", rule, lt);
+    assertFirstSuggestion("Portfolien", "Portfolios", rule, lt);
+    assertFirstSuggestion("Nivo", "Niveau", rule, lt);
+    assertFirstSuggestion("dilletanten", "Dilettanten", rule, lt);
+    assertFirstSuggestion("intersannt", "interessant", rule, lt);
+    assertFirstSuggestion("allereinzigstem", "einzigem", rule, lt);
+    assertFirstSuggestion("Einzigste", "Einzige", rule, lt);
   }
 
   @Test
@@ -349,6 +362,12 @@ public class GermanSpellerRuleTest {
     assertEquals(0, rule.match(lt.getAnalyzedSentence("Dual-Use- und Wirtschaftsgüter")).length);
     assertEquals(0, rule.match(lt.getAnalyzedSentence("Test-Dual-Use")).length);
     assertEquals(1, rule.match(lt.getAnalyzedSentence("Dual-Use")).length);
+    assertEquals(0, rule.match(lt.getAnalyzedSentence("Einpseudowortmitßfürlanguagetooltests-Auto")).length);
+
+    assertEquals(1, rule.match(lt.getAnalyzedSentence("Einpseudowortmitssfürlanguagetooltests-Auto")).length);
+    HunspellRule ruleCH = new GermanSpellerRule(TestTools.getMessages("de"), GERMAN_CH);
+    assertEquals(1, ruleCH.match(lt.getAnalyzedSentence("Einpseudowortmitßfürlanguagetooltests-Auto")).length);
+    assertEquals(0, ruleCH.match(lt.getAnalyzedSentence("Einpseudowortmitssfürlanguagetooltests-Auto")).length);
   }
 
   @Test

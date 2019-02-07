@@ -103,9 +103,17 @@ public class GermanSpellerRule extends CompoundAwareHunspellRule {
     putRepl("^funk?z[ou]nier.+", "funk?z[ou]nier", "funktionier");
     putRepl("[wW]öruber", "öru", "orü");
     putRepl("[lL]einensamens?", "[lL]einen", "Lein");
+    putRepl("Feinleiner[ns]?", "Feinlei", "Fineli");
     putRepl("Oldheimer[ns]?", "he", "t");
     putRepl("unternehmensl[uü]stig(e[mnrs]?)?", "mensl[uü]st", "mungslust"); // "unternehmenslüstig" -> "unternehmungslustig"
     putRepl("proff?ess?ional(e[mnrs]?)?", "ff?ess?ional", "fessionell");
+    putRepl("zuverlässlich(e[mnrs]?)?", "lich", "ig");
+    putRepl("fluoreszenzierend(e[mnrs]?)?", "zen", "");
+    putRepl("revalierend(e[mnrs]?)?", "^reval", "rivalis");
+    putRepl("verhäuft(e[mnrs]?)?", "^ver", "ge");
+    putRepl("stürmig(e[mnrs]?)?", "mig", "misch");
+    putRepl("größeste[mnrs]?", "ßes", "ß");
+    putRepl("naheste[mnrs]?", "nahe", "näch");
     putRepl("gesundlich(e[mnrs]?)?", "lich", "heitlich");
     putRepl("eckel(e|t(en?)?|st)?", "^eck", "ek");
     putRepl("entt?euscht(e[mnrs]?)?", "entt?eusch", "enttäusch");
@@ -130,6 +138,13 @@ public class GermanSpellerRule extends CompoundAwareHunspellRule {
     put("past", "passt");
     put("eingetragt", "eingetragen");
     put("getrunkt", "getrunken");
+    put("veräht", "verrät");
+    put("helfte", "half");
+    put("helften", "halfen");
+    put("befehlte", "befahl");
+    put("befehlten", "befahlen");
+    put("lügte", "log");
+    put("lügten", "logen");
     put("Komplexibilität", "Komplexität");
     put("abbonement", "Abonnement");
     put("perse", "per se");
@@ -141,19 +156,25 @@ public class GermanSpellerRule extends CompoundAwareHunspellRule {
     put("[mM]issionarie?sie?rung", "Missionierung");
     put("[sS]chee?selonge?", "Chaiselongue");
     put("Re[kc]amiere", "Récamière");
+    put("Singel", "Single");
     put("legen[td]lich", "lediglich");
     put("ein[ua]ndhalb", "eineinhalb");
     put("[mM]illion(en)?mal", w -> Collections.singletonList(StringTools.uppercaseFirstChar(w.replaceFirst("mal", " Mal"))));
     put("Opelarena", "Opel Arena");
     put("Toll-Collect", "Toll Collect");
+    put("[pP][qQ]-Formel", "p-q-Formel");
     put("desweitere[nm]", "des Weiteren");
     put("handzuhaben", "zu handhaben");
     put("nachvollzuziehe?n", "nachzuvollziehen");
+    put("[bB]ischen", "bisschen");
+    put("Porto?folien", "Portfolios");
     putRepl("indifiziert(e[mnrs]?)?", "ind", "ident");
     putRepl("dreite[mnrs]?", "dreit", "dritt");
     putRepl("verblüte[mnrs]?", "blü", "blüh");
+    putRepl("Einzigste[mnrs]?", "zigst", "zig");
     putRepl("(aller)?einzigste[mnrs]?", "(aller)?einzigst", "einzig");
     putRepl("[iI]nterkurell(e[nmrs]?)?", "ku", "kultu");
+    putRepl("[iI]ntersannt(e[mnrs]?)?", "sannt", "essant");
     putRepl("ubera(g|sch)end(e[nmrs]?)?", "uber", "überr");
     putRepl("[wW]olt$", "lt", "llt");
     putRepl("[zZ]uende", "ue", "u E");
@@ -173,6 +194,9 @@ public class GermanSpellerRule extends CompoundAwareHunspellRule {
     putRepl("[uU]naufbesichtigt(e[nmrs]?)?", "aufbe", "beauf");
     putRepl("[nN]utzvoll(e[nmrs]?)?", "utzvoll", "ützlich");
     putRepl("Lezte[mnrs]?", "Lez", "Letz");
+    putRepl("Letze[mnrs]?", "Letz", "Letzt");
+    putRepl("[nN]i[vw]os?", "[nN]i[vw]o", "Niveau");
+    putRepl("[dD]illetant(en)?", "[dD]ille", "Dilet");
     putRepl("Makeups?", "up", "-up");
     putRepl("Add-?Ons?", "Add-?On", "Add-on");
     putRepl("Addons?", "on", "-on");
@@ -207,6 +231,9 @@ public class GermanSpellerRule extends CompoundAwareHunspellRule {
     putRepl("[rR]eligiösisch(e[nmrs]?)?", "isch", "");
     putRepl("[fF]olklorisch(e[nmrs]?)?", "isch", "istisch");
     putRepl("[eE]infühlsvoll(e[nmrs]?)?", "voll", "am");
+    putRepl("Unstimmlichkeit(en)?", "lich", "ig");
+    putRepl("Strebergartens?", "Stre", "Schre");
+    putRepl("[hH]ähern(e[mnrs]?)?", "ähern", "ären");
     putRepl("todesbedroh(end|lich)(e[nmrs]?)?", "todes", "lebens");
     putRepl("^[uU]nabsichtig(e[nmrs]?)?", "ig", "lich");
     putRepl("[aA]ntisemitistisch(e[mnrs]?)?", "tist", "t");
@@ -220,6 +247,7 @@ public class GermanSpellerRule extends CompoundAwareHunspellRule {
     putRepl("[aA]ufwechse?lungsreich(er|st)?(e[nmrs]?)?", "ufwechse?lung", "bwechslung");
     putRepl("[iI]nordnung", "ordnung", " Ordnung");
     putRepl("[iI]mmoment", "moment", " Moment");
+    putRepl("[hH]euteabend", "abend", " Abend");
     putRepl("[wW]ienerschnitzel[ns]?", "[wW]ieners", "Wiener S");
     putRepl("[sS]chwarzwälderkirschtorten?", "[sS]chwarzwälderk", "Schwarzwälder K");
     putRepl("[kK]oxial(e[nmrs]?)?", "x", "ax");
@@ -309,6 +337,9 @@ public class GermanSpellerRule extends CompoundAwareHunspellRule {
     put("Lexion", "Lexikon");
     put("[mM]otorisation", "Motorisierung");
     put("[mM]enegment", "Management");
+    put("[gG]ebrauspuren", "Gebrauchsspuren");
+    put("viedeo", "Video");
+    put("[hH]erstammung", "Abstammung");
     put("[iI]nstall?atör", "Installateur");
     put("maletriert", "malträtiert");
     put("abgeschaffen", "abgeschafft");
@@ -335,6 +366,27 @@ public class GermanSpellerRule extends CompoundAwareHunspellRule {
     put("Campagnen", "Kampagnen");
     put("Jockei", "Jockey");
     put("Roulett", "Roulette");
+    put("Mo-Di", "Mo.–Di.");
+    put("Mo-Mi", "Mo.–Mi.");
+    put("Mo-Do", "Mo.–Do.");
+    put("Mo-Fr", "Mo.–Fr.");
+    put("Mo-Sa", "Mo.–Sa.");
+    put("Mo-So", "Mo.–So.");
+    put("Di-Mi", "Di.–Mi.");
+    put("Di-Do", "Di.–Do.");
+    put("Di-Fr", "Di.–Fr.");
+    put("Di-Sa", "Di.–Sa.");
+    put("Di-So", "Di.–So.");
+    put("Mi-Do", "Mi.–Do.");
+    put("Mi-Fr", "Mi.–Fr.");
+    put("Mi-Sa", "Mi.–Sa.");
+    put("Mi-So", "Mi.–So.");
+    put("Do-Fr", "Do.–Fr.");
+    put("Do-Sa", "Do.–Sa.");
+    put("Do-So", "Do.–So.");
+    put("Fr-Sa", "Fr.–Sa.");
+    put("Fr-So", "Fr.–So.");
+    put("Sa-So", "Sa.–So.");
   }
 
   private static void putRepl(String wordPattern, String pattern, String replacement) {
@@ -431,17 +483,13 @@ public class GermanSpellerRule extends CompoundAwareHunspellRule {
 
   @Override
   protected void addIgnoreWords(String origLine) {
-    String line;
-    if (language.getShortCodeWithCountryAndVariant().equals("de-CH")) {
-      // hack: Swiss German doesn't use "ß" but always "ss" - replace this, otherwise
-      // misspellings (from Swiss point-of-view) like "äußere" wouldn't be found:
-      line = origLine.replace("ß", "ss");
-    } else if (origLine.endsWith("-*")) {
+    // hack: Swiss German doesn't use "ß" but always "ss" - replace this, otherwise
+    // misspellings (from Swiss point-of-view) like "äußere" wouldn't be found:
+    String line = language.getShortCodeWithCountryAndVariant().equals("de-CH") ? origLine.replace("ß", "ss") : origLine;
+    if (origLine.endsWith("-*")) {
       // words whose line ends with "-*" are only allowed in hyphenated compounds
-      wordsToBeIgnoredInCompounds.add(origLine.substring(0, origLine.length() - 2));
+      wordsToBeIgnoredInCompounds.add(line.substring(0, line.length() - 2));
       return;
-    } else {
-      line = origLine;
     }
     List<String> words = expandLine(line);
     for (String word : words) {
