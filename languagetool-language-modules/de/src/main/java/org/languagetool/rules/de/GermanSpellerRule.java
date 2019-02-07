@@ -38,6 +38,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.Nullable;
 import org.languagetool.*;
 import org.languagetool.language.German;
+import org.languagetool.language.GermanyGerman;
 import org.languagetool.rules.Example;
 import org.languagetool.rules.spelling.hunspell.CompoundAwareHunspellRule;
 import org.languagetool.rules.spelling.morfologik.MorfologikMultiSpeller;
@@ -127,6 +128,11 @@ public class GermanSpellerRule extends CompoundAwareHunspellRule {
     put("fangte", "fing");
     put("fangten", "fingen");
     put("past", "passt");
+    put("eingetragt", "eingetragen");
+    put("getrunkt", "getrunken");
+    put("Komplexibilität", "Komplexität");
+    put("abbonement", "Abonnement");
+    put("perse", "per se");
     put("Schwitch", "Switch");
     put("[aA]nwesenzeiten", "Anwesenheitszeiten");
     put("[gG]eizigkeit", "Geiz");
@@ -365,7 +371,14 @@ public class GermanSpellerRule extends CompoundAwareHunspellRule {
    * @since 4.2
    */
   public GermanSpellerRule(ResourceBundle messages, German language, UserConfig userConfig, String languageVariantPlainTextDict) {
-    super(messages, language, language.getNonStrictCompoundSplitter(), getSpeller(language, userConfig, languageVariantPlainTextDict), userConfig);
+    this(messages, language, userConfig, languageVariantPlainTextDict, Collections.emptyList());
+  }
+  
+  /**
+   * @since 4.3
+   */
+  public GermanSpellerRule(ResourceBundle messages, German language, UserConfig userConfig, String languageVariantPlainTextDict, List<Language> altLanguages) {
+    super(messages, language, language.getNonStrictCompoundSplitter(), getSpeller(language, userConfig, languageVariantPlainTextDict), userConfig, altLanguages);
     addExamplePair(Example.wrong("LanguageTool kann mehr als eine <marker>nromale</marker> Rechtschreibprüfung."),
                    Example.fixed("LanguageTool kann mehr als eine <marker>normale</marker> Rechtschreibprüfung."));
     compoundTokenizer = language.getStrictCompoundTokenizer();

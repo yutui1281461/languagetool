@@ -1,9 +1,32 @@
 # LanguageTool Change Log
 
-## 4.3-SNAPSHOT (2018-09-26)
+## 4.4-SNAPSHOT (release planned for 2018-12-27)
+
+#### HTTP API / LT server
+  * Experimental support for `altLanguages` parameter: takes a list of languages
+    codes. Unknown words of the main languages (as specified by the `language` parameter)
+    will be accepted if accepted by one of these languages and if they are not to similar
+    to a word of the main language. Support for this is experimental, i.e. it might be
+    removed again or implemented in a different way. 
+
+
+
+## 4.3 (2018-09-26)
+
+#### Catalan
+  * added and improved rules
+
+#### Dutch
+  * added and improved rules
 
 #### English
   * added and improved rules
+
+##### Esperanto
+  * added and improved rules
+
+##### French
+  * small rule improvements
 
 #### Galician
   * added and improved rules
@@ -21,6 +44,9 @@
     - [pt-PT pos-AO] Dicionários Portugueses Complementares 3.0
 
 #### Russian
+  * added and improved rules
+
+#### Ukrainian
   * added and improved rules
 
 #### General
@@ -60,10 +86,12 @@
     Will check only text-level rules or all other rules. As there are fewer text-level rules,
     this is usually much faster and the access limit for characters per minute that can be
     checked is more generous for this mode.
+  * Improved spellchecker suggestions (not yet enabled by default).
+    See https://forum.languagetool.org/t/gsoc-reports-spellchecker-server-side-framework-and-build-tool-tasks/2926/43
   * Experimental new `type` in JSON. This is supposed to help clients choose the color
     with which they underline/mark errors. Please do not rely on this yet, it might change
     or even be removed.
-
+  
 
 ## 4.2 (2018-06-26)
 

@@ -18,8 +18,13 @@
  */
 package org.languagetool.rules.de;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
+import org.languagetool.AnalyzedToken;
 import org.languagetool.AnalyzedTokenReadings;
 import org.languagetool.UserConfig;
 import org.languagetool.rules.AbstractStyleRepeatedWordRule;
@@ -31,8 +36,9 @@ import org.languagetool.rules.Categories;
  * This rule detects no grammar error but a stylistic problem (default off)
  * @author Fred Kruse
  */
-
-public class GermanStyleRepeatedWordRule  extends AbstractStyleRepeatedWordRule {
+public class GermanStyleRepeatedWordRule extends AbstractStyleRepeatedWordRule {
+  
+  private static final String SYNONYMS_URL = "https://www.openthesaurus.de/synonyme/";
   
   public GermanStyleRepeatedWordRule(ResourceBundle messages, UserConfig userConfig) {
     super(messages, userConfig);
@@ -100,7 +106,7 @@ public class GermanStyleRepeatedWordRule  extends AbstractStyleRepeatedWordRule 
   }
   
   protected boolean isPartOfWord(String testTokenText, String tokenText) {
-    if((testTokenText.startsWith(tokenText) || testTokenText.endsWith(tokenText) 
+    if ((testTokenText.startsWith(tokenText) || testTokenText.endsWith(tokenText) 
         || tokenText.startsWith(testTokenText) || tokenText.endsWith(testTokenText)) 
         && (testTokenText.length() == tokenText.length() || testTokenText.length() < tokenText.length() - 3
         || testTokenText.length() > tokenText.length() + 3)
@@ -108,6 +114,27 @@ public class GermanStyleRepeatedWordRule  extends AbstractStyleRepeatedWordRule 
       return true;
     }
     return false;
+  }
+
+  /* 
+   *  set an URL to the German openThesaurus
+   */
+  protected URL setURL(AnalyzedTokenReadings token) throws MalformedURLException {
+    if (token != null) {
+      List<AnalyzedToken> readings = token.getReadings();
+      List<String> lemmas = new ArrayList<>();
+      for (AnalyzedToken reading : readings) {
+        String lemma = reading.getLemma();
+        if (lemma != null) {
+          lemmas.add(lemma);
+        }
+      }
+      if (lemmas.size() == 1) {
+        return new URL(SYNONYMS_URL + lemmas.get(0));
+      }
+      return new URL(SYNONYMS_URL + token.getToken());
+    }
+    return null;
   }
 
 }

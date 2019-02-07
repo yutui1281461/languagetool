@@ -19,11 +19,11 @@
 package org.languagetool.rules;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-
-import javax.swing.JOptionPane;
 
 import org.languagetool.AnalyzedSentence;
 import org.languagetool.AnalyzedToken;
@@ -54,11 +54,10 @@ public abstract class AbstractStyleRepeatedWordRule  extends TextLevelRule {
     setDefaultOff();
     if (userConfig != null) {
       int confDistance = userConfig.getConfigValueByID(getId());
-      if(confDistance >= 0) {
+      if (confDistance >= 0) {
         this.maxDistanceOfSentences = confDistance;
       }
     }
-
   }
 
   /**
@@ -147,7 +146,7 @@ public abstract class AbstractStyleRepeatedWordRule  extends TextLevelRule {
    * listings are excluded
    */
   private static boolean hasBreakToken(AnalyzedTokenReadings[] tokens) {
-    for(int i = 0; i < tokens.length && i < MAX_TOKEN_TO_CHECK; i++) {
+    for (int i = 0; i < tokens.length && i < MAX_TOKEN_TO_CHECK; i++) {
       if (tokens[i].getToken().equals("-") || tokens[i].getToken().equals("—") || tokens[i].getToken().equals("–")) {
         return true;
       }
@@ -165,6 +164,13 @@ public abstract class AbstractStyleRepeatedWordRule  extends TextLevelRule {
    */
   protected boolean isPartOfWord(String testTokenText, String tokenText) {
     return false;
+  }
+
+  /* 
+   *  set an URL to an synonym dictionary for a token
+   */
+  protected URL setURL(AnalyzedTokenReadings token ) throws MalformedURLException {
+    return null;
   }
 
   /* 
@@ -253,6 +259,10 @@ public abstract class AbstractStyleRepeatedWordRule  extends TextLevelRule {
               int startPos = pos + token.getStartPos();
               int endPos = pos + token.getEndPos();
               RuleMatch ruleMatch = new RuleMatch(this, startPos, endPos, msg);
+              URL url = setURL(token);
+              if(url != null) {
+                ruleMatch.setUrl(url);
+              }
               ruleMatch.setSynonymsFor(token);
               ruleMatches.add(ruleMatch);
             }
@@ -263,5 +273,5 @@ public abstract class AbstractStyleRepeatedWordRule  extends TextLevelRule {
     }
     return toRuleMatchArray(ruleMatches);
   }
-
+  
 }
