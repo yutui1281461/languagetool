@@ -34,8 +34,7 @@ import java.util.concurrent.TimeUnit;
  */
 class DatabaseLogger {
 
-  // package private for mocking in tests
-  static DatabaseLogger instance = null;
+  private static DatabaseLogger instance = null;
 
 /*  // smaller numbers for tests
   static final int SQL_BATCH_SIZE = 10;

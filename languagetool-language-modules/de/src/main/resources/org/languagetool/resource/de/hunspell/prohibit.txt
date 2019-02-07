@@ -8078,9 +8078,3 @@ Warnkörbe/N
 Bildungsbürgerturm/S
 Terrormilz
 Terrormilzen
-Flugzug/S
-Frostwirt/S
-Frostwirtschaft
-Arttermin.*
-Ladenjustizkasse/N
-zimmer

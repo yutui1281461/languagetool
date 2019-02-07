@@ -28,7 +28,7 @@ import java.util.regex.Pattern;
 
 /**
  * Accepts rule matches if we are in the first days of a new year and the user
- * may have entered a date with the old year (but not a date in December).
+ * may have entered a date with the old year
  * @since 4.3
  */
 public abstract class AbstractNewYearDateFilter extends RuleFilter {
@@ -48,9 +48,8 @@ public abstract class AbstractNewYearDateFilter extends RuleFilter {
   }
 
   protected int getCurrentYear() {
-    if (TestHackHelper.isJUnitTest()) {
+    if (TestHackHelper.isJUnitTest())
       return 2014;
-    }
     return getCalendar().get(Calendar.YEAR);
   }
 
@@ -75,19 +74,17 @@ public abstract class AbstractNewYearDateFilter extends RuleFilter {
    */
   @Override
   public RuleMatch acceptRuleMatch(RuleMatch match, Map<String, String> args, AnalyzedTokenReadings[] patternTokens) {
-    Calendar dateFromText = getDate(args);
-    int monthFromText;
-    int yearFromText;
+    Calendar dateFromDate = getDate(args);
+    int yearFromDate;
     try {
-      monthFromText = dateFromText.get(Calendar.MONTH);
-      yearFromText = dateFromText.get(Calendar.YEAR);
+      yearFromDate = dateFromDate.get(Calendar.YEAR);
     } catch (IllegalArgumentException e) {
       return null; // date is not valid; another rule is responsible
     }
     int currentYear = getCurrentYear();
-    if (isJanuary() && monthFromText != 11 /*December*/ && yearFromText + 1 == currentYear) {
+    if (isJanuary() && yearFromDate + 1 == currentYear) {
       String message = match.getMessage()
-              .replace("{year}", Integer.toString(yearFromText))
+              .replace("{year}", Integer.toString(yearFromDate))
               .replace("{realYear}", Integer.toString(currentYear));
       RuleMatch ruleMatch = new RuleMatch(match.getRule(), match.getSentence(), match.getFromPos(), match.getToPos(), message, match.getShortMessage());
       ruleMatch.setType(match.getType());

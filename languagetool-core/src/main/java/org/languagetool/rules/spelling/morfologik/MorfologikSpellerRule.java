@@ -24,7 +24,6 @@ import org.languagetool.*;
 import org.languagetool.rules.Categories;
 import org.languagetool.rules.ITSIssueType;
 import org.languagetool.rules.RuleMatch;
-import org.languagetool.rules.SuggestedReplacement;
 import org.languagetool.rules.spelling.SpellingCheckRule;
 import org.languagetool.rules.spelling.morfologik.suggestions_ordering.SuggestionsOrderer;
 import org.languagetool.tools.Tools;
@@ -219,8 +218,7 @@ public abstract class MorfologikSpellerRule extends SpellingCheckRule {
         suggestions.addAll(getAdditionalSuggestions(suggestions, word));
         if (!suggestions.isEmpty()) {
           filterSuggestions(suggestions);
-          List<String> replacements = orderSuggestions(suggestions, word, sentence, startPos);
-          ruleMatch.setSuggestedReplacements(replacements);
+          ruleMatch.setSuggestedReplacements(orderSuggestions(suggestions, word, sentence, startPos));
         }
       } else {
         // limited to save CPU

@@ -66,7 +66,7 @@ public class RuleMatch implements Comparable<RuleMatch> {
 
   private LinePosition linePosition = new LinePosition(-1, -1);
   private ColumnPosition columnPosition = new ColumnPosition(-1, -1);
-  private List<SuggestedReplacement> suggestedReplacements = new ArrayList<>();
+  private List<String> suggestedReplacements = new ArrayList<>();
   private URL url;
   private Type type = Type.Other;
 
@@ -144,9 +144,8 @@ public class RuleMatch implements Comparable<RuleMatch> {
       if (startWithUppercase) {
         replacement = StringTools.uppercaseFirstChar(replacement);
       }
-      SuggestedReplacement repl = new SuggestedReplacement(replacement);
-      if (!suggestedReplacements.contains(repl)) {
-        suggestedReplacements.add(repl);
+      if (!suggestedReplacements.contains(replacement)) {
+        suggestedReplacements.add(replacement);
       }
     }
     this.sentence = sentence;
@@ -269,17 +268,6 @@ public class RuleMatch implements Comparable<RuleMatch> {
    * @see #getSuggestedReplacements()
    */
   public void setSuggestedReplacements(List<String> replacements) {
-    Objects.requireNonNull(replacements, "replacements may be empty but not null");
-    this.suggestedReplacements.clear();
-    for (String replacement : replacements) {
-      this.suggestedReplacements.add(new SuggestedReplacement(replacement));
-    }
-  }
-
-  /**
-   * @see #getSuggestedReplacements()
-   */
-  public void setSuggestedReplacementObjects(List<SuggestedReplacement> replacements) {
     this.suggestedReplacements = Objects.requireNonNull(replacements, "replacements may be empty but not null");
   }
 
@@ -290,14 +278,6 @@ public class RuleMatch implements Comparable<RuleMatch> {
    * @return unmodifiable list of String objects or an empty List
    */
   public List<String> getSuggestedReplacements() {
-    List<String> l = new ArrayList<>();
-    for (SuggestedReplacement repl : suggestedReplacements) {
-      l.add(repl.getReplacement());
-    } 
-    return Collections.unmodifiableList(l);
-  }
-
-  public List<SuggestedReplacement> getSuggestedReplacementObjects() {
     return Collections.unmodifiableList(suggestedReplacements);
   }
 

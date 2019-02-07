@@ -73,6 +73,9 @@ public class Serbian extends Language {
           "grammar-style.xml"
   );
 
+  public Serbian() {
+  }
+
   @Override
   public String getName() {
     return "Serbian";

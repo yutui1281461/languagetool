@@ -39,7 +39,6 @@ public final class PatternTestTools {
 
   // These characters should not be present in token values as they split tokens in all languages.
   private static final Pattern TOKEN_SEPARATOR_PATTERN = Pattern.compile("[ 	.,:;…!?(){}<>«»\"]");
-  private static final Pattern TOKEN_SEPARATOR_PATTERN_NO_DOT = Pattern.compile("[ 	,:;…!?(){}<>«»\"]");
 
   private static final Pattern PROBABLE_PATTERN = Pattern.compile("(\\\\[dDsSwW])|.*([^*]\\*|[.+?{}()|\\[\\]].*|\\\\d).*");
 
@@ -331,13 +330,7 @@ public final class PatternTestTools {
     if (!isPos && !isRegularExpression && stringValue.length() > 1) {
       // Example: <token>foo bar</token> can't be valid because
       // token value contains a space which is a token separator.
-
-      // Ukrainian dictionary contains some abbreviations with dot
-      Pattern tokenSeparatorPattern = lang.getShortCode().equals("uk")
-    		  ? TOKEN_SEPARATOR_PATTERN_NO_DOT
-    		  : TOKEN_SEPARATOR_PATTERN;
-
-      if (tokenSeparatorPattern.matcher(stringValue).find()) {
+      if (TOKEN_SEPARATOR_PATTERN.matcher(stringValue).find()) {
         System.err.println("The " + lang + " rule: "
                 + ruleId + ", token [" + tokenIndex + "], contains " + "\"" + stringValue
                 + "\" that contains token separators, so can't possibly be matched.");
@@ -348,9 +341,8 @@ public final class PatternTestTools {
     // since Polish uses dot '.' in POS tags. So a dot does not indicate that
     // it's a probable regexp for Polish POS tags.
     Pattern regexPattern = (isPos && lang.getShortCode().equals("pl"))
-        || (!isPos && lang.getShortCode().equals("uk"))
-            ? PROBABLE_PATTERN_PL_POS // Polish POS tag or Ukrainian token
-            : PROBABLE_PATTERN;       // other usual cases
+            ? PROBABLE_PATTERN_PL_POS // Polish POS tag.
+            : PROBABLE_PATTERN;       // something else than Polish POS tag.
 
     if (!isRegularExpression && stringValue.length() > 1
             && regexPattern.matcher(stringValue).find() && !NO_REGEXP.contains(stringValue)) {

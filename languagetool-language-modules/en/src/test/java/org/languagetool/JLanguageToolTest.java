@@ -264,11 +264,11 @@ public class JLanguageToolTest {
     }
     @Override
     public String getId() {
-      return "MyTextLevelRule";
+      return null;
     }
     @Override
     public String getDescription() {
-      return "Test rule";
+      return null;
     }
   }
 }

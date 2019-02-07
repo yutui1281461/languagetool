@@ -205,6 +205,18 @@ public class HunspellRule extends SpellingCheckRule {
       throw new RuntimeException(e);
     }
   }
+  
+  void filterDupes(List<String> words) {
+    Set<String> seen = new HashSet<>();
+    Iterator<String> iterator = words.iterator();
+    while (iterator.hasNext()) {
+      String word = iterator.next();
+      if (seen.contains(word)) {
+        iterator.remove();
+      }
+      seen.add(word);
+    }
+  }
 
   private String removeTrailingDot(String word) {
     if (word.endsWith(".")) {

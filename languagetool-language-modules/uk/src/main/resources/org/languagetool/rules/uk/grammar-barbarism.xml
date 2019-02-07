@@ -3154,32 +3154,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA
       <example>Через ті самі причини він не зміг прийти.</example>
     </rule>
 
-    <rule id="tym_ne_menshe" name="Тим не менше">
-      <pattern>
-        <token>тим</token>
-        <token>не</token>
-        <token regexp="yes">менше?</token>
-      </pattern>
-      <message>Краще: <suggestion>(а) проте</suggestion></message>
-      <suggestion>однак (одначе)</suggestion>
-      <suggestion>а все-таки (все ж таки)</suggestion>
-      <suggestion>з усім тим</suggestion>
-      <example correction="(а) проте|однак (одначе)|а все-таки (все ж таки)|з усім тим">І <marker>тим не менше</marker> він прийшов.</example>
-    </rule>
-
-    <rule id="hvatyt_vs_vystachyt" name="Хватить і вистачить">
-      <pattern>
-        <token>хватить
-          <exception scope="previous" regexp="yes">грець|удар</exception>
-          <exception scope="next" regexp="yes">грець|удар</exception>
-        </token>
-      </pattern>
-      <message>Правильно: <suggestion>вистачить</suggestion></message>
-      <suggestion>досить</suggestion>
-      <suggestion>годі</suggestion>
-      <example correction="вистачить|досить|годі">І <marker>хватить</marker> гулять.</example>
-    </rule>
-
     <rule id="ODRUZHYTYSIA_NA" name="Одружитися на">
       <pattern>
         <token inflected="yes" regexp="yes">одружуватися|одружитися|о?женитися|одружуючись|одружившись|о?женившись</token>
@@ -5461,16 +5435,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA
       </pattern>
       <message>Правильно: <suggestion>кепська справа</suggestion></message>
       <example correction="кепська справа">тож <marker>діло табак</marker>!</example>
-    </rule>
-
-    <rule id="mizh_tym_jak" name="Між тим як">
-      <pattern>
-        <token>між</token>
-        <token>тим</token>
-        <token>як</token>
-      </pattern>
-      <message>Правильно: <suggestion>тимчасом як</suggestion>, <suggestion>тоді як</suggestion></message>
-      <example correction="тимчасом як|тоді як"><marker>між тим як</marker> в інших випадках</example>
     </rule>
 
     <rulegroup id="vechorom" name="Вечором і увечері">

@@ -25,6 +25,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.Nullable;
@@ -313,16 +314,6 @@ public class AgreementRule extends Rule {
       new PatternTokenBuilder().csToken("schenken").matchInflectedForms().build(),
       new PatternTokenBuilder().csToken("dem").build(),
       new PatternTokenBuilder().csToken("Achtung").build()
-    ),
-    Arrays.asList(
-      new PatternTokenBuilder().csToken("dem").build(),
-      new PatternTokenBuilder().csToken("Rechnung").setSkip(1).build(),
-      new PatternTokenBuilder().csToken("tragen").matchInflectedForms().build()
-    ),
-    Arrays.asList(
-      new PatternTokenBuilder().csToken("tragen").matchInflectedForms().build(),
-      new PatternTokenBuilder().csToken("dem").build(),
-      new PatternTokenBuilder().csToken("Rechnung").build()
     ),
     Arrays.asList(
       new PatternTokenBuilder().csToken("zum").build(),

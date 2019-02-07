@@ -455,7 +455,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA
             <rule>
                 <pattern>
                     <token inflected="yes" skip="5">geben</token>
-                    <token regexp="yes">an|bekannt|vor|zu</token>
+                    <token regexp="yes">an|bekannt|vor</token>
                     <marker>
                         <token>,</token>
                         <token negate_pos="yes" postag_regexp="yes" postag="(ADV|VER):.*|KON:UNT"/>
@@ -806,7 +806,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA
                 <pattern>
                     <!-- Für SFT gibt es zu viele falsche Positive. -->
                     <token postag_regexp="yes" postag=".*:KJ(1|2)(:NON)?">
-                        <exception postag_regexp="yes" postag="VER:(MOD:)?INF.*"/>
+                        <exception postag_regexp="yes" postag="VER:INF:.*"/>
                         <exception postag="VER:1:SIN:PRÄ:NON"/>
                         <!-- Gleiche Verbform VER:2:PLU:KJ1:NON und VER:3:SIN:PRÄ:NON. Die 2:PLU ist vermutlich sehr viel seltener, daher wird eine Ausnahme hinzugefügt. -->
                         <exception postag_regexp="yes" postag="VER:2:PLU:KJ1:.*"/>
@@ -819,7 +819,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA
                 <example>Ich schlafe nicht mehr.</example>
                 <example>Sie nimmt an, er habe das verschwiegen.</example>
                 <example>Er behauptet, dass sie die Tat verschwiegen hat.</example>
-                <example>Wir können lesen, sie müssen arbeiten, wir sollen lernen.</example>
             </rule>
             <rule>
                 <pattern>
@@ -856,67 +855,9 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA
             <example type="incorrect" correction="">Was machen wir heute<marker>?</marker></example>
             <example type="correct">Lass uns heute etwas machen.</example>
         </rule>
-        
     </category>
 
     <category id="DIFFICULT_WORDS" name="Schwierige Wörter und Wendungen" type="misspelling">
-        
-        <rulegroup id="ABKUERZUNG" name="Leichte Sprache: Abkürzung">
-            <rule>
-                <pattern>
-                    <token regexp="yes">\p{Lu}{2,}</token>
-                </pattern>
-                <message>Verzichten Sie auf Abkürzungen.</message>
-                <example>Das <marker>Köchelverzeichnis</marker> ist ein Verzeichnis der Kompositionen von Mozart.</example>
-                <example correction="">Das <marker>KV</marker> ist ein Verzeichnis der Kompositionen von Mozart.</example>
-            </rule>
-            <rule>
-                <pattern>
-                    <token regexp="yes">\p{L}</token><token>.</token>
-                    <token regexp="yes">\p{L}</token><token>.</token>
-                    <token regexp="yes">\p{L}</token><token>.</token>
-                </pattern>
-                <message>Verzichten Sie auf Abkürzungen.</message>
-                <example>Die Sozialdemokratische Partei Deutschlands.</example>
-                <example correction="">Die <marker>S.P.D.</marker></example>
-            </rule>
-            <rule>
-                <pattern>
-                    <token regexp="yes">\p{L}</token>
-                    <token spacebefore="no">.</token>
-                    <token regexp="yes">\p{L}</token>
-                    <token spacebefore="no">.</token>
-                </pattern>
-                <message>Verzichten Sie auf Abkürzungen.</message>
-                <example correction="">Der Tiger ist <marker>z. B.</marker> ein Tier.</example>
-                <example correction="">Er ist krank, <marker>d. h.</marker> er kann nicht kommen.</example>
-            </rule>
-            <rule>
-                <pattern>
-                    <token regexp="yes">Tel|Temp|trans|Tsd|übertr|übl|ff|überarb|ugs|univ|unveränd|urspr|usw|vgl|Vol|vollst|vorm|etc|Vp|Vs|vs|wesentl|wg|Hd|Ztr|zus|Zus|zzt?|zzgl|Zz|Zt|Min|Bzgl|bzgl|bezügl|Frhr|ggfs|insb|autom|MwSt|hebr|hg|hl|Hg|hist|hochd|hochspr|Hptst|Hr|hrsg|Allg|ill|inkl|incl|Ind|Inf|Ing|ital|Tr|jap|Jb|Jg|Jhd?|Jhdts?|jmdm?|jmdn|jmds|jur|Kap|kart|kath|kaufm|Kfm|kgl|Kl|Konj|königl|Krs|Kr|Kto|bzw</token>
-                    <token spacebefore="no">.</token>
-                </pattern>
-                <message>Verzichten Sie auf Abkürzungen.</message>
-                <example correction="">Das ist <marker>Hr.</marker> Meier.</example>
-                <example>Das ist Herr <marker>Meier</marker>.</example>
-            </rule>
-            <rule>
-                <pattern>
-                    <token postag_regexp="yes" postag="ABK:.*"><exception regexp="yes">\p{L}</exception></token>
-                </pattern>
-                <message>Verzichten Sie auf Abkürzungen.</message>
-                <example>Wir brauchen Milch, Eier <marker>und so weiter</marker>.</example>
-                <example correction="">Wir brauchen Milch, Eier <marker>usw</marker>.</example>
-            </rule>
-        </rulegroup>
-        <rule id="LANGES_WORT" name="Leichte Sprache: Langes Wort">
-            <pattern>
-                <token regexp="yes">\p{L}{14,}</token>
-            </pattern>
-            <message>Dieses Wort hat mehr als dreizehn Buchstaben. Benutzen Sie kurze Wörter.</message>
-            <example>Die Schifffahrt auf der Donau ist beliebt.</example>
-            <example correction="">Die <marker>Donaudampfschifffahrt</marker> ist beliebt.</example>
-        </rule>
         <rule id="METAPHERN" name="Leichte Sprache: Metaphern">
             <pattern>
                 <token inflected='yes' regexp='yes'>Wiegenfest|Nahverkehr|Fernverkehr|Lichtbild|Bärendienst|Kurschatten|Mauerblümchen|Erdbeermund|Gänsehaut|Pustekuchen|Gardinenpredigt|Orangenhaut|Gipfeltreffen|Honigkuchenpferd|Rabeneltern|Stimmungskanone|Hausdrache|Gaumenschmeichler|Glückspilz|Baumkrone|Sternstunde|Warteschlange|Menschenschlange|Strohfeuer|Wüstenschiff|Zahlenfriedhof|Kaderschmiede|Zwickmühle|Augenweide|Augenschmaus|Hexenkessel|Hosenstall|Stubentiger|Couchsurfer|Lampenfieber|Rohrkrepierer|Goldmarie|Sternstunden|Helikoptereltern|Schwarzmalerei|Augenwischerei|Eselsbrücke|Kredithai|Torschlusspanik|Dreikäsehoch|Hanswurst|stiefmütterlich</token>
@@ -931,7 +872,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA
 
         <rule id="SCHWIERIGE_WOERTER" name="Leichte Sprache: schwierige Wörter">
             <pattern>
-                <token inflected='yes' regexp='yes'>abnor.+|ambi.+|anti.+|asy.+|auth.+|biblio.+|diffizil|ge(denken|nehmigen|statten|währen)|hemi.+|hy.+|kontra.+|mono.+|my.+|neo.+|omni.+|ortho.+|poly.+|prä.+|pseudo.+|retro.+|rhy.+|semi.+|sy[mn].+|theo.*|zy.+|.+ismus|.+phobien?|.+nym|ehelichen</token>
+                <token inflected='yes' regexp='yes'>abnor.+|ambi.+|anti.+|asy.+|auth.+|biblio.+|diffizil|ge(denken|nehmigen|statten|währen)|hemi.+|hy.+|kontra.+|mono.+|myo.+|neo.+|omni.+|ortho.+|poly.+|prä.+|pseudo.+|retro.+|rhy.+|semi.+|sy[mn].+|theo.*|zy.+|.+ismus|.+phobien?|.+nym|ehelichen|Vorspiegelung</token>
             </pattern>
             <message>Vermeiden Sie schwierige Wörter und Fremdwörter.</message>
             <short>Schwierige Wörter vermeiden</short>
@@ -939,20 +880,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA
             <example correction="">Sie hat es ihm <marker>gestattet</marker>.</example>
             <example correction="">Eine <marker>asymmetrische</marker> Anordnung.</example>
         </rule>
-        <rulegroup id="ABSTRAKTE_WOERTER" name="Leichte Sprache: abstrakte Wörter">
-            <rule>
-                <pattern>
-                    <token postag="SUB:.+" postag_regexp="yes" inflected='yes' regexp='yes'>[A-ZÄÖÜ][a-zäöüß]{2,}(ung|[hk]eit)(s[a-zäöüß]{2,})?</token>
-                </pattern>
-                <message>Vermeiden Sie abstrakte Wörter. Benutzen Sie möglichst konkrete Aussagen.</message>
-                <short>Abstrakte Wörter vermeiden</short>
-                <example correction="">Sie sucht nach einer <marker>Lösung</marker>.</example>
-                <example>Sie möchte das Rätsel <marker>lösen</marker>.</example>
-                <!--example correction="">Sie sagt die <marker>Wahrheit</marker>.</example>
-                <example>Sie ist <marker>ehrlich</marker>.</example-->
-                <example correction="">Sie sucht nach einer <marker>Lösungsidee</marker>.</example>
-            </rule>
-        </rulegroup>
         <rulegroup id="SCHWIERIGE_WENDUNGEN" name="Leichte Sprache: schwierige Wendungen">
             <rule>
                 <pattern>
@@ -984,11 +911,8 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA
                 <example correction="">Er hat etwas <marker>im Schilde geführt</marker>.</example>
             </rule>
         </rulegroup>
-        
     </category>
-
     <category id="STYLE" name="Stil" type="style">
-        
         <rulegroup id="QUERVERWEIS" name="Leichte Sprache: Querverweise">
             <rule>
                 <pattern>
@@ -1237,7 +1161,61 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA
                 <example correction="Bürgermeister oder Bürgermeisterin|Bürgermeister und Bürgermeisterin">Sie wählen heute eine(n) neue(n) <marker>Bürgermeister/in</marker></example>
             </rule>
         </rulegroup>
-
+        <rule id="LANGES_WORT" name="Leichte Sprache: Langes Wort">
+            <pattern>
+                <token regexp="yes">\p{L}{14,}</token>
+            </pattern>
+            <message>Dieses Wort hat mehr als dreizehn Buchstaben. Benutzen Sie kurze Wörter.</message>
+            <example>Die Schifffahrt auf der Donau ist beliebt.</example>
+            <example correction="">Die <marker>Donaudampfschifffahrt</marker> ist beliebt.</example>
+        </rule>
+        <rulegroup id="ABKUERZUNG" name="Leichte Sprache: Abkürzung">
+            <rule>
+                <pattern>
+                    <token regexp="yes">\p{Lu}{2,}</token>
+                </pattern>
+                <message>Verzichten Sie auf Abkürzungen.</message>
+                <example>Das <marker>Köchelverzeichnis</marker> ist ein Verzeichnis der Kompositionen von Mozart.</example>
+                <example correction="">Das <marker>KV</marker> ist ein Verzeichnis der Kompositionen von Mozart.</example>
+            </rule>
+            <rule>
+                <pattern>
+                    <token regexp="yes">\p{L}</token><token>.</token>
+                    <token regexp="yes">\p{L}</token><token>.</token>
+                    <token regexp="yes">\p{L}</token><token>.</token>
+                </pattern>
+                <message>Verzichten Sie auf Abkürzungen.</message>
+                <example>Die Sozialdemokratische Partei Deutschlands.</example>
+                <example correction="">Die <marker>S.P.D.</marker></example>
+            </rule>
+            <rule>
+                <pattern>
+                    <token regexp="yes">\p{L}</token>
+                    <token spacebefore="no">.</token>
+                    <token regexp="yes">\p{L}</token>
+                    <token spacebefore="no">.</token>
+                </pattern>
+                <message>Verzichten Sie auf Abkürzungen.</message>
+                <example correction="">Der Tiger ist <marker>z. B.</marker> ein Tier.</example>
+                <example correction="">Er ist krank, <marker>d. h.</marker> er kann nicht kommen.</example>
+            </rule>
+            <rule>
+                <pattern>
+                    <token regexp="yes">Tel|Temp|trans|Tsd|übertr|übl|ff|überarb|ugs|univ|unveränd|urspr|usw|vgl|Vol|vollst|vorm|etc|Vp|Vs|vs|wesentl|wg|Hd|Ztr|zus|Zus|zzt?|zzgl|Zz|Zt|Min|Bzgl|bzgl|bezügl|Frhr|ggfs|insb|autom|MwSt|hebr|hg|hl|Hg|hist|hochd|hochspr|Hptst|Hr|hrsg|Allg|ill|inkl|incl|Ind|Inf|Ing|ital|Tr|jap|Jb|Jg|Jhd?|Jhdts?|jmdm?|jmdn|jmds|jur|Kap|kart|kath|kaufm|Kfm|kgl|Kl|Konj|königl|Krs|Kr|Kto|bzw</token>
+                    <token spacebefore="no">.</token>
+                </pattern>
+                <message>Verzichten Sie auf Abkürzungen.</message>
+                <example correction="">Das ist <marker>Hr.</marker> Meier.</example>
+                <example>Das ist Herr <marker>Meier</marker>.</example>
+            </rule>
+            <rule>
+                <pattern>
+                    <token postag_regexp="yes" postag="ABK:.*"><exception regexp="yes">\p{L}</exception></token>
+                </pattern>
+                <message>Verzichten Sie auf Abkürzungen.</message>
+                <example>Wir brauchen Milch, Eier <marker>und so weiter</marker>.</example>
+                <example correction="">Wir brauchen Milch, Eier <marker>usw</marker>.</example>
+            </rule>
+        </rulegroup>
     </category>
-
 </rules>

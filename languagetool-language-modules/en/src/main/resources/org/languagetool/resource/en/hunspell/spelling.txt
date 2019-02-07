@@ -6,14 +6,10 @@ a priori
 ab initio
 Abu Dhabi
 achromatization
-Airbnb
 Al Jazeera
-Alibaba
 alkalizer
 alkalizers
 alphameric
-amplexus
-amplexuses
 analyte
 analytes
 Antiguans
@@ -25,28 +21,11 @@ astronomizes
 astronomizing
 au contraire
 au fait
-AutoCAD
-Bing
 blackbody radiation
-bona fide
 brussels sprout
 brussels sprouts
 Buffett
-callipygian
-chronobiologist
-chronobiologists
-chronotype
-chronotypes
-counterintuitive
-counterintuitively
-Craigslist
 cui bono
-cyberattacker
-cyberattackers
-cyberintrusion
-cyberintrusions
-cyberoperation
-cyberoperations
 de facto
 de jure
 decolorization
@@ -55,12 +34,10 @@ depolymerization
 derivatization
 derring-do
 deterritorialization
-DHL
 dogmatizer
 dogmatizers
 drumroll
 El Niño
-embox
 en masse
 et al
 etherealization
@@ -68,11 +45,7 @@ ex officio
 exempli gratia
 fait accompli
 focalization
-fo'c'sle
-Fortnite
-GCHQ
 gelatinization
-geminate
 genealogize
 genealogized
 genealogizes
@@ -85,12 +58,10 @@ geometricize
 geometricized
 geometricizes
 geometricizing
-Gmail
 gospelize
 gospelized
 gospelizes
 gospelizing
-grandparenting
 granitization
 granitize
 granitized
@@ -98,7 +69,6 @@ granitizes
 granitizing
 granulator
 granulators
-groupthink
 gutturalize
 gutturalized
 gutturalizes
@@ -109,7 +79,6 @@ historize
 historized
 historizes
 historizing
-Huawei
 humorize
 humorized
 humorizes
@@ -128,8 +97,6 @@ intelligizes
 intelligizing
 inter alia
 ipso facto
-jeu d'esprit
-jeux d'esprit
 Jimi
 lingua franca
 lingua francas
@@ -137,9 +104,6 @@ lingualize
 lingualized
 lingualizes
 lingualizing
-LinkedIn
-Mailchimp
-majuscule
 marsupialize
 marsupialized
 marsupializes
@@ -159,7 +123,6 @@ microminiaturize
 microminiaturized
 microminiaturizes
 microminiaturizing
-Minecraft
 mithridatize
 mithridatized
 mithridatizes
@@ -191,7 +154,6 @@ nephrectomize
 nephrectomized
 nephrectomizes
 nephrectomizing
-nidification
 nodalize
 nodalized
 nodalizes
@@ -213,8 +175,6 @@ oxygenized
 oxygenizes
 oxygenizing
 pacta sunt servanda
-Palme d'Or
-Palme d'or
 panegyrize
 panegyrized
 panegyrizes
@@ -259,7 +219,6 @@ photopolymerize
 photopolymerized
 photopolymerizes
 photopolymerizing
-Photoshop
 pinealectomize
 pinealectomized
 pinealectomizes
@@ -326,16 +285,12 @@ raison d'être
 rehospitalization
 resocialization
 Rio Grande
-rivulose
-Shenzhen
 sizable
 sizably
 sizeably
-Snapchat
 spina bifida
 spiralizer
 spiralizers
-Spotify
 subtilization
 sui generis
 sui juris
@@ -345,7 +300,6 @@ tabula rasa
 terpenoid
 terpenoids
 theatricalization
-tr
 traditionalize
 traditionalized
 traditionalizes
@@ -366,7 +320,3 @@ unrealizing
 vernalization
 von Neumann
 Wachovia
-WhatsApp
-Wi-Fi
-Xbox
-Xiaomi

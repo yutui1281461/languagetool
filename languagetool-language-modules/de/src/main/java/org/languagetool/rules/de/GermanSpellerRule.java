@@ -38,7 +38,6 @@ import java.util.function.Function;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-import org.apache.commons.lang3.RegExUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.Nullable;
 import org.languagetool.AnalyzedSentence;
@@ -48,9 +47,7 @@ import org.languagetool.JLanguageTool;
 import org.languagetool.Language;
 import org.languagetool.UserConfig;
 import org.languagetool.language.German;
-import org.languagetool.languagemodel.LanguageModel;
 import org.languagetool.rules.Example;
-import org.languagetool.rules.ngrams.Probability;
 import org.languagetool.rules.spelling.hunspell.CompoundAwareHunspellRule;
 import org.languagetool.rules.spelling.morfologik.MorfologikMultiSpeller;
 import org.languagetool.synthesis.Synthesizer;
@@ -60,8 +57,6 @@ import org.languagetool.tools.StringTools;
 
 import de.danielnaber.jwordsplitter.GermanWordSplitter;
 import de.danielnaber.jwordsplitter.InputTooLongException;
-
-import static java.nio.charset.StandardCharsets.*;
 
 public class GermanSpellerRule extends CompoundAwareHunspellRule {
 
@@ -78,7 +73,6 @@ public class GermanSpellerRule extends CompoundAwareHunspellRule {
   private final Set<String> wordStartsToBeProhibited    = new HashSet<>();
   private static final Map<Pattern, Function<String,List<String>>> ADDITIONAL_SUGGESTIONS = new HashMap<>();
   static {
-    put("abschiednehmen", "Abschied nehmen");
     put("wars", w -> Arrays.asList("war's", "war es"));
     put("[aA]wa", w -> Arrays.asList("AWA", "ach was", "aber"));
     put("[aA]lsallerersten?s", w -> Arrays.asList(w.replaceFirst("lsallerersten?s", "ls allererstes"), w.replaceFirst("lsallerersten?s", "ls Allererstes")));
@@ -130,7 +124,6 @@ public class GermanSpellerRule extends CompoundAwareHunspellRule {
     putRepl("naheste[mnrs]?", "nahe", "näch");
     putRepl("gesundlich(e[mnrs]?)?", "lich", "heitlich");
     putRepl("eckel(e|t(en?)?|st)?", "^eck", "ek");
-    putRepl("unhervorgesehen(e[mnrs]?)?", "hervor", "vorher");
     putRepl("entt?euscht(e[mnrs]?)?", "entt?eusch", "enttäusch");
     putRepl("Phählen?", "^Ph", "Pf");
     putRepl("Kattermesser[ns]?", "Ka", "Cu");
@@ -139,7 +132,6 @@ public class GermanSpellerRule extends CompoundAwareHunspellRule {
     putRepl("[nN]amenhaft(e[mnrs]?)?", "amen", "am");
     putRepl("hom(o?e|ö)ophatisch(e[mnrs]?)?", "hom(o?e|ö)ophat", "homöopath");
     putRepl("Geschwindlichkeit(en)?", "lich", "ig");
-    putRepl("[DN]r", "r", "r.");
     put("Investion", "Investition");
     put("Pakur", w -> Arrays.asList("Parcours", "Parkuhr"));
     put("Erstsemesterin", w -> Arrays.asList("Erstsemester", "Erstsemesters"));
@@ -305,7 +297,6 @@ public class GermanSpellerRule extends CompoundAwareHunspellRule {
     putRepl("[oO]rganisativ(e[nmrs]?)?", "tiv", "torisch");
     putRepl("[kK]ontaktfreundlich(e[nmrs]?)?", "ndlich", "dig");
     put("berücksicht", "berücksichtigt");
-    put("nix", "nichts");
     put("must", "musst");
     put("kaffe", "Kaffee");
     put("zetel", "Zettel");
@@ -321,22 +312,6 @@ public class GermanSpellerRule extends CompoundAwareHunspellRule {
     put("[aA]petitt", "Appetit");
     put("bezuggenommen", "Bezug genommen");
     put("mägt", "mögt");
-    put("frug", "fragte");
-    put("gesäht", "gesät");
-    put("verennt", "verrennt");
-    put("überrant", "überrannt");
-    put("Gallop", "Galopp");
-    put("Stop", "Stopp");
-    put("Schertz", "Scherz");
-    put("dreiundhalb", "dreieinhalb");
-    put("geschied", "geschieht");
-    put("Aku", "Akku");
-    put("Migrationspackt", "Migrationspakt");
-    put("[zZ]ulaufror", "Zulaufrohr");
-    put("[gG]ebrauchss?puhren", "Gebrauchsspuren");
-    put("[pP]reisnachlassung", "Preisnachlass");
-    put("[mM]edikamentation", "Medikation");
-    put("n[ei]gliche", "Negligé");
     put("palletten?", w -> Arrays.asList(w.replaceFirst("pall", "Pal"), w.replaceFirst("pa", "Pai")));
     put("Geräuch", w -> Arrays.asList("Geräusch", "Gesträuch"));
     put("[sS]chull?igung", "Entschuldigung");
@@ -505,7 +480,6 @@ public class GermanSpellerRule extends CompoundAwareHunspellRule {
     put("Fr-Sa", "Fr.–Sa.");
     put("Fr-So", "Fr.–So.");
     put("Sa-So", "Sa.–So.");
-    putRepl("[hH]ats", "ats", "at es");
   }
 
   private static void putRepl(String wordPattern, String pattern, String replacement) {
@@ -534,31 +508,27 @@ public class GermanSpellerRule extends CompoundAwareHunspellRule {
   private final Synthesizer synthesizer;
   private final Tagger tagger;
 
-
   public GermanSpellerRule(ResourceBundle messages, German language) {
     this(messages, language, null, null);
   }
-
 
   /**
    * @since 4.2
    */
   public GermanSpellerRule(ResourceBundle messages, German language, UserConfig userConfig, String languageVariantPlainTextDict) {
-    this(messages, language, userConfig, languageVariantPlainTextDict, Collections.emptyList(), null);
+    this(messages, language, userConfig, languageVariantPlainTextDict, Collections.emptyList());
   }
   
   /**
    * @since 4.3
    */
-  public GermanSpellerRule(ResourceBundle messages, German language, UserConfig userConfig, String languageVariantPlainTextDict, List<Language> altLanguages, LanguageModel lm) {
+  public GermanSpellerRule(ResourceBundle messages, German language, UserConfig userConfig, String languageVariantPlainTextDict, List<Language> altLanguages) {
     super(messages, language, language.getNonStrictCompoundSplitter(), getSpeller(language, userConfig, languageVariantPlainTextDict), userConfig, altLanguages);
-
     addExamplePair(Example.wrong("LanguageTool kann mehr als eine <marker>nromale</marker> Rechtschreibprüfung."),
                    Example.fixed("LanguageTool kann mehr als eine <marker>normale</marker> Rechtschreibprüfung."));
     compoundTokenizer = language.getStrictCompoundTokenizer();
     tagger = language.getTagger();
     synthesizer = language.getSynthesizer();
-    languageModel = lm;
   }
 
   @Override
@@ -645,8 +615,7 @@ public class GermanSpellerRule extends CompoundAwareHunspellRule {
   }
 
   @Nullable
-  private static MorfologikMultiSpeller getSpeller(Language language, UserConfig userConfig,
-                                                   String languageVariantPlainTextDict) {
+  private static MorfologikMultiSpeller getSpeller(Language language, UserConfig userConfig, String languageVariantPlainTextDict) {
     if (!language.getShortCode().equals(Locale.GERMAN.getLanguage())) {
       throw new RuntimeException("Language is not a variant of German: " + language);
     }
@@ -658,15 +627,16 @@ public class GermanSpellerRule extends CompoundAwareHunspellRule {
         StringBuilder concatPaths = new StringBuilder();
         List<InputStream> streams = new ArrayList<>();
         for (String path : paths) {
-          concatPaths.append(path).append(";");
+          concatPaths.append(path + ";");
           streams.add(JLanguageTool.getDataBroker().getFromResourceDirAsStream(path));
         }
         try (BufferedReader br = new BufferedReader(
-          new InputStreamReader(new SequenceInputStream(Collections.enumeration(streams)), UTF_8))) {
+          new InputStreamReader(new SequenceInputStream(Collections.enumeration(streams)), "utf-8"))) {
+          InputStream variantStream = null;
           BufferedReader variantReader = null;
           if (languageVariantPlainTextDict != null && !languageVariantPlainTextDict.isEmpty()) {
-            InputStream variantStream = JLanguageTool.getDataBroker().getFromResourceDirAsStream(languageVariantPlainTextDict);
-            variantReader = new ExpandingReader (new BufferedReader(new InputStreamReader(variantStream, UTF_8)));
+            variantStream = JLanguageTool.getDataBroker().getFromResourceDirAsStream(languageVariantPlainTextDict);
+            variantReader = new ExpandingReader (new BufferedReader(new InputStreamReader(variantStream, "utf-8")));
           }
           return new MorfologikMultiSpeller(morfoFile, new ExpandingReader(br), concatPaths.toString(),
             variantReader, languageVariantPlainTextDict, userConfig != null ? userConfig.getAcceptedWords(): Collections.emptyList(), MAX_EDIT_DISTANCE);
@@ -698,41 +668,21 @@ public class GermanSpellerRule extends CompoundAwareHunspellRule {
   @Override
   protected List<String> sortSuggestionByQuality(String misspelling, List<String> suggestions) {
     List<String> result = new ArrayList<>();
-    List<String> topSuggestions = new ArrayList<>(); // candidates from suggestions that get boosted to the top
-
     for (String suggestion : suggestions) {
-      if (misspelling.equalsIgnoreCase(suggestion)) { // this should be preferred - only case differs
-        topSuggestions.add(suggestion);
-      } else if (suggestion.contains(" ")) { // this should be preferred - prefer e.g. "vor allem":
-        // suggestions at the sentence end include a period sometimes, clean up for ngram lookup
-        String[] words = suggestion.replaceFirst("\\.$", "").split(" ", 2);
-        if (languageModel != null && words.length == 2) {
-          // language model available, test if split word occurs at all / more frequently than alternative
-          Probability nonSplit = languageModel.getPseudoProbability(Collections.singletonList(words[0] + words[1]));
-          Probability split = languageModel.getPseudoProbability(Arrays.asList(words));
-          //System.out.printf("Probability - %s vs %s: %.12f (%d) vs %.12f (%d)%n",
-          //  words[0] + words[1], suggestion,
-          //  nonSplit.getProb(), nonSplit.getOccurrences(), split.getProb(), split.getOccurrences());
-          if (nonSplit.getProb() > split.getProb() || split.getProb() == 0) {
-            result.add(suggestion);
-          } else {
-            topSuggestions.add(suggestion);
-          }
-        } else {
-          topSuggestions.add(suggestion);
-        }
+      if (misspelling.equalsIgnoreCase(suggestion) || suggestion.contains(" ")) {
+        // this should be preferred - only case differs || prefer e.g. "vor allem":
+        result.add(0, suggestion);
       } else {
         result.add(suggestion);
       }
     }
-    result.addAll(0, topSuggestions);
     return result;
   }
 
   private boolean ignoreElative(String word) {
     if (StringUtils.startsWithAny(word, "bitter", "dunkel", "erz", "extra", "früh",
         "gemein", "hyper", "lau", "mega", "minder", "stock", "super", "tod", "ultra", "ur")) {
-      String lastPart = RegExUtils.removePattern(word, "^(bitter|dunkel|erz|extra|früh|gemein|grund|hyper|lau|mega|minder|stock|super|tod|ultra|ur|voll)");
+      String lastPart = StringUtils.removePattern(word, "^(bitter|dunkel|erz|extra|früh|gemein|grund|hyper|lau|mega|minder|stock|super|tod|ultra|ur|voll)");
       return !isMisspelled(lastPart);
     }
     return false;

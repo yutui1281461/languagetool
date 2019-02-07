@@ -22,18 +22,19 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.StringTokenizer;
 
 import org.languagetool.tokenizers.Tokenizer;
-import org.languagetool.tokenizers.WordTokenizer;
 
 /**
  *
  * @author Panagiotis Minos (pminos@gmail.com)
  */
-public class GreekWordTokenizer extends WordTokenizer {
+public class GreekWordTokenizer implements Tokenizer {
 
   private final GreekWordTokenizerImpl tokenizer = new GreekWordTokenizerImpl(new StringReader(""));
+
+  public GreekWordTokenizer() {
+  }
 
   @Override
   public List<String> tokenize(String text) {
@@ -46,6 +47,6 @@ public class GreekWordTokenizer extends WordTokenizer {
     } catch (IOException ex) {
       throw new RuntimeException(ex);
     }
-    return joinEMailsAndUrls(tokens);
+    return tokens;
   }
 }

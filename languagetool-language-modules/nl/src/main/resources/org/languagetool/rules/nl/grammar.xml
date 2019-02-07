@@ -5128,6 +5128,14 @@ regexp case-insensitive maken : (?i)
             </rule>
         </rulegroup>
 
+        <rulegroup id="FINNEN_VINNEN" name="waarschuwing bij gebruik finnen i.p.v. vinnen">
+            <rule>
+                <pattern case_sensitive="yes"><token>finnen</token></pattern>
+                <message>Bedoelt u wellicht <suggestion>vinnen</suggestion> (van waterdieren) of <suggestion>Finnen</suggestion> (Finland)? Of toch blaaswormen?</message>
+                <example correction="vinnen|Finnen">Het woord <marker>finnen</marker> kan een vergissing zijn.</example>
+            </rule>
+        </rulegroup>
+
         <rulegroup id="FLOER_VLOER" name="waarschuwing bij gebruik floer i.p.v. vloer">
             <rule>
                 <pattern>
@@ -8190,49 +8198,6 @@ onwaarschijnlijk
                 </pattern>
                 <message>In Vlaanderen betekent 'bot' (ook) 'laars'.</message>
                 <example type="incorrect">Ik trok mijn <marker>motorbotten</marker> aan..</example>
-            </rule>
-            <rule>
-                <pattern>
-                    <token inflected="yes">enerverend</token>
-                </pattern>
-                <message>'Enerverend' betekent in Vlaanderen 'spannend', in Nederland 'zenuwslopend'.</message>
-                <example type="incorrect">Het was <marker>enerverend</marker>.</example>
-            </rule>
-            <rule>
-                <pattern>
-                    <token>mes</token>
-                    <token skip="8">snijdt</token>
-                    <token>twee</token>
-                    <token>kanten</token>
-                </pattern>
-                <message>'Mes snijdt aan twee kanten' betekent in Vlaanderen 'heeft voor- en nadelen', in Nederland 'geeft dubbel voordeel'.</message>
-                <example type="incorrect">Het <marker>mes snijdt weer aan twee kanten</marker>.</example>
-            </rule>
-            <rule>
-                <pattern>
-                    <token skip="8">mes</token>
-                    <token>twee</token>
-                    <token>kanten</token>
-                    <token>snijdt</token>
-                </pattern>
-                <message>'Mes snijdt aan twee kanten' betekent in Vlaanderen 'heeft voor- en nadelen', in Nederland 'geeft dubbel voordeel'.</message>
-                <example type="incorrect">Als het <marker>mes weer aan twee kanten snijdt</marker>, gaat het goed.</example>
-            </rule>
-            <rule>
-                <pattern>
-                    <token skip="8">sisser</token>
-                    <token inflected="yes">aflopen</token>
-                </pattern>
-                <message>'(met/op) een sisser aflopen' betekent in Vlaanderen 'teleurstellen', in Nederland 'meevallen'.</message>
-                <example type="incorrect">Als het met een <marker>sisser is afgelopen</marker>, gaat het goed.</example>
-            </rule>
-            <rule>
-                <pattern>
-                    <token skip="8" inflected="yes">aflopen</token>
-                    <token>sisser</token>
-                </pattern>
-                <message>'(met/op) een sisser aflopen' betekent in Vlaanderen 'teleurstellen', in Nederland 'meevallen'.</message>
-                <example type="incorrect">Als het met een <marker>afloopt met een sisser</marker>, gaat het goed.</example>
             </rule>
         </rulegroup>
     </category>
@@ -12270,7 +12235,7 @@ onwaarschijnlijk
             <!-- 2014-08-20 TaalTik uitzondering cellulitis, godvrucht, Honolulu, aardkloot, stefanus toegevoegd -->
             <rule>
                 <pattern>
-                    <token regexp="yes">.*(fuck|godv|kont|anus|lul|kut|kloot|klote|druiloor|zakkenwasser|shit|.*verdom.*|spleetoo?g|nikker|neger).*<exception regexp="yes">.*(aardkloot|honolulu|godvrucht|cellul|kontich|ontwik|tetanus|ijkont|gshitte|drukontl|kontakt|manus|llul[ao]).*|bullshit</exception><exception regexp="yes" case_sensitive="yes">[A-Z].*anus|Matsushita|kontinent.*|kontrole.*|netwerkontwerp|Kuta|Lulu|Akuta|Lula|Konta|Talula|Kutiman|Orkutel|kontant.*|Kinoshita|godsvrezend|oorlogshitsers|negeren</exception></token>
+                    <token regexp="yes">.*(fuck|godv|kont|anus|lul|kut|kloot|klote|druiloor|zakkenwasser|shit|.*verdom.*).*<exception regexp="yes">.*(aardkloot|honolulu|godvrucht|cellul|kontich|ontwik|tetanus|ijkont|gshitte|drukontl|kontakt|manus|llul[ao]).*|bullshit</exception><exception regexp="yes" case_sensitive="yes">[A-Z].*anus|Matsushita|kontinent.*|kontrole.*|netwerkontwerp|Kuta|Lulu|Akuta|Lula|Konta|Talula|Kutiman|Orkutel|kontant.*|Kinoshita|godsvrezend|oorlogshitsers</exception></token>
                 </pattern>
                 <message>Dit taalgebruik kan als ongepast, grof of beledigend worden ervaren.</message>
                 <short>ongepast</short>
@@ -13346,7 +13311,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Aan</token><token>de</token><token>Rijksweg</token></antipattern>
 			<pattern><token>aan</token><token>de</token><token>rijksweg</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Aan de Rijksweg</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Aan de Rijksweg</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Aan de Rijksweg">Ik zie <marker>aan de rijksweg</marker>.</example>
 		</rule>
@@ -13354,7 +13319,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Achterste</token><token>Erm</token></antipattern>
 			<pattern><token>achterste</token><token>erm</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Achterste Erm</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Achterste Erm</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Achterste Erm">Ik zie <marker>achterste erm</marker>.</example>
 		</rule>
@@ -13362,7 +13327,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Alphen</token><token>aan</token><token>den</token><token>Rijn</token></antipattern>
 			<pattern><token>alphen</token><token>aan</token><token>den</token><token>rijn</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Alphen aan den Rijn</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Alphen aan den Rijn</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Alphen aan den Rijn">Ik zie <marker>alphen aan den rijn</marker>.</example>
 		</rule>
@@ -13370,7 +13335,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Anna</token><token>Jacobapolder</token></antipattern>
 			<pattern><token>anna</token><token>jacobapolder</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Anna Jacobapolder</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Anna Jacobapolder</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Anna Jacobapolder">Ik zie <marker>anna jacobapolder</marker>.</example>
 		</rule>
@@ -13378,7 +13343,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Anna</token><token>Paulowna</token></antipattern>
 			<pattern><token>anna</token><token>paulowna</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Anna Paulowna</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Anna Paulowna</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Anna Paulowna">Ik zie <marker>anna paulowna</marker>.</example>
 		</rule>
@@ -13386,7 +13351,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Bad</token><token>Nieuweschans</token></antipattern>
 			<pattern><token>bad</token><token>nieuweschans</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Bad Nieuweschans</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Bad Nieuweschans</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Bad Nieuweschans">Ik zie <marker>bad nieuweschans</marker>.</example>
 		</rule>
@@ -13394,7 +13359,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Beek</token><token>en</token><token>Donk</token></antipattern>
 			<pattern><token>beek</token><token>en</token><token>donk</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Beek en Donk</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Beek en Donk</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Beek en Donk">Ik zie <marker>beek en donk</marker>.</example>
 		</rule>
@@ -13402,7 +13367,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Berg</token><token>aan</token><token>de</token><token>Maas</token></antipattern>
 			<pattern><token>berg</token><token>aan</token><token>de</token><token>maas</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Berg aan de Maas</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Berg aan de Maas</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Berg aan de Maas">Ik zie <marker>berg aan de maas</marker>.</example>
 		</rule>
@@ -13410,7 +13375,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Bergen</token><token>aan</token><token>Zee</token></antipattern>
 			<pattern><token>bergen</token><token>aan</token><token>zee</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Bergen aan Zee</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Bergen aan Zee</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Bergen aan Zee">Ik zie <marker>bergen aan zee</marker>.</example>
 		</rule>
@@ -13418,7 +13383,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Berg</token><token>en</token><token>Dal</token></antipattern>
 			<pattern><token>berg</token><token>en</token><token>dal</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Berg en Dal</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Berg en Dal</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Berg en Dal">Ik zie <marker>berg en dal</marker>.</example>
 		</rule>
@@ -13426,7 +13391,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Bergen</token><token>op</token><token>Zoom</token></antipattern>
 			<pattern><token>bergen</token><token>op</token><token>zoom</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Bergen op Zoom</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Bergen op Zoom</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Bergen op Zoom">Ik zie <marker>bergen op zoom</marker>.</example>
 		</rule>
@@ -13434,7 +13399,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Berkel</token><token>en</token><token>Rodenrijs</token></antipattern>
 			<pattern><token>berkel</token><token>en</token><token>rodenrijs</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Berkel en Rodenrijs</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Berkel en Rodenrijs</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Berkel en Rodenrijs">Ik zie <marker>berkel en rodenrijs</marker>.</example>
 		</rule>
@@ -13442,7 +13407,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Blauwe</token><token>Hand</token></antipattern>
 			<pattern><token>blauwe</token><token>hand</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Blauwe Hand</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Blauwe Hand</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Blauwe Hand">Ik zie <marker>blauwe hand</marker>.</example>
 		</rule>
@@ -13450,7 +13415,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Bosch</token><token>en</token><token>Duin</token></antipattern>
 			<pattern><token>bosch</token><token>en</token><token>duin</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Bosch en Duin</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Bosch en Duin</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Bosch en Duin">Ik zie <marker>bosch en duin</marker>.</example>
 		</rule>
@@ -13458,7 +13423,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Broek</token><token>in</token><token>Waterland</token></antipattern>
 			<pattern><token>broek</token><token>in</token><token>waterland</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Broek in Waterland</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Broek in Waterland</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Broek in Waterland">Ik zie <marker>broek in waterland</marker>.</example>
 		</rule>
@@ -13466,7 +13431,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Broek</token><token>op</token><token>Langedijk</token></antipattern>
 			<pattern><token>broek</token><token>op</token><token>langedijk</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Broek op Langedijk</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Broek op Langedijk</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Broek op Langedijk">Ik zie <marker>broek op langedijk</marker>.</example>
 		</rule>
@@ -13474,7 +13439,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Cadier</token><token>en</token><token>Keer</token></antipattern>
 			<pattern><token>cadier</token><token>en</token><token>keer</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Cadier en Keer</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Cadier en Keer</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Cadier en Keer">Ik zie <marker>cadier en keer</marker>.</example>
 		</rule>
@@ -13482,7 +13447,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Capelle</token><token>aan</token><token>den</token><token>IJssel</token></antipattern>
 			<pattern><token>capelle</token><token>aan</token><token>den</token><token>ijssel</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Capelle aan den IJssel</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Capelle aan den IJssel</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Capelle aan den IJssel">Ik zie <marker>capelle aan den ijssel</marker>.</example>
 		</rule>
@@ -13490,7 +13455,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Catsop</token><token>-</token></antipattern>
 			<pattern><token>catsop</token><token>-</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Catsop -</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Catsop -</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Catsop -">Ik zie <marker>catsop -</marker>.</example>
 		</rule>
@@ -13498,7 +13463,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>De</token><token>Bilt</token></antipattern>
 			<pattern><token>de</token><token>bilt</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>De Bilt</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>De Bilt</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="De Bilt">Ik zie <marker>de bilt</marker>.</example>
 		</rule>
@@ -13506,7 +13471,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>De</token><token>Blesse</token></antipattern>
 			<pattern><token>de</token><token>blesse</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>De Blesse</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>De Blesse</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="De Blesse">Ik zie <marker>de blesse</marker>.</example>
 		</rule>
@@ -13514,7 +13479,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>De</token><token>Bult</token></antipattern>
 			<pattern><token>de</token><token>bult</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>De Bult</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>De Bult</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="De Bult">Ik zie <marker>de bult</marker>.</example>
 		</rule>
@@ -13522,7 +13487,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>De</token><token>Cocksdorp</token></antipattern>
 			<pattern><token>de</token><token>cocksdorp</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>De Cocksdorp</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>De Cocksdorp</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="De Cocksdorp">Ik zie <marker>de cocksdorp</marker>.</example>
 		</rule>
@@ -13530,7 +13495,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>De</token><token>Glind</token></antipattern>
 			<pattern><token>de</token><token>glind</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>De Glind</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>De Glind</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="De Glind">Ik zie <marker>de glind</marker>.</example>
 		</rule>
@@ -13538,7 +13503,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>De</token><token>Goorn</token></antipattern>
 			<pattern><token>de</token><token>goorn</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>De Goorn</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>De Goorn</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="De Goorn">Ik zie <marker>de goorn</marker>.</example>
 		</rule>
@@ -13546,7 +13511,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>De</token><token>Groeve</token></antipattern>
 			<pattern><token>de</token><token>groeve</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>De Groeve</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>De Groeve</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="De Groeve">Ik zie <marker>de groeve</marker>.</example>
 		</rule>
@@ -13554,7 +13519,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>De</token><token>Haukes</token></antipattern>
 			<pattern><token>de</token><token>haukes</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>De Haukes</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>De Haukes</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="De Haukes">Ik zie <marker>de haukes</marker>.</example>
 		</rule>
@@ -13562,7 +13527,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>De</token><token>Heen</token></antipattern>
 			<pattern><token>de</token><token>heen</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>De Heen</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>De Heen</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="De Heen">Ik zie <marker>de heen</marker>.</example>
 		</rule>
@@ -13570,7 +13535,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>De</token><token>Heurne</token></antipattern>
 			<pattern><token>de</token><token>heurne</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>De Heurne</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>De Heurne</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="De Heurne">Ik zie <marker>de heurne</marker>.</example>
 		</rule>
@@ -13578,7 +13543,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>De</token><token>Hoef</token></antipattern>
 			<pattern><token>de</token><token>hoef</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>De Hoef</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>De Hoef</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="De Hoef">Ik zie <marker>de hoef</marker>.</example>
 		</rule>
@@ -13586,7 +13551,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>De</token><token>Hoek</token></antipattern>
 			<pattern><token>de</token><token>hoek</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>De Hoek</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>De Hoek</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="De Hoek">Ik zie <marker>de hoek</marker>.</example>
 		</rule>
@@ -13594,7 +13559,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>De</token><token>Hoeve</token></antipattern>
 			<pattern><token>de</token><token>hoeve</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>De Hoeve</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>De Hoeve</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="De Hoeve">Ik zie <marker>de hoeve</marker>.</example>
 		</rule>
@@ -13602,7 +13567,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>De</token><token>Hulk</token></antipattern>
 			<pattern><token>de</token><token>hulk</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>De Hulk</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>De Hulk</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="De Hulk">Ik zie <marker>de hulk</marker>.</example>
 		</rule>
@@ -13610,7 +13575,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>De</token><token>Kar</token></antipattern>
 			<pattern><token>de</token><token>kar</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>De Kar</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>De Kar</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="De Kar">Ik zie <marker>de kar</marker>.</example>
 		</rule>
@@ -13618,7 +13583,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>De</token><token>Kiel</token></antipattern>
 			<pattern><token>de</token><token>kiel</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>De Kiel</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>De Kiel</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="De Kiel">Ik zie <marker>de kiel</marker>.</example>
 		</rule>
@@ -13626,7 +13591,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>De</token><token>Klencke</token></antipattern>
 			<pattern><token>de</token><token>klencke</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>De Klencke</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>De Klencke</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="De Klencke">Ik zie <marker>de klencke</marker>.</example>
 		</rule>
@@ -13634,7 +13599,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>De</token><token>Klomp</token></antipattern>
 			<pattern><token>de</token><token>klomp</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>De Klomp</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>De Klomp</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="De Klomp">Ik zie <marker>de klomp</marker>.</example>
 		</rule>
@@ -13642,7 +13607,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>De</token><token>Knijpe</token></antipattern>
 			<pattern><token>de</token><token>knijpe</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>De Knijpe</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>De Knijpe</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="De Knijpe">Ik zie <marker>de knijpe</marker>.</example>
 		</rule>
@@ -13650,7 +13615,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>De</token><token>Koog</token></antipattern>
 			<pattern><token>de</token><token>koog</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>De Koog</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>De Koog</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="De Koog">Ik zie <marker>de koog</marker>.</example>
 		</rule>
@@ -13658,7 +13623,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>De</token><token>Kooy</token></antipattern>
 			<pattern><token>de</token><token>kooy</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>De Kooy</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>De Kooy</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="De Kooy">Ik zie <marker>de kooy</marker>.</example>
 		</rule>
@@ -13666,7 +13631,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>De</token><token>Krim</token></antipattern>
 			<pattern><token>de</token><token>krim</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>De Krim</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>De Krim</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="De Krim">Ik zie <marker>de krim</marker>.</example>
 		</rule>
@@ -13674,7 +13639,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>De</token><token>Kwakel</token></antipattern>
 			<pattern><token>de</token><token>kwakel</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>De Kwakel</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>De Kwakel</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="De Kwakel">Ik zie <marker>de kwakel</marker>.</example>
 		</rule>
@@ -13682,7 +13647,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>De</token><token>Lichtmis</token></antipattern>
 			<pattern><token>de</token><token>lichtmis</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>De Lichtmis</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>De Lichtmis</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="De Lichtmis">Ik zie <marker>de lichtmis</marker>.</example>
 		</rule>
@@ -13690,7 +13655,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>De</token><token>Lier</token></antipattern>
 			<pattern><token>de</token><token>lier</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>De Lier</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>De Lier</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="De Lier">Ik zie <marker>de lier</marker>.</example>
 		</rule>
@@ -13698,7 +13663,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>De</token><token>Lutte</token></antipattern>
 			<pattern><token>de</token><token>lutte</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>De Lutte</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>De Lutte</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="De Lutte">Ik zie <marker>de lutte</marker>.</example>
 		</rule>
@@ -13706,7 +13671,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>De</token><token>Marshoek</token></antipattern>
 			<pattern><token>de</token><token>marshoek</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>De Marshoek</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>De Marshoek</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="De Marshoek">Ik zie <marker>de marshoek</marker>.</example>
 		</rule>
@@ -13714,7 +13679,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>De</token><token>Meern</token></antipattern>
 			<pattern><token>de</token><token>meern</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>De Meern</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>De Meern</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="De Meern">Ik zie <marker>de meern</marker>.</example>
 		</rule>
@@ -13722,7 +13687,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>De</token><token>Moer</token></antipattern>
 			<pattern><token>de</token><token>moer</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>De Moer</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>De Moer</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="De Moer">Ik zie <marker>de moer</marker>.</example>
 		</rule>
@@ -13730,7 +13695,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>De</token><token>Mortel</token></antipattern>
 			<pattern><token>de</token><token>mortel</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>De Mortel</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>De Mortel</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="De Mortel">Ik zie <marker>de mortel</marker>.</example>
 		</rule>
@@ -13738,7 +13703,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Den</token><token>Andel</token></antipattern>
 			<pattern><token>den</token><token>andel</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Den Andel</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Den Andel</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Den Andel">Ik zie <marker>den andel</marker>.</example>
 		</rule>
@@ -13746,7 +13711,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Den</token><token>Bommel</token></antipattern>
 			<pattern><token>den</token><token>bommel</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Den Bommel</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Den Bommel</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Den Bommel">Ik zie <marker>den bommel</marker>.</example>
 		</rule>
@@ -13754,7 +13719,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Den</token><token>Burg</token></antipattern>
 			<pattern><token>den</token><token>burg</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Den Burg</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Den Burg</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Den Burg">Ik zie <marker>den burg</marker>.</example>
 		</rule>
@@ -13762,7 +13727,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Den</token><token>Dolder</token></antipattern>
 			<pattern><token>den</token><token>dolder</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Den Dolder</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Den Dolder</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Den Dolder">Ik zie <marker>den dolder</marker>.</example>
 		</rule>
@@ -13770,7 +13735,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Den</token><token>Dungen</token></antipattern>
 			<pattern><token>den</token><token>dungen</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Den Dungen</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Den Dungen</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Den Dungen">Ik zie <marker>den dungen</marker>.</example>
 		</rule>
@@ -13778,7 +13743,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>De</token><token>Nes</token></antipattern>
 			<pattern><token>de</token><token>nes</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>De Nes</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>De Nes</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="De Nes">Ik zie <marker>de nes</marker>.</example>
 		</rule>
@@ -13786,7 +13751,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Den</token><token>Haag</token></antipattern>
 			<pattern><token>den</token><token>haag</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Den Haag</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Den Haag</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Den Haag">Ik zie <marker>den haag</marker>.</example>
 		</rule>
@@ -13794,7 +13759,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Den</token><token>Ham</token></antipattern>
 			<pattern><token>den</token><token>ham</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Den Ham</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Den Ham</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Den Ham">Ik zie <marker>den ham</marker>.</example>
 		</rule>
@@ -13802,7 +13767,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Den</token><token>Helder</token></antipattern>
 			<pattern><token>den</token><token>helder</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Den Helder</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Den Helder</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Den Helder">Ik zie <marker>den helder</marker>.</example>
 		</rule>
@@ -13810,7 +13775,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Den</token><token>Hoorn</token></antipattern>
 			<pattern><token>den</token><token>hoorn</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Den Hoorn</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Den Hoorn</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Den Hoorn">Ik zie <marker>den hoorn</marker>.</example>
 		</rule>
@@ -13818,7 +13783,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Den</token><token>Horn</token></antipattern>
 			<pattern><token>den</token><token>horn</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Den Horn</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Den Horn</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Den Horn">Ik zie <marker>den horn</marker>.</example>
 		</rule>
@@ -13826,7 +13791,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Den</token><token>Hout</token></antipattern>
 			<pattern><token>den</token><token>hout</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Den Hout</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Den Hout</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Den Hout">Ik zie <marker>den hout</marker>.</example>
 		</rule>
@@ -13834,7 +13799,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Den</token><token>Hulst</token></antipattern>
 			<pattern><token>den</token><token>hulst</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Den Hulst</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Den Hulst</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Den Hulst">Ik zie <marker>den hulst</marker>.</example>
 		</rule>
@@ -13842,7 +13807,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Den</token><token>Ilp</token></antipattern>
 			<pattern><token>den</token><token>ilp</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Den Ilp</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Den Ilp</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Den Ilp">Ik zie <marker>den ilp</marker>.</example>
 		</rule>
@@ -13850,7 +13815,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Den</token><token>Kaat</token></antipattern>
 			<pattern><token>den</token><token>kaat</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Den Kaat</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Den Kaat</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Den Kaat">Ik zie <marker>den kaat</marker>.</example>
 		</rule>
@@ -13858,7 +13823,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Den</token><token>Nul</token></antipattern>
 			<pattern><token>den</token><token>nul</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Den Nul</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Den Nul</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Den Nul">Ik zie <marker>den nul</marker>.</example>
 		</rule>
@@ -13866,7 +13831,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Den</token><token>Oever</token></antipattern>
 			<pattern><token>den</token><token>oever</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Den Oever</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Den Oever</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Den Oever">Ik zie <marker>den oever</marker>.</example>
 		</rule>
@@ -13874,7 +13839,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Den</token><token>Velde</token></antipattern>
 			<pattern><token>den</token><token>velde</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Den Velde</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Den Velde</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Den Velde">Ik zie <marker>den velde</marker>.</example>
 		</rule>
@@ -13882,7 +13847,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>De</token><token>Pol</token></antipattern>
 			<pattern><token>de</token><token>pol</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>De Pol</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>De Pol</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="De Pol">Ik zie <marker>de pol</marker>.</example>
 		</rule>
@@ -13890,7 +13855,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>De</token><token>Pollen</token></antipattern>
 			<pattern><token>de</token><token>pollen</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>De Pollen</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>De Pollen</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="De Pollen">Ik zie <marker>de pollen</marker>.</example>
 		</rule>
@@ -13898,7 +13863,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>De</token><token>Poppe</token></antipattern>
 			<pattern><token>de</token><token>poppe</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>De Poppe</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>De Poppe</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="De Poppe">Ik zie <marker>de poppe</marker>.</example>
 		</rule>
@@ -13906,7 +13871,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>De</token><token>Punt</token></antipattern>
 			<pattern><token>de</token><token>punt</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>De Punt</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>De Punt</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="De Punt">Ik zie <marker>de punt</marker>.</example>
 		</rule>
@@ -13914,7 +13879,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>De</token><token>Rijp</token></antipattern>
 			<pattern><token>de</token><token>rijp</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>De Rijp</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>De Rijp</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="De Rijp">Ik zie <marker>de rijp</marker>.</example>
 		</rule>
@@ -13922,7 +13887,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>De</token><token>Rips</token></antipattern>
 			<pattern><token>de</token><token>rips</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>De Rips</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>De Rips</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="De Rips">Ik zie <marker>de rips</marker>.</example>
 		</rule>
@@ -13930,7 +13895,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>De</token><token>Schiphorst</token></antipattern>
 			<pattern><token>de</token><token>schiphorst</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>De Schiphorst</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>De Schiphorst</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="De Schiphorst">Ik zie <marker>de schiphorst</marker>.</example>
 		</rule>
@@ -13938,7 +13903,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>De</token><token>Stapel</token></antipattern>
 			<pattern><token>de</token><token>stapel</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>De Stapel</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>De Stapel</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="De Stapel">Ik zie <marker>de stapel</marker>.</example>
 		</rule>
@@ -13946,7 +13911,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>De</token><token>Steeg</token></antipattern>
 			<pattern><token>de</token><token>steeg</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>De Steeg</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>De Steeg</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="De Steeg">Ik zie <marker>de steeg</marker>.</example>
 		</rule>
@@ -13954,7 +13919,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>De</token><token>Stolpen</token></antipattern>
 			<pattern><token>de</token><token>stolpen</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>De Stolpen</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>De Stolpen</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="De Stolpen">Ik zie <marker>de stolpen</marker>.</example>
 		</rule>
@@ -13962,7 +13927,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>De</token><token>Tike</token></antipattern>
 			<pattern><token>de</token><token>tike</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>De Tike</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>De Tike</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="De Tike">Ik zie <marker>de tike</marker>.</example>
 		</rule>
@@ -13970,7 +13935,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>De</token><token>Valom</token></antipattern>
 			<pattern><token>de</token><token>valom</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>De Valom</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>De Valom</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="De Valom">Ik zie <marker>de valom</marker>.</example>
 		</rule>
@@ -13978,7 +13943,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>De</token><token>Vecht</token></antipattern>
 			<pattern><token>de</token><token>vecht</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>De Vecht</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>De Vecht</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="De Vecht">Ik zie <marker>de vecht</marker>.</example>
 		</rule>
@@ -13986,7 +13951,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>De</token><token>Veenhoop</token></antipattern>
 			<pattern><token>de</token><token>veenhoop</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>De Veenhoop</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>De Veenhoop</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="De Veenhoop">Ik zie <marker>de veenhoop</marker>.</example>
 		</rule>
@@ -13994,7 +13959,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>De</token><token>Waal</token></antipattern>
 			<pattern><token>de</token><token>waal</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>De Waal</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>De Waal</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="De Waal">Ik zie <marker>de waal</marker>.</example>
 		</rule>
@@ -14002,16 +13967,15 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>De</token><token>Weere</token></antipattern>
 			<pattern><token>de</token><token>weere</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>De Weere</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>De Weere</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="De Weere">Ik zie <marker>de weere</marker>.</example>
 		</rule>
 
 		<rule>
-			<antipattern case_sensitive="yes"><token>de</token><token>Wijk</token><token case_sensitive="yes" regexp="yes">[A-Z][a-z].*</token></antipattern>
 			<antipattern case_sensitive="yes"><token>de</token><token>Wijk</token></antipattern>
 			<pattern><token>de</token><token>wijk</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>de Wijk</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>de Wijk</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="de Wijk">Ik zie <marker>de wijk</marker>.</example>
 		</rule>
@@ -14019,17 +13983,15 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>De</token><token>Wijk</token></antipattern>
 			<pattern><token>de</token><token>wijk</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>De Wijk</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>De Wijk</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="De Wijk">Ik zie <marker>de wijk</marker>.</example>
 		</rule>
 
 		<rule>
-			<!-- uitzondering: aan de wilgen hangen -->
-			<antipattern case_sensitive="yes"><token postag="SENT_START" skip="-1"/><token inflected="yes" regexp="yes">hangen|sloot|rivier|plant|knotten</token></antipattern>
 			<antipattern case_sensitive="yes"><token>De</token><token>Wilgen</token></antipattern>
 			<pattern><token>de</token><token>wilgen</token></pattern>
-			<message>U bedoelt misschien het gehucht <suggestion>De Wilgen</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>De Wilgen</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="De Wilgen">Ik zie <marker>de wilgen</marker>.</example>
 		</rule>
@@ -14037,7 +13999,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>De</token><token>Wilp</token></antipattern>
 			<pattern><token>de</token><token>wilp</token></pattern>
-			<message>U bedoelt misschien het dorp <suggestion>De Wilp</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>De Wilp</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="De Wilp">Ik zie <marker>de wilp</marker>.</example>
 		</rule>
@@ -14045,7 +14007,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>De</token><token>Woude</token></antipattern>
 			<pattern><token>de</token><token>woude</token></pattern>
-			<message>U bedoelt misschien het dorp <suggestion>De Woude</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>De Woude</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="De Woude">Ik zie <marker>de woude</marker>.</example>
 		</rule>
@@ -14053,7 +14015,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>De</token><token>Zande</token></antipattern>
 			<pattern><token>de</token><token>zande</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>De Zande</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>De Zande</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="De Zande">Ik zie <marker>de zande</marker>.</example>
 		</rule>
@@ -14061,7 +14023,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>De</token><token>Zilk</token></antipattern>
 			<pattern><token>de</token><token>zilk</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>De Zilk</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>De Zilk</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="De Zilk">Ik zie <marker>de zilk</marker>.</example>
 		</rule>
@@ -14069,7 +14031,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Dokkumer</token><token>Nieuwe</token><token>Zijlen</token></antipattern>
 			<pattern><token>dokkumer</token><token>nieuwe</token><token>zijlen</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Dokkumer Nieuwe Zijlen</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Dokkumer Nieuwe Zijlen</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Dokkumer Nieuwe Zijlen">Ik zie <marker>dokkumer nieuwe zijlen</marker>.</example>
 		</rule>
@@ -14077,7 +14039,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Druten</token><token>-</token></antipattern>
 			<pattern><token>druten</token><token>-</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Druten -</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Druten -</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Druten -">Ik zie <marker>druten -</marker>.</example>
 		</rule>
@@ -14085,7 +14047,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Duur</token><token>-</token></antipattern>
 			<pattern><token>duur</token><token>-</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Duur -</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Duur -</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Duur -">Ik zie <marker>duur -</marker>.</example>
 		</rule>
@@ -14093,7 +14055,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Eck</token><token>en</token><token>Wiel</token></antipattern>
 			<pattern><token>eck</token><token>en</token><token>wiel</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Eck en Wiel</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Eck en Wiel</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Eck en Wiel">Ik zie <marker>eck en wiel</marker>.</example>
 		</rule>
@@ -14101,7 +14063,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Eerste</token><token>Exloërmond</token></antipattern>
 			<pattern><token>eerste</token><token>exloërmond</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Eerste Exloërmond</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Eerste Exloërmond</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Eerste Exloërmond">Ik zie <marker>eerste exloërmond</marker>.</example>
 		</rule>
@@ -14109,7 +14071,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Egmond</token><token>aan</token><token>den</token><token>Hoef</token></antipattern>
 			<pattern><token>egmond</token><token>aan</token><token>den</token><token>hoef</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Egmond aan den Hoef</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Egmond aan den Hoef</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Egmond aan den Hoef">Ik zie <marker>egmond aan den hoef</marker>.</example>
 		</rule>
@@ -14117,7 +14079,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Egmond</token><token>aan</token><token>Zee</token></antipattern>
 			<pattern><token>egmond</token><token>aan</token><token>zee</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Egmond aan Zee</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Egmond aan Zee</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Egmond aan Zee">Ik zie <marker>egmond aan zee</marker>.</example>
 		</rule>
@@ -14125,7 +14087,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Geulle</token><token>aan</token><token>de</token><token>Maas</token></antipattern>
 			<pattern><token>geulle</token><token>aan</token><token>de</token><token>maas</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Geulle aan de Maas</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Geulle aan de Maas</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Geulle aan de Maas">Ik zie <marker>geulle aan de maas</marker>.</example>
 		</rule>
@@ -14133,7 +14095,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Groot</token><token>Agelo</token></antipattern>
 			<pattern><token>groot</token><token>agelo</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Groot Agelo</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Groot Agelo</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Groot Agelo">Ik zie <marker>groot agelo</marker>.</example>
 		</rule>
@@ -14141,7 +14103,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Groot</token><token>Dochteren</token></antipattern>
 			<pattern><token>groot</token><token>dochteren</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Groot Dochteren</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Groot Dochteren</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Groot Dochteren">Ik zie <marker>groot dochteren</marker>.</example>
 		</rule>
@@ -14149,7 +14111,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Groot</token><token>Dorregeest</token></antipattern>
 			<pattern><token>groot</token><token>dorregeest</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Groot Dorregeest</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Groot Dorregeest</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Groot Dorregeest">Ik zie <marker>groot dorregeest</marker>.</example>
 		</rule>
@@ -14157,7 +14119,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Groote</token><token>Keeten</token></antipattern>
 			<pattern><token>groote</token><token>keeten</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Groote Keeten</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Groote Keeten</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Groote Keeten">Ik zie <marker>groote keeten</marker>.</example>
 		</rule>
@@ -14165,7 +14127,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Groot</token><token>Haasdal</token></antipattern>
 			<pattern><token>groot</token><token>haasdal</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Groot Haasdal</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Groot Haasdal</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Groot Haasdal">Ik zie <marker>groot haasdal</marker>.</example>
 		</rule>
@@ -14173,7 +14135,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Hei-</token><token>en</token><token>Boeicop</token></antipattern>
 			<pattern><token>hei-</token><token>en</token><token>boeicop</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Hei- en Boeicop</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Hei- en Boeicop</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Hei- en Boeicop">Ik zie <marker>hei- en boeicop</marker>.</example>
 		</rule>
@@ -14181,7 +14143,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Heilig</token><token>Landstichting</token></antipattern>
 			<pattern><token>heilig</token><token>landstichting</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Heilig Landstichting</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Heilig Landstichting</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Heilig Landstichting">Ik zie <marker>heilig landstichting</marker>.</example>
 		</rule>
@@ -14189,7 +14151,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Het</token><token>Koegras</token></antipattern>
 			<pattern><token>het</token><token>koegras</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Het Koegras</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Het Koegras</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Het Koegras">Ik zie <marker>het koegras</marker>.</example>
 		</rule>
@@ -14197,7 +14159,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Het</token><token>Woud</token></antipattern>
 			<pattern><token>het</token><token>woud</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Het Woud</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Het Woud</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Het Woud">Ik zie <marker>het woud</marker>.</example>
 		</rule>
@@ -14205,7 +14167,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Hoek</token><token>van</token><token>Holland</token></antipattern>
 			<pattern><token>hoek</token><token>van</token><token>holland</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Hoek van Holland</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Hoek van Holland</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Hoek van Holland">Ik zie <marker>hoek van holland</marker>.</example>
 		</rule>
@@ -14213,7 +14175,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Hoge</token><token>Hexel</token></antipattern>
 			<pattern><token>hoge</token><token>hexel</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Hoge Hexel</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Hoge Hexel</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Hoge Hexel">Ik zie <marker>hoge hexel</marker>.</example>
 		</rule>
@@ -14221,7 +14183,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Hollandsche</token><token>Rading</token></antipattern>
 			<pattern><token>hollandsche</token><token>rading</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Hollandsche Rading</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Hollandsche Rading</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Hollandsche Rading">Ik zie <marker>hollandsche rading</marker>.</example>
 		</rule>
@@ -14229,7 +14191,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Hongerige</token><token>Wolf</token></antipattern>
 			<pattern><token>hongerige</token><token>wolf</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Hongerige Wolf</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Hongerige Wolf</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Hongerige Wolf">Ik zie <marker>hongerige wolf</marker>.</example>
 		</rule>
@@ -14237,7 +14199,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Hooge</token><token>Mierde</token></antipattern>
 			<pattern><token>hooge</token><token>mierde</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Hooge Mierde</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Hooge Mierde</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Hooge Mierde">Ik zie <marker>hooge mierde</marker>.</example>
 		</rule>
@@ -14245,7 +14207,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Hooge</token><token>Zwaluwe</token></antipattern>
 			<pattern><token>hooge</token><token>zwaluwe</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Hooge Zwaluwe</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Hooge Zwaluwe</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Hooge Zwaluwe">Ik zie <marker>hooge zwaluwe</marker>.</example>
 		</rule>
@@ -14253,7 +14215,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Hoog</token><token>Soeren</token></antipattern>
 			<pattern><token>hoog</token><token>soeren</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Hoog Soeren</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Hoog Soeren</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Hoog Soeren">Ik zie <marker>hoog soeren</marker>.</example>
 		</rule>
@@ -14261,7 +14223,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Huis</token><token>ter</token><token>Heide</token></antipattern>
 			<pattern><token>huis</token><token>ter</token><token>heide</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Huis ter Heide</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Huis ter Heide</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Huis ter Heide">Ik zie <marker>huis ter heide</marker>.</example>
 		</rule>
@@ -14269,7 +14231,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>It</token><token>Heidenskip</token></antipattern>
 			<pattern><token>it</token><token>heidenskip</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>It Heidenskip</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>It Heidenskip</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="It Heidenskip">Ik zie <marker>it heidenskip</marker>.</example>
 		</rule>
@@ -14277,7 +14239,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Julianadorp</token><token>aan</token><token>Zee</token></antipattern>
 			<pattern><token>julianadorp</token><token>aan</token><token>zee</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Julianadorp aan Zee</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Julianadorp aan Zee</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Julianadorp aan Zee">Ik zie <marker>julianadorp aan zee</marker>.</example>
 		</rule>
@@ -14285,7 +14247,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Katwijk</token><token>aan</token><token>den</token><token>Rijn</token></antipattern>
 			<pattern><token>katwijk</token><token>aan</token><token>den</token><token>rijn</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Katwijk aan den Rijn</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Katwijk aan den Rijn</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Katwijk aan den Rijn">Ik zie <marker>katwijk aan den rijn</marker>.</example>
 		</rule>
@@ -14293,7 +14255,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Katwijk</token><token>aan</token><token>Zee</token></antipattern>
 			<pattern><token>katwijk</token><token>aan</token><token>zee</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Katwijk aan Zee</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Katwijk aan Zee</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Katwijk aan Zee">Ik zie <marker>katwijk aan zee</marker>.</example>
 		</rule>
@@ -14301,7 +14263,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Klein</token><token>Dochteren</token></antipattern>
 			<pattern><token>klein</token><token>dochteren</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Klein Dochteren</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Klein Dochteren</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Klein Dochteren">Ik zie <marker>klein dochteren</marker>.</example>
 		</rule>
@@ -14309,7 +14271,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Klein</token><token>Dorregeest</token></antipattern>
 			<pattern><token>klein</token><token>dorregeest</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Klein Dorregeest</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Klein Dorregeest</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Klein Dorregeest">Ik zie <marker>klein dorregeest</marker>.</example>
 		</rule>
@@ -14317,7 +14279,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Kleine</token><token>Huisjes</token></antipattern>
 			<pattern><token>kleine</token><token>huisjes</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Kleine Huisjes</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Kleine Huisjes</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Kleine Huisjes">Ik zie <marker>kleine huisjes</marker>.</example>
 		</rule>
@@ -14325,7 +14287,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Kleine</token><token>Koolwijk</token></antipattern>
 			<pattern><token>kleine</token><token>koolwijk</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Kleine Koolwijk</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Kleine Koolwijk</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Kleine Koolwijk">Ik zie <marker>kleine koolwijk</marker>.</example>
 		</rule>
@@ -14333,7 +14295,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Klein</token><token>Haasdal</token></antipattern>
 			<pattern><token>klein</token><token>haasdal</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Klein Haasdal</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Klein Haasdal</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Klein Haasdal">Ik zie <marker>klein haasdal</marker>.</example>
 		</rule>
@@ -14341,7 +14303,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Klein</token><token>Ulsda</token></antipattern>
 			<pattern><token>klein</token><token>ulsda</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Klein Ulsda</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Klein Ulsda</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Klein Ulsda">Ik zie <marker>klein ulsda</marker>.</example>
 		</rule>
@@ -14349,7 +14311,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Klein</token><token>Zundert</token></antipattern>
 			<pattern><token>klein</token><token>zundert</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Klein Zundert</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Klein Zundert</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Klein Zundert">Ik zie <marker>klein zundert</marker>.</example>
 		</rule>
@@ -14357,7 +14319,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Kolderveense</token><token>Bovenboer</token></antipattern>
 			<pattern><token>kolderveense</token><token>bovenboer</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Kolderveense Bovenboer</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Kolderveense Bovenboer</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Kolderveense Bovenboer">Ik zie <marker>kolderveense bovenboer</marker>.</example>
 		</rule>
@@ -14365,7 +14327,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Koog</token><token>aan</token><token>de</token><token>Zaan</token></antipattern>
 			<pattern><token>koog</token><token>aan</token><token>de</token><token>zaan</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Koog aan de Zaan</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Koog aan de Zaan</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Koog aan de Zaan">Ik zie <marker>koog aan de zaan</marker>.</example>
 		</rule>
@@ -14373,7 +14335,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Koudekerk</token><token>aan</token><token>den</token><token>Rijn</token></antipattern>
 			<pattern><token>koudekerk</token><token>aan</token><token>den</token><token>rijn</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Koudekerk aan den Rijn</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Koudekerk aan den Rijn</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Koudekerk aan den Rijn">Ik zie <marker>koudekerk aan den rijn</marker>.</example>
 		</rule>
@@ -14381,7 +14343,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Krimpen</token><token>aan</token><token>de</token><token>Lek</token></antipattern>
 			<pattern><token>krimpen</token><token>aan</token><token>de</token><token>lek</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Krimpen aan de Lek</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Krimpen aan de Lek</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Krimpen aan de Lek">Ik zie <marker>krimpen aan de lek</marker>.</example>
 		</rule>
@@ -14389,7 +14351,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Krimpen</token><token>aan</token><token>den</token><token>IJssel</token></antipattern>
 			<pattern><token>krimpen</token><token>aan</token><token>den</token><token>ijssel</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Krimpen aan den IJssel</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Krimpen aan den IJssel</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Krimpen aan den IJssel">Ik zie <marker>krimpen aan den ijssel</marker>.</example>
 		</rule>
@@ -14397,7 +14359,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Lage</token><token>Mierde</token></antipattern>
 			<pattern><token>lage</token><token>mierde</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Lage Mierde</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Lage Mierde</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Lage Mierde">Ik zie <marker>lage mierde</marker>.</example>
 		</rule>
@@ -14405,7 +14367,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Lage</token><token>Vuursche</token></antipattern>
 			<pattern><token>lage</token><token>vuursche</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Lage Vuursche</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Lage Vuursche</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Lage Vuursche">Ik zie <marker>lage vuursche</marker>.</example>
 		</rule>
@@ -14413,7 +14375,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Lage</token><token>Zwaluwe</token></antipattern>
 			<pattern><token>lage</token><token>zwaluwe</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Lage Zwaluwe</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Lage Zwaluwe</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Lage Zwaluwe">Ik zie <marker>lage zwaluwe</marker>.</example>
 		</rule>
@@ -14421,7 +14383,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Loenen</token><token>aan</token><token>de</token><token>Vecht</token></antipattern>
 			<pattern><token>loenen</token><token>aan</token><token>de</token><token>vecht</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Loenen aan de Vecht</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Loenen aan de Vecht</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Loenen aan de Vecht">Ik zie <marker>loenen aan de vecht</marker>.</example>
 		</rule>
@@ -14429,7 +14391,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Loon</token><token>op</token><token>Zand</token></antipattern>
 			<pattern><token>loon</token><token>op</token><token>zand</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Loon op Zand</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Loon op Zand</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Loon op Zand">Ik zie <marker>loon op zand</marker>.</example>
 		</rule>
@@ -14437,7 +14399,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Millingen</token><token>aan</token><token>de</token><token>Rijn</token></antipattern>
 			<pattern><token>millingen</token><token>aan</token><token>de</token><token>rijn</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Millingen aan de Rijn</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Millingen aan de Rijn</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Millingen aan de Rijn">Ik zie <marker>millingen aan de rijn</marker>.</example>
 		</rule>
@@ -14445,7 +14407,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Nederhorst</token><token>den</token><token>Berg</token></antipattern>
 			<pattern><token>nederhorst</token><token>den</token><token>berg</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Nederhorst den Berg</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Nederhorst den Berg</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Nederhorst den Berg">Ik zie <marker>nederhorst den berg</marker>.</example>
 		</rule>
@@ -14453,7 +14415,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Nes</token><token>aan</token><token>de</token><token>Amstel</token></antipattern>
 			<pattern><token>nes</token><token>aan</token><token>de</token><token>amstel</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Nes aan de Amstel</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Nes aan de Amstel</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Nes aan de Amstel">Ik zie <marker>nes aan de amstel</marker>.</example>
 		</rule>
@@ -14461,7 +14423,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Nieuw</token><token>Bergen</token></antipattern>
 			<pattern><token>nieuw</token><token>bergen</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Nieuw Bergen</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Nieuw Bergen</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Nieuw Bergen">Ik zie <marker>nieuw bergen</marker>.</example>
 		</rule>
@@ -14469,7 +14431,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Nieuwe</token><token>Krim</token></antipattern>
 			<pattern><token>nieuwe</token><token>krim</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Nieuwe Krim</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Nieuwe Krim</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Nieuwe Krim">Ik zie <marker>nieuwe krim</marker>.</example>
 		</rule>
@@ -14477,7 +14439,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Nieuwe</token><token>Meer</token></antipattern>
 			<pattern><token>nieuwe</token><token>meer</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Nieuwe Meer</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Nieuwe Meer</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Nieuwe Meer">Ik zie <marker>nieuwe meer</marker>.</example>
 		</rule>
@@ -14485,7 +14447,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Nieuwe</token><token>Niedorp</token></antipattern>
 			<pattern><token>nieuwe</token><token>niedorp</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Nieuwe Niedorp</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Nieuwe Niedorp</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Nieuwe Niedorp">Ik zie <marker>nieuwe niedorp</marker>.</example>
 		</rule>
@@ -14493,7 +14455,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Nieuw-</token><token>en</token><token>Sint</token><token>Joosland</token></antipattern>
 			<pattern><token>nieuw-</token><token>en</token><token>sint</token><token>joosland</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Nieuw- en Sint Joosland</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Nieuw- en Sint Joosland</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Nieuw- en Sint Joosland">Ik zie <marker>nieuw- en sint joosland</marker>.</example>
 		</rule>
@@ -14501,7 +14463,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Nieuwe</token><token>Pekela</token></antipattern>
 			<pattern><token>nieuwe</token><token>pekela</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Nieuwe Pekela</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Nieuwe Pekela</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Nieuwe Pekela">Ik zie <marker>nieuwe pekela</marker>.</example>
 		</rule>
@@ -14509,7 +14471,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Nieuwerkerk</token><token>aan</token><token>den</token><token>IJssel</token></antipattern>
 			<pattern><token>nieuwerkerk</token><token>aan</token><token>den</token><token>ijssel</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Nieuwerkerk aan den IJssel</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Nieuwerkerk aan den IJssel</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Nieuwerkerk aan den IJssel">Ik zie <marker>nieuwerkerk aan den ijssel</marker>.</example>
 		</rule>
@@ -14517,7 +14479,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Nieuwer</token><token>ter</token><token>Aa</token></antipattern>
 			<pattern><token>nieuwer</token><token>ter</token><token>aa</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Nieuwer ter Aa</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Nieuwer ter Aa</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Nieuwer ter Aa">Ik zie <marker>nieuwer ter aa</marker>.</example>
 		</rule>
@@ -14525,7 +14487,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Nieuwe</token><token>Wetering</token></antipattern>
 			<pattern><token>nieuwe</token><token>wetering</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Nieuwe Wetering</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Nieuwe Wetering</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Nieuwe Wetering">Ik zie <marker>nieuwe wetering</marker>.</example>
 		</rule>
@@ -14533,7 +14495,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Nieuw</token><token>Heeten</token></antipattern>
 			<pattern><token>nieuw</token><token>heeten</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Nieuw Heeten</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Nieuw Heeten</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Nieuw Heeten">Ik zie <marker>nieuw heeten</marker>.</example>
 		</rule>
@@ -14541,7 +14503,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Nij</token><token>Altoenae</token></antipattern>
 			<pattern><token>nij</token><token>altoenae</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Nij Altoenae</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Nij Altoenae</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Nij Altoenae">Ik zie <marker>nij altoenae</marker>.</example>
 		</rule>
@@ -14549,7 +14511,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Nij</token><token>Beets</token></antipattern>
 			<pattern><token>nij</token><token>beets</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Nij Beets</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Nij Beets</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Nij Beets">Ik zie <marker>nij beets</marker>.</example>
 		</rule>
@@ -14557,7 +14519,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Nijeveense</token><token>Bovenboer</token></antipattern>
 			<pattern><token>nijeveense</token><token>bovenboer</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Nijeveense Bovenboer</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Nijeveense Bovenboer</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Nijeveense Bovenboer">Ik zie <marker>nijeveense bovenboer</marker>.</example>
 		</rule>
@@ -14565,7 +14527,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Noord</token><token>Deurningen</token></antipattern>
 			<pattern><token>noord</token><token>deurningen</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Noord Deurningen</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Noord Deurningen</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Noord Deurningen">Ik zie <marker>noord deurningen</marker>.</example>
 		</rule>
@@ -14573,7 +14535,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Noordwijk</token><token>aan</token><token>Zee</token></antipattern>
 			<pattern><token>noordwijk</token><token>aan</token><token>zee</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Noordwijk aan Zee</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Noordwijk aan Zee</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Noordwijk aan Zee">Ik zie <marker>noordwijk aan zee</marker>.</example>
 		</rule>
@@ -14581,7 +14543,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Ohé</token><token>en</token><token>Laak</token></antipattern>
 			<pattern><token>ohé</token><token>en</token><token>laak</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Ohé en Laak</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Ohé en Laak</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Ohé en Laak">Ik zie <marker>ohé en laak</marker>.</example>
 		</rule>
@@ -14589,7 +14551,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Oud</token><token>Ade</token></antipattern>
 			<pattern><token>oud</token><token>ade</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Oud Ade</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Oud Ade</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Oud Ade">Ik zie <marker>oud ade</marker>.</example>
 		</rule>
@@ -14597,7 +14559,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Oud</token><token>Avereest</token></antipattern>
 			<pattern><token>oud</token><token>avereest</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Oud Avereest</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Oud Avereest</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Oud Avereest">Ik zie <marker>oud avereest</marker>.</example>
 		</rule>
@@ -14605,7 +14567,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Oude</token><token>Leede</token></antipattern>
 			<pattern><token>oude</token><token>leede</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Oude Leede</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Oude Leede</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Oude Leede">Ik zie <marker>oude leede</marker>.</example>
 		</rule>
@@ -14613,7 +14575,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Oude</token><token>Leije</token></antipattern>
 			<pattern><token>oude</token><token>leije</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Oude Leije</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Oude Leije</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Oude Leije">Ik zie <marker>oude leije</marker>.</example>
 		</rule>
@@ -14621,7 +14583,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Oude</token><token>Meer</token></antipattern>
 			<pattern><token>oude</token><token>meer</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Oude Meer</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Oude Meer</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Oude Meer">Ik zie <marker>oude meer</marker>.</example>
 		</rule>
@@ -14629,7 +14591,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Oude</token><token>Niedorp</token></antipattern>
 			<pattern><token>oude</token><token>niedorp</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Oude Niedorp</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Oude Niedorp</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Oude Niedorp">Ik zie <marker>oude niedorp</marker>.</example>
 		</rule>
@@ -14637,7 +14599,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Oude</token><token>Pekela</token></antipattern>
 			<pattern><token>oude</token><token>pekela</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Oude Pekela</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Oude Pekela</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Oude Pekela">Ik zie <marker>oude pekela</marker>.</example>
 		</rule>
@@ -14645,7 +14607,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Ouderkerk</token><token>aan</token><token>de</token><token>Amstel</token></antipattern>
 			<pattern><token>ouderkerk</token><token>aan</token><token>de</token><token>amstel</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Ouderkerk aan de Amstel</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Ouderkerk aan de Amstel</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Ouderkerk aan de Amstel">Ik zie <marker>ouderkerk aan de amstel</marker>.</example>
 		</rule>
@@ -14653,7 +14615,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Ouderkerk</token><token>aan</token><token>den</token><token>IJssel</token></antipattern>
 			<pattern><token>ouderkerk</token><token>aan</token><token>den</token><token>ijssel</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Ouderkerk aan den IJssel</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Ouderkerk aan den IJssel</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Ouderkerk aan den IJssel">Ik zie <marker>ouderkerk aan den ijssel</marker>.</example>
 		</rule>
@@ -14661,7 +14623,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Oude</token><token>Wetering</token></antipattern>
 			<pattern><token>oude</token><token>wetering</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Oude Wetering</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Oude Wetering</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Oude Wetering">Ik zie <marker>oude wetering</marker>.</example>
 		</rule>
@@ -14669,7 +14631,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Oude</token><token>Willem</token></antipattern>
 			<pattern><token>oude</token><token>willem</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Oude Willem</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Oude Willem</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Oude Willem">Ik zie <marker>oude willem</marker>.</example>
 		</rule>
@@ -14677,7 +14639,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Oud</token><token>Gastel</token></antipattern>
 			<pattern><token>oud</token><token>gastel</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Oud Gastel</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Oud Gastel</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Oud Gastel">Ik zie <marker>oud gastel</marker>.</example>
 		</rule>
@@ -14685,7 +14647,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Oud</token><token>Ootmarsum</token></antipattern>
 			<pattern><token>oud</token><token>ootmarsum</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Oud Ootmarsum</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Oud Ootmarsum</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Oud Ootmarsum">Ik zie <marker>oud ootmarsum</marker>.</example>
 		</rule>
@@ -14693,7 +14655,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Oud</token><token>Osdorp</token></antipattern>
 			<pattern><token>oud</token><token>osdorp</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Oud Osdorp</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Oud Osdorp</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Oud Osdorp">Ik zie <marker>oud osdorp</marker>.</example>
 		</rule>
@@ -14701,7 +14663,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Oud</token><token>Sabbinge</token></antipattern>
 			<pattern><token>oud</token><token>sabbinge</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Oud Sabbinge</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Oud Sabbinge</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Oud Sabbinge">Ik zie <marker>oud sabbinge</marker>.</example>
 		</rule>
@@ -14709,7 +14671,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Radio</token><token>Kootwijk</token></antipattern>
 			<pattern><token>radio</token><token>kootwijk</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Radio Kootwijk</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Radio Kootwijk</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Radio Kootwijk">Ik zie <marker>radio kootwijk</marker>.</example>
 		</rule>
@@ -14717,7 +14679,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Rotterdam</token><token>Albrands</token></antipattern>
 			<pattern><token>rotterdam</token><token>albrands</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Rotterdam Albrands</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Rotterdam Albrands</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Rotterdam Albrands">Ik zie <marker>rotterdam albrands</marker>.</example>
 		</rule>
@@ -14725,7 +14687,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Schin</token><token>op</token><token>Geul</token></antipattern>
 			<pattern><token>schin</token><token>op</token><token>geul</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Schin op Geul</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Schin op Geul</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Schin op Geul">Ik zie <marker>schin op geul</marker>.</example>
 		</rule>
@@ -14733,7 +14695,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Sint</token><token>Agatha</token></antipattern>
 			<pattern><token>sint</token><token>agatha</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Sint Agatha</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Sint Agatha</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Sint Agatha">Ik zie <marker>sint agatha</marker>.</example>
 		</rule>
@@ -14741,7 +14703,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Sint</token><token>Annaparochie</token></antipattern>
 			<pattern><token>sint</token><token>annaparochie</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Sint Annaparochie</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Sint Annaparochie</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Sint Annaparochie">Ik zie <marker>sint annaparochie</marker>.</example>
 		</rule>
@@ -14749,7 +14711,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Sint</token><token>Anna</token><token>ter</token><token>Muiden</token></antipattern>
 			<pattern><token>sint</token><token>anna</token><token>ter</token><token>muiden</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Sint Anna ter Muiden</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Sint Anna ter Muiden</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Sint Anna ter Muiden">Ik zie <marker>sint anna ter muiden</marker>.</example>
 		</rule>
@@ -14757,7 +14719,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Sint</token><token>Annen</token></antipattern>
 			<pattern><token>sint</token><token>annen</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Sint Annen</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Sint Annen</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Sint Annen">Ik zie <marker>sint annen</marker>.</example>
 		</rule>
@@ -14765,7 +14727,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Sint</token><token>Anthonis</token></antipattern>
 			<pattern><token>sint</token><token>anthonis</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Sint Anthonis</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Sint Anthonis</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Sint Anthonis">Ik zie <marker>sint anthonis</marker>.</example>
 		</rule>
@@ -14773,7 +14735,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Sint</token><token>Geertruid</token></antipattern>
 			<pattern><token>sint</token><token>geertruid</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Sint Geertruid</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Sint Geertruid</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Sint Geertruid">Ik zie <marker>sint geertruid</marker>.</example>
 		</rule>
@@ -14781,7 +14743,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Sint</token><token>Gerlach</token></antipattern>
 			<pattern><token>sint</token><token>gerlach</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Sint Gerlach</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Sint Gerlach</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Sint Gerlach">Ik zie <marker>sint gerlach</marker>.</example>
 		</rule>
@@ -14789,7 +14751,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Sint</token><token>Hubert</token></antipattern>
 			<pattern><token>sint</token><token>hubert</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Sint Hubert</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Sint Hubert</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Sint Hubert">Ik zie <marker>sint hubert</marker>.</example>
 		</rule>
@@ -14797,7 +14759,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Sint</token><token>Isidorushoeve</token></antipattern>
 			<pattern><token>sint</token><token>isidorushoeve</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Sint Isidorushoeve</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Sint Isidorushoeve</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Sint Isidorushoeve">Ik zie <marker>sint isidorushoeve</marker>.</example>
 		</rule>
@@ -14805,7 +14767,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Sint</token><token>Jansklooster</token></antipattern>
 			<pattern><token>sint</token><token>jansklooster</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Sint Jansklooster</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Sint Jansklooster</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Sint Jansklooster">Ik zie <marker>sint jansklooster</marker>.</example>
 		</rule>
@@ -14813,7 +14775,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Sint</token><token>Jansteen</token></antipattern>
 			<pattern><token>sint</token><token>jansteen</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Sint Jansteen</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Sint Jansteen</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Sint Jansteen">Ik zie <marker>sint jansteen</marker>.</example>
 		</rule>
@@ -14821,7 +14783,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Sint</token><token>Joost</token></antipattern>
 			<pattern><token>sint</token><token>joost</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Sint Joost</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Sint Joost</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Sint Joost">Ik zie <marker>sint joost</marker>.</example>
 		</rule>
@@ -14829,7 +14791,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Sint</token><token>Kruis</token></antipattern>
 			<pattern><token>sint</token><token>kruis</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Sint Kruis</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Sint Kruis</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Sint Kruis">Ik zie <marker>sint kruis</marker>.</example>
 		</rule>
@@ -14837,7 +14799,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Sint</token><token>Laurens</token></antipattern>
 			<pattern><token>sint</token><token>laurens</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Sint Laurens</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Sint Laurens</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Sint Laurens">Ik zie <marker>sint laurens</marker>.</example>
 		</rule>
@@ -14845,7 +14807,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Sint</token><token>Maarten</token></antipattern>
 			<pattern><token>sint</token><token>maarten</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Sint Maarten</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Sint Maarten</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Sint Maarten">Ik zie <marker>sint maarten</marker>.</example>
 		</rule>
@@ -14853,7 +14815,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Sint</token><token>Maartensbrug</token></antipattern>
 			<pattern><token>sint</token><token>maartensbrug</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Sint Maartensbrug</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Sint Maartensbrug</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Sint Maartensbrug">Ik zie <marker>sint maartensbrug</marker>.</example>
 		</rule>
@@ -14861,7 +14823,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Sint</token><token>Maartensvlotbrug</token></antipattern>
 			<pattern><token>sint</token><token>maartensvlotbrug</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Sint Maartensvlotbrug</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Sint Maartensvlotbrug</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Sint Maartensvlotbrug">Ik zie <marker>sint maartensvlotbrug</marker>.</example>
 		</rule>
@@ -14869,7 +14831,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Sint</token><token>Maartenszee</token></antipattern>
 			<pattern><token>sint</token><token>maartenszee</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Sint Maartenszee</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Sint Maartenszee</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Sint Maartenszee">Ik zie <marker>sint maartenszee</marker>.</example>
 		</rule>
@@ -14877,7 +14839,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Sint</token><token>Michielsgestel</token></antipattern>
 			<pattern><token>sint</token><token>michielsgestel</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Sint Michielsgestel</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Sint Michielsgestel</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Sint Michielsgestel">Ik zie <marker>sint michielsgestel</marker>.</example>
 		</rule>
@@ -14885,7 +14847,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Sint</token><token>Nicolaasga</token></antipattern>
 			<pattern><token>sint</token><token>nicolaasga</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Sint Nicolaasga</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Sint Nicolaasga</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Sint Nicolaasga">Ik zie <marker>sint nicolaasga</marker>.</example>
 		</rule>
@@ -14893,7 +14855,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Sint</token><token>Odiliënberg</token></antipattern>
 			<pattern><token>sint</token><token>odiliënberg</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Sint Odiliënberg</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Sint Odiliënberg</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Sint Odiliënberg">Ik zie <marker>sint odiliënberg</marker>.</example>
 		</rule>
@@ -14901,7 +14863,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Sint</token><token>Pancras</token></antipattern>
 			<pattern><token>sint</token><token>pancras</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Sint Pancras</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Sint Pancras</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Sint Pancras">Ik zie <marker>sint pancras</marker>.</example>
 		</rule>
@@ -14909,7 +14871,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Sint</token><token>Philipsland</token></antipattern>
 			<pattern><token>sint</token><token>philipsland</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Sint Philipsland</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Sint Philipsland</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Sint Philipsland">Ik zie <marker>sint philipsland</marker>.</example>
 		</rule>
@@ -14917,7 +14879,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Smalle</token><token>Ee</token></antipattern>
 			<pattern><token>smalle</token><token>ee</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Smalle Ee</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Smalle Ee</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Smalle Ee">Ik zie <marker>smalle ee</marker>.</example>
 		</rule>
@@ -14925,7 +14887,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Ten</token><token>Arlo</token></antipattern>
 			<pattern><token>ten</token><token>arlo</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Ten Arlo</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Ten Arlo</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Ten Arlo">Ik zie <marker>ten arlo</marker>.</example>
 		</rule>
@@ -14933,7 +14895,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Ten</token><token>Boer</token></antipattern>
 			<pattern><token>ten</token><token>boer</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Ten Boer</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Ten Boer</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Ten Boer">Ik zie <marker>ten boer</marker>.</example>
 		</rule>
@@ -14941,7 +14903,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Ten</token><token>Esschen</token></antipattern>
 			<pattern><token>ten</token><token>esschen</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Ten Esschen</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Ten Esschen</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Ten Esschen">Ik zie <marker>ten esschen</marker>.</example>
 		</rule>
@@ -14949,7 +14911,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Ten</token><token>Post</token></antipattern>
 			<pattern><token>ten</token><token>post</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Ten Post</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Ten Post</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Ten Post">Ik zie <marker>ten post</marker>.</example>
 		</rule>
@@ -14957,7 +14919,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Ter</token><token>Aar</token></antipattern>
 			<pattern><token>ter</token><token>aar</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Ter Aar</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Ter Aar</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Ter Aar">Ik zie <marker>ter aar</marker>.</example>
 		</rule>
@@ -14965,7 +14927,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Ter</token><token>Aard</token></antipattern>
 			<pattern><token>ter</token><token>aard</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Ter Aard</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Ter Aard</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Ter Aard">Ik zie <marker>ter aard</marker>.</example>
 		</rule>
@@ -14973,7 +14935,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Ter</token><token>Apel</token></antipattern>
 			<pattern><token>ter</token><token>apel</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Ter Apel</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Ter Apel</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Ter Apel">Ik zie <marker>ter apel</marker>.</example>
 		</rule>
@@ -14981,7 +14943,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Ter</token><token>Apelkanaal</token></antipattern>
 			<pattern><token>ter</token><token>apelkanaal</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Ter Apelkanaal</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Ter Apelkanaal</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Ter Apelkanaal">Ik zie <marker>ter apelkanaal</marker>.</example>
 		</rule>
@@ -14989,7 +14951,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Ter</token><token>Heijde</token></antipattern>
 			<pattern><token>ter</token><token>heijde</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Ter Heijde</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Ter Heijde</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Ter Heijde">Ik zie <marker>ter heijde</marker>.</example>
 		</rule>
@@ -14997,7 +14959,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Ter</token><token>Idzard</token></antipattern>
 			<pattern><token>ter</token><token>idzard</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Ter Idzard</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Ter Idzard</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Ter Idzard">Ik zie <marker>ter idzard</marker>.</example>
 		</rule>
@@ -15005,7 +14967,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>'</token><token>t</token><token>Goy</token></antipattern>
 			<pattern><token>'</token><token>t</token><token>goy</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>'t Goy</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>'t Goy</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="'t Goy">Ik zie <marker>'t goy</marker>.</example>
 		</rule>
@@ -15013,7 +14975,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>'</token><token>t</token><token>Haagje</token></antipattern>
 			<pattern><token>'</token><token>t</token><token>haagje</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>'t Haagje</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>'t Haagje</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="'t Haagje">Ik zie <marker>'t haagje</marker>.</example>
 		</rule>
@@ -15021,7 +14983,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>'</token><token>t</token><token>Haantje</token></antipattern>
 			<pattern><token>'</token><token>t</token><token>haantje</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>'t Haantje</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>'t Haantje</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="'t Haantje">Ik zie <marker>'t haantje</marker>.</example>
 		</rule>
@@ -15029,7 +14991,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>'</token><token>t</token><token>Harde</token></antipattern>
 			<pattern><token>'</token><token>t</token><token>harde</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>'t Harde</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>'t Harde</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="'t Harde">Ik zie <marker>'t harde</marker>.</example>
 		</rule>
@@ -15037,7 +14999,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>The</token><token>Bottom</token></antipattern>
 			<pattern><token>the</token><token>bottom</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>The Bottom</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>The Bottom</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="The Bottom">Ik zie <marker>the bottom</marker>.</example>
 		</rule>
@@ -15045,7 +15007,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>'</token><token>t</token><token>Loo</token></antipattern>
 			<pattern><token>'</token><token>t</token><token>loo</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>'t Loo</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>'t Loo</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="'t Loo">Ik zie <marker>'t loo</marker>.</example>
 		</rule>
@@ -15053,7 +15015,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>'</token><token>t</token><token>Rooth</token></antipattern>
 			<pattern><token>'</token><token>t</token><token>rooth</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>'t Rooth</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>'t Rooth</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="'t Rooth">Ik zie <marker>'t rooth</marker>.</example>
 		</rule>
@@ -15061,7 +15023,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Tull</token><token>en</token><token>'</token><token>t</token><token>Waal</token></antipattern>
 			<pattern><token>tull</token><token>en</token><token>'</token><token>t</token><token>waal</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Tull en 't Waal</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Tull en 't Waal</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Tull en 't Waal">Ik zie <marker>tull en 't waal</marker>.</example>
 		</rule>
@@ -15069,7 +15031,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>'</token><token>t</token><token>Veld</token></antipattern>
 			<pattern><token>'</token><token>t</token><token>veld</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>'t Veld</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>'t Veld</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="'t Veld">Ik zie <marker>'t veld</marker>.</example>
 		</rule>
@@ -15077,7 +15039,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>'</token><token>t</token><token>Waar</token></antipattern>
 			<pattern><token>'</token><token>t</token><token>waar</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>'t Waar</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>'t Waar</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="'t Waar">Ik zie <marker>'t waar</marker>.</example>
 		</rule>
@@ -15085,7 +15047,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Tweede</token><token>Exloërmond</token></antipattern>
 			<pattern><token>tweede</token><token>exloërmond</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Tweede Exloërmond</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Tweede Exloërmond</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Tweede Exloërmond">Ik zie <marker>tweede exloërmond</marker>.</example>
 		</rule>
@@ -15093,7 +15055,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Tweede</token><token>Valthermond</token></antipattern>
 			<pattern><token>tweede</token><token>valthermond</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Tweede Valthermond</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Tweede Valthermond</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Tweede Valthermond">Ik zie <marker>tweede valthermond</marker>.</example>
 		</rule>
@@ -15101,7 +15063,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>'</token><token>t</token><token>Zand</token></antipattern>
 			<pattern><token>'</token><token>t</token><token>zand</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>'t Zand</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>'t Zand</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="'t Zand">Ik zie <marker>'t zand</marker>.</example>
 		</rule>
@@ -15109,7 +15071,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>'</token><token>t</token><token>Zandt</token></antipattern>
 			<pattern><token>'</token><token>t</token><token>zandt</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>'t Zandt</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>'t Zandt</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="'t Zandt">Ik zie <marker>'t zandt</marker>.</example>
 		</rule>
@@ -15117,7 +15079,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Van</token><token>Ewijcksluis</token></antipattern>
 			<pattern><token>van</token><token>ewijcksluis</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Van Ewijcksluis</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Van Ewijcksluis</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Van Ewijcksluis">Ik zie <marker>van ewijcksluis</marker>.</example>
 		</rule>
@@ -15125,7 +15087,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Vuile</token><token>Riete</token></antipattern>
 			<pattern><token>vuile</token><token>riete</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Vuile Riete</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Vuile Riete</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Vuile Riete">Ik zie <marker>vuile riete</marker>.</example>
 		</rule>
@@ -15133,7 +15095,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Wehe-den</token><token>Hoorn</token></antipattern>
 			<pattern><token>wehe-den</token><token>hoorn</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Wehe-den Hoorn</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Wehe-den Hoorn</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Wehe-den Hoorn">Ik zie <marker>wehe-den hoorn</marker>.</example>
 		</rule>
@@ -15141,7 +15103,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Wijk</token><token>aan</token><token>Zee</token></antipattern>
 			<pattern><token>wijk</token><token>aan</token><token>zee</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Wijk aan Zee</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Wijk aan Zee</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Wijk aan Zee">Ik zie <marker>wijk aan zee</marker>.</example>
 		</rule>
@@ -15149,7 +15111,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Wijk</token><token>bij</token><token>Duurstede</token></antipattern>
 			<pattern><token>wijk</token><token>bij</token><token>duurstede</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Wijk bij Duurstede</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Wijk bij Duurstede</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Wijk bij Duurstede">Ik zie <marker>wijk bij duurstede</marker>.</example>
 		</rule>
@@ -15157,7 +15119,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Wijk</token><token>en</token><token>Aalburg</token></antipattern>
 			<pattern><token>wijk</token><token>en</token><token>aalburg</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Wijk en Aalburg</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Wijk en Aalburg</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Wijk en Aalburg">Ik zie <marker>wijk en aalburg</marker>.</example>
 		</rule>
@@ -15165,7 +15127,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Willige</token><token>Langerak</token></antipattern>
 			<pattern><token>willige</token><token>langerak</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Willige Langerak</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Willige Langerak</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Willige Langerak">Ik zie <marker>willige langerak</marker>.</example>
 		</rule>
@@ -15173,7 +15135,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Witte</token><token>Paarden</token></antipattern>
 			<pattern><token>witte</token><token>paarden</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Witte Paarden</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Witte Paarden</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Witte Paarden">Ik zie <marker>witte paarden</marker>.</example>
 		</rule>
@@ -15181,7 +15143,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Woerdense</token><token>Verlaat</token></antipattern>
 			<pattern><token>woerdense</token><token>verlaat</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Woerdense Verlaat</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Woerdense Verlaat</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Woerdense Verlaat">Ik zie <marker>woerdense verlaat</marker>.</example>
 		</rule>
@@ -15189,7 +15151,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Woeste</token><token>Hoeve</token></antipattern>
 			<pattern><token>woeste</token><token>hoeve</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Woeste Hoeve</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Woeste Hoeve</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Woeste Hoeve">Ik zie <marker>woeste hoeve</marker>.</example>
 		</rule>
@@ -15197,7 +15159,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Wouwse</token><token>Plantage-</token></antipattern>
 			<pattern><token>wouwse</token><token>plantage-</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Wouwse Plantage-</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Wouwse Plantage-</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Wouwse Plantage-">Ik zie <marker>wouwse plantage-</marker>.</example>
 		</rule>
@@ -15205,7 +15167,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Zevenbergschen</token><token>Hoek</token></antipattern>
 			<pattern><token>zevenbergschen</token><token>hoek</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Zevenbergschen Hoek</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Zevenbergschen Hoek</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Zevenbergschen Hoek">Ik zie <marker>zevenbergschen hoek</marker>.</example>
 		</rule>
@@ -15213,7 +15175,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Zions</token><token>Hill</token></antipattern>
 			<pattern><token>zions</token><token>hill</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Zions Hill</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Zions Hill</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Zions Hill">Ik zie <marker>zions hill</marker>.</example>
 		</rule>
@@ -15221,7 +15183,7 @@ onwaarschijnlijk
 		<rule>
 			<antipattern case_sensitive="yes"><token>Zwarte</token><token>Haan</token></antipattern>
 			<pattern><token>zwarte</token><token>haan</token></pattern>
-			<message>U bedoelt misschien de plaats <suggestion>Zwarte Haan</suggestion>.</message>
+			<message>U bedoelt misschien de eigennaam <suggestion>Zwarte Haan</suggestion>.</message>
 			<short>Plaatsnaam verkeerd</short>
 			<example correction="Zwarte Haan">Ik zie <marker>zwarte haan</marker>.</example>
 		</rule>
@@ -15856,6 +15818,7 @@ gulpen;Gulpen
 evers;Evers
 abel;Abel
 robbert;Robbert
+finnen;Finnen
 janet;Janet
 bridget;Bridget
 bedrijfsdiner;Bedrijfsdiner
@@ -16196,40 +16159,96 @@ steenwijk;Steenwijk
                 <example>Dit <marker>is</marker> wel goed.</example>
             </rule>
         </rulegroup>
-        <rulegroup id="DUBBELOP" name="Voorlopig concept">
-			<rule>
-				<pattern><token>voorlopig</token><token>concept</token></pattern>
-                <message>Een concept is toch altijd voorlopig? Schrijf: <suggestion>\1</suggestion> of <suggestion>\2</suggestion>.</message>
-                <example correction="voorlopig|concept">Dit is een <marker>voorlopig concept</marker>.</example>
-                <example>Dit is een <marker>concept</marker>.</example>
-			</rule>
-		</rulegroup>
-        <rulegroup id="HOOFDL_OVERB" name="Hoofdletters overbodig">
-			<antipattern case_sensitive="yes"><token>de</token><token>Rijn</token></antipattern>
+        <rulegroup id="TITELS" name="Titels zonder hoofdletter">
             <rule>
+                <antipattern><token regexp="yes">[A-Z].*</token><token regexp="yes">de|der</token><token>Graaf</token></antipattern>
+                <antipattern><token regexp="yes">[A-Z].*</token><token>den</token><token>Hertog</token></antipattern>
                 <pattern case_sensitive="yes">
-                    <token case_sensitive="yes" regexp="yes">[a-z].*</token>
+                    <token/>
+                    <token><exception postag="SENT_START"/><exception>De</exception></token>
                     <marker>
-						<token case_sensitive="yes" regexp="yes">[A-Z].*<exception postag_regexp="yes" postag="ENM.*|UNKNOWN|VLG:BHL"/></token>
+                        <token regexp="yes">Prinses|Prins|Koning|Koningin|Graaf|Hertog|Minister|Staatssecretaris</token>
                     </marker>
-                    <token case_sensitive="yes" regexp="yes">[a-z].*|[.?!]</token>
                 </pattern>
-                <message>Er is vast geen hoofdletter nodig: <suggestion><match no="2" case_conversion="startlower"/></suggestion> (behalve bij een eigennaam of bij uitzonderlijk respect).</message>
-                <example correction="bisdom">Een cursus bij een van de broeders in het <marker>Bisdom</marker>.</example>
-                <example type="correct">Het gaat in het <marker>Vlaams</marker>.</example>
-                <example type="correct">Hij komt in de <marker>Europese</marker> organisaties.</example>
+                <message>Als u de titel bedoelt, dan is het: <suggestion><match no="3" case_conversion="startlower"/></suggestion> (behalve als u bijzonder respect wilt wergeven).</message>
+                <short>Kleine letter gebruiken</short>
+                <example>Ik zie <marker>prinses</marker> Alexia.</example>
+                <example correction="prinses">Ik zie <marker>Prinses</marker> Alexia.</example>
+                <example correction="graaf">Wat denken jullie van "<marker>Graaf</marker>"?</example>
+                <example correction="graaf">Het lot viel op <marker>Graaf</marker> van Elissem.</example>
+                <example correction="koningin">15 <marker>Koningin</marker> Paola gaat elke dag naar de mis.</example>
+                <example correction="koning">Gelukkig hebben we onze goede <marker>Koning</marker> nog.</example>
+                <example correction="koningin">Misoffer op tot lafenis der ziel van <marker>Koningin</marker> Astrid.</example>
+                <example correction="prins">De prijs wordt uitgereikt door Pelé en <marker>Prins</marker> Albert van Monaco.</example>
             </rule>
+        </rulegroup>
+        <rulegroup id="BISDOM" name="geen Bisdom maar bisdom">
             <rule>
                 <pattern case_sensitive="yes">
-                    <token postag="SENT_START"/>
-					<token/>
+                    <token><exception postag="SENT_START"/></token>
                     <marker>
-						<token case_sensitive="yes" regexp="yes">[A-Z].*<exception postag_regexp="yes" postag="ENM.*|UNKNOWN|VLG:BHL"/></token>
+                        <token>Bisdom</token>
                     </marker>
-                    <token case_sensitive="yes" regexp="yes">[a-z].*|[.?!]</token>
                 </pattern>
-                <message>Er is vast geen hoofdletter nodig: <suggestion><match no="3" case_conversion="startlower"/></suggestion> (behalve bij een eigennaam of bij uitzonderlijk respect).</message>
-                <example correction="bisdom">Het <marker>Bisdom</marker> is gegroeid.</example>
+                <message>Geen hoofdletter nodig: <suggestion><match no="2" case_conversion="startlower"/></suggestion></message>
+                <example correction="bisdom">Sedert 2012 is hij tevens ook voorzitter van de zetel <marker>Bisdom</marker> Brugge.</example>
+                <example correction="bisdom">Het gaat volgen van een cursus bij een van de broeders in het <marker>Bisdom</marker>.</example>
+                <example correction="bisdom">We zullen het wel vinden in de archieven van het <marker>Bisdom</marker> Brugge.</example>
+                <example correction="bisdom">Het <marker>Bisdom</marker> van Brugge vroeg een nieuw werk te componeren.</example>
+                <example correction="bisdom">Het domein is eigendom van het <marker>Bisdom</marker> Brugge en wordt door de vzw Jericho beheerd.</example>
+            </rule>
+        </rulegroup>
+        <rulegroup id="MAANDEN" name="maanden hebben geen hoofdletter">
+            <rule>
+                <!-- 2014-08-21 TaalTik -->
+                <antipattern><token>van</token><token>der</token><token>Mei</token></antipattern>
+                <pattern case_sensitive="yes">
+                    <token><exception postag="SENT_START"/></token>
+                    <marker>
+                        <token regexp="yes">Januari|Februari|Maart|April|Mei|Juni|Juli|Augustus|September|Oktober|November|December</token>
+                    </marker>
+                </pattern>
+                <message>Maanden krijgen geen hoofdletter: <suggestion><match no="2" case_conversion="startlower"/></suggestion></message>
+                <example correction="mei">De maand <marker>Mei</marker> is droog.</example>
+                <example correction="juni">30 <marker>Juni</marker>.</example>
+                <example correction="juli">16 <marker>Juli</marker>.</example>
+                <example correction="januari">Maandag 8 <marker>Januari</marker>.</example>
+                <example correction="december">Vrijdag, 2 <marker>December</marker>.</example>
+                <example correction="juni">De Wet van 10 <marker>Juni</marker> 1938.</example>
+                <example correction="juli">Zaterdag 23" <marker>Juli</marker> 1887.</example>
+                <example correction="juli">Donderdag 30- <marker>Juli</marker>.</example>
+            </rule>
+        </rulegroup>
+        <rulegroup id="FEESTDAGEN" name="samenstellingen met feestdagen, geen hoofdletter">
+            <!-- 2014-08-19 TaalTik -->
+            <rule>
+                <pattern case_sensitive="yes">
+                    <token><exception postag="SENT_START"/></token>
+                    <marker>
+                        <token regexp="yes">(Oudejaar|Oudjaar|Nieuwjaar|Allerzielen|Dierendag|Prinsjesdag|Vaderdag|Moederdag|Aswoensdag|Carnaval|Valentijnsdag|Driekoningen|Kinderboekenweek|Boekenweek|Allerheiligen|Pinkster|Kerst|Hemelvaarts).*...<exception regexp="yes">Kerstmis|Kerstman|Hemelvaartsdag</exception></token>
+                    </marker>
+                </pattern>
+                <message>Samenstellingen met namen van feesten behoeven geen hoofdletter: <suggestion><match no="2" case_conversion="startlower"/></suggestion></message>
+                <short>Geen hoofdletter</short>
+                <example correction="boekenweekgeschenk">Een <marker>Boekenweekgeschenk</marker> is fout.</example>
+                <example correction="kerstdesign">Ronde doos met <marker>Kerstdesign</marker>.</example>
+                <example correction="oudejaarsdag">Morgen is het <marker>Oudejaarsdag</marker>.</example>
+                <example correction="kerstmarkten">13 december 2013: <marker>Kerstmarkten</marker>!</example>
+                <example correction="kerstmuziek">Ook nergens <marker>Kerstmuziek</marker> te horen.</example>
+                <example correction="kerstboom">De <marker>Kerstboom</marker> van juffrouw Martine (4b).</example>
+                <example correction="nieuwjaarswens">Ik besluit met een <marker>Nieuwjaarswens</marker>.</example>
+                <example correction="kerstverlof">Wanneer spelen tijdens het <marker>Kerstverlof</marker>?</example>
+                <example correction="nieuwjaarswensen">2001-60-1-015 <marker>Nieuwjaarswensen</marker> (A.</example>
+                <example correction="kerstfeest">Wij wensen jullie een fijn <marker>Kerstfeest</marker> toe.</example>
+                <example correction="pinksterweekend">Een fijn lang <marker>Pinksterweekend</marker> gewenst.</example>
+                <example correction="pinksterfeest">Aan ieder van u een zalig <marker>Pinksterfeest</marker>!</example>
+                <example correction="kerstmannetje">Door een <marker>Kerstmannetje</marker> dat er bovenop zit.</example>
+                <example correction="driekoningenliedjes">Een van de vele <marker>Driekoningenliedjes</marker>.</example>
+                <example correction="kerstnachtmis">De <marker>Kerstnachtmis</marker> is daar een voorbeeld van.</example>
+                <example correction="pinkstermorgen">Welkom aan iedereen op deze <marker>Pinkstermorgen</marker>.</example>
+                <example correction="nieuwjaarsoverweging">Laat dit de <marker>Nieuwjaarsoverweging</marker> zijn.</example>
+                <example correction="carnavalkermis">De <marker>Carnavalkermis</marker> is al het eerste slachtoffer.</example>
+                <example correction="allerheiligendag">Traditie op <marker>Allerheiligendag</marker>: onze Run-Bike-Run.</example>
             </rule>
         </rulegroup>
         <rulegroup id="PAMPUS" name="Pampus of pampus">
@@ -18005,7 +18024,7 @@ steenwijk;Steenwijk
             <antipattern><token>de</token><token>meer</token></antipattern>
             <antipattern><token>op</token><token>de</token><token>been</token></antipattern>
             <antipattern><token>de</token><token>nummer</token><token regexp="yes">[0-9]+</token></antipattern> <!-- de nummer 1 -->
-            <antipattern><token>de</token><token>nummer</token><token postag_regexp="yes" postag="GET:(EKV|MRV)"/></antipattern> <!-- de nummer 1 -->
+            <antipattern><token>de</token><token>nummer</token><token postag="GET"/></antipattern> <!-- de nummer 1 -->
             <antipattern><token>de</token><token>paar</token><token postag="ZNW:MRV.*" postag_regexp="yes"/></antipattern> <!-- de paar woningen -->
             <antipattern><token>in</token><token>de</token><token>gloria</token></antipattern> <!-- de paar woningen -->
             <antipattern><token>de</token><token>beest</token><token inflected="yes">uithangen</token></antipattern> <!-- de paar woningen -->
@@ -19267,29 +19286,6 @@ steenwijk;Steenwijk
                 <example correction="duidelijk|overduidelijk">De werkgroep noemt het <marker>evident</marker>.</example>
             </rule>
         </rulegroup>
-		<rulegroup id="NIET_X_MINST" name="Niet (in) het minst">
-			<rule>
-				<pattern>
-					<token>niet</token>
-					<token>het</token>
-					<token>minst</token>
-				</pattern>
-				<message>Schrijf liever <suggestion>helemaal niet</suggestion>, dat is duidelijker.</message>
-				<url>https://onzetaal.nl/taaladvies/niet-in-het-minst-niet-het-minst</url>
-				<example correction="helemaal niet">We zijn <marker>niet het minst</marker> verrast.</example>
-			</rule>
-			<rule>
-				<pattern>
-					<token>niet</token>
-					<token>in</token>
-					<token>het</token>
-					<token>minst</token>
-				</pattern>
-				<message>Schrijf liever <suggestion>vooral</suggestion>, dat is duidelijker.</message>
-				<url>https://onzetaal.nl/taaladvies/niet-in-het-minst-niet-het-minst</url>
-				<example correction="vooral">We zijn <marker>niet in het minst</marker> verrast.</example>
-			</rule>
-		</rulegroup>		
         <rulegroup id="EX_NUNC" name="Ex nunc → meteen, direct">
             <rule>
                 <!-- 2014-09-08 TaalTik
@@ -30282,73 +30278,16 @@ steenwijk;Steenwijk
         <rulegroup id="VAAG" name="vage taal">
             <rule>
                 <pattern>
-                    <token regexp="yes">dingen|alles|ergens|ooit|wellicht|men</token>
+                    <token regexp="yes">dingen|alles|ergens|ooit|wellicht|misschien|men</token>
                 </pattern>
                 <message>Woorden als '<match no="1"/>' kunnen een tekst vaag maken.</message>
                 <example type="incorrect">Deze zin is <marker>ergens</marker> wel vaag hoor!</example>
+                <example type="incorrect"><marker>Misschien</marker> dat je daar iets mee kunt?</example>
                 <example type="incorrect">Hoe kom ik hier <marker>ooit</marker> doorheen?</example>
                 <example type="incorrect">Heviger dan <marker>ooit</marker>.</example>
                 <example type="incorrect">Hier <marker>alles</marker> ok.</example>
                 <example type="incorrect">Wat van <marker>alles</marker>.</example>
             </rule>
-        </rulegroup>
-        <rulegroup id="INSPECIFIEK" name="vage aanduiding hoeveelheid">
-            <rule>
-                <pattern>
-                    <token regexp="yes">doorgaans|meestal|waarschijnlijk|vaak|vermoedelijk|mogelijk|misschien|onzeker|twijfelachtig|soms|onwaarschijnlijk</token>
-                </pattern>
-                <message>Wanneer u een kans wilt aangeven, kunt u beter een percentage aangeven; uit onderzoek blijkt dat '\1' heel verschillend wordt geïnterpreteerd.</message>
-                <example type="incorrect">Dit is <marker>doorgaans</marker> onduidelijk.</example>
-            </rule>
-            <rule>
-                <pattern>
-                    <token>bijna</token>
-                    <token regexp="yes">zeker|altijd</token>
-                </pattern>
-                <message>Wanneer u een kans wilt aangeven, kunt u beter een percentage aangeven; uit onderzoek blijkt dat '\1 \2' heel verschillend wordt geïnterpreteerd.</message>
-                <example type="incorrect">Dit is <marker>bijna zeker</marker> onduidelijk.</example>
-            </rule>
-            <rule>
-                <pattern>
-                    <token>zeer</token>
-                    <token>waarschijnlijk</token>
-                </pattern>
-                <message>Wanneer u een kans wilt aangeven, kunt u beter een percentage aangeven; uit onderzoek blijkt dat '\1 \2' heel verschillend wordt geïnterpreteerd.</message>
-                <example type="incorrect">Dit is <marker>zeer waarschijnlijk</marker> onduidelijk.</example>
-            </rule>
-            <rule>
-                <pattern>
-                    <token>heel</token>
-                    <token>vaak</token>
-                </pattern>
-                <message>Wanneer u een kans wilt aangeven, kunt u beter een percentage aangeven; uit onderzoek blijkt dat '\1 \2' heel verschillend wordt geïnterpreteerd.</message>
-                <example type="incorrect">Dit is <marker>heel vaak</marker> onduidelijk.</example>
-            </rule>
-            <rule>
-                <pattern>
-                    <token regexp="yes">grote|kleine</token>
-                    <token>kans</token>
-                </pattern>
-                <message>Wanneer u een kans wilt aangeven, kunt u beter een percentage aangeven; uit onderzoek blijkt dat '\1 \2' heel verschillend wordt geïnterpreteerd.</message>
-                <example type="incorrect">Dit is <marker>grote kans</marker> onduidelijk.</example>
-            </rule>
-            <rule>
-                <pattern>
-                    <token>te</token>
-                    <token>verwachten</token>
-                </pattern>
-                <message>Wanneer u een kans wilt aangeven, kunt u beter een percentage aangeven; uit onderzoek blijkt dat '\1 \2' heel verschillend wordt geïnterpreteerd.</message>
-                <example type="incorrect">Dit is <marker>te verwachten</marker>.</example>
-            </rule>
-            <rule>
-                <pattern>
-                    <token inflected="yes">kunnen</token>
-                    <token>gebeuren</token>
-                </pattern>
-                <message>Wanneer u een kans wilt aangeven, kunt u beter een percentage aangeven; uit onderzoek blijkt dat '\1 \2' heel verschillend wordt geïnterpreteerd.</message>
-                <example type="incorrect">Dit <marker>kan gebeuren</marker>.</example>
-            </rule>
-			
         </rulegroup>
         <rulegroup id="OVERDRIJVING" name="mogelijke overdrijving">
             <rule>
@@ -31644,33 +31583,7 @@ steenwijk;Steenwijk
         </rulegroup>
     </category>
     <category id="CONFUSED_WORDS" name="Woordverwarring">
-
-		<rulegroup id="OVALEN" name="ovalen / ovale">
-            <rule>
-                <pattern>
-                    <marker>
-                        <token>ovalen</token>
-                    </marker>
-                <token postag_regexp="yes" postag="ZNW.*"/>
-                </pattern>
-				<message>Als de \2 ovaal is of zijn, is juist: <suggestion>ovale</suggestion>.</message>
-                <example correction="ovale">Het is een <marker>ovalen</marker> tafeltje.</example>
-            </rule>
-        </rulegroup>
-		<rulegroup id="DANKJE" name="dankje / dank je">
-            <rule>
-                <antipattern><marker><token>dankje</token><token>wel</token></marker></antipattern>
-                <antipattern><token regexp="yes" skip="1">een|het</token><marker><token>dankje</token></marker></antipattern>
-                <pattern>
-                    <marker>
-                        <token>dankje</token>
-                    </marker>
-                </pattern>
-				<message>Je bedoelt vast: <suggestion>dank je</suggestion>.</message>
-                <example correction="Dank je"><marker>Dankje</marker> voor de correctie.</example>
-            </rule>
-        </rulegroup>
-		<rulegroup id="KAMT_MET" name="kamt met / kamt met">
+        <rulegroup id="KAMT_MET" name="kamt met / kamt met">
             <rule>
                 <pattern>
                     <marker>
@@ -31849,7 +31762,6 @@ steenwijk;Steenwijk
                 <example correction="ƒ">Het is <marker>fl</marker> 50.</example>
             </rule>
             <rule>
-                <antipattern><token>u</token><token>s</token><token spacebefore="no">.</token></antipattern>
                 <pattern>
                     <token regexp="yes">.*[aiouy]$</token>
                     <token case_sensitive="yes">s</token>
@@ -36585,22 +36497,15 @@ steenwijk;Steenwijk
         </rulegroup>
         <rulegroup id="SPATIE_LEESTEKEN" name="spatie voor leesteken schrappen">
             <rule>
-                <antipattern>
-                    <!-- smiley -->
-                    <token regexp="yes">[:;]</token>
-                    <token spacebefore="no" min="0">-</token>
-                    <token spacebefore="no" regexp="yes">[()D]</token>
-                </antipattern>
                 <pattern>
                     <token/>
                     <token spacebefore="yes" regexp="yes">[!?;,:]</token>
                 </pattern>
-                <message>Voor dit teken hoort geen spatie <suggestion>\1\2</suggestion></message>
+                <message>Voor dit teken hoort geen spatie<suggestion>\1\2</suggestion></message>
                 <short>!</short>
                 <example correction="fout!">Dit is <marker>fout !</marker></example>
                 <example correction="fout?">Is dit <marker>fout ?</marker></example>
                 <example correction="fout,">Dit is <marker>fout ,</marker> toch?</example>
-                <example>Dit is :-)</example>
             </rule>
         </rulegroup>
         <rulegroup id="GEDACHTESTREEPJE" name="- → —">

@@ -28,15 +28,15 @@ import java.util.TimeZone;
 import java.util.logging.Level;
 
 /**
- * @since 4.5
+ * @since 4.4
  * Logs messages to stdout (or any stream given in constructor)
  */
 @Experimental
-public class OutputStreamLogger extends RuleLogger {
+public class OutputStreamLogger implements RuleLogger {
   private final PrintStream stream;
   private final DateFormat dateFormat;
 
-  private Level level = Level.WARNING;
+  private Level level = Level.INFO;
 
 
   public OutputStreamLogger() {

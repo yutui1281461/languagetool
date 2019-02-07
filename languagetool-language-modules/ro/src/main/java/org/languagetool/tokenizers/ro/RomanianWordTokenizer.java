@@ -23,7 +23,6 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 import org.languagetool.tokenizers.Tokenizer;
-import org.languagetool.tokenizers.WordTokenizer;
 
 /**
  * Tokenizes a sentence into words. Punctuation and whitespace gets its own
@@ -32,7 +31,10 @@ import org.languagetool.tokenizers.WordTokenizer;
  * @author Ionuț Păduraru
  * @since 20.02.2009 19:53:50
  */
-public class RomanianWordTokenizer extends WordTokenizer {
+public class RomanianWordTokenizer implements Tokenizer {
+
+  public RomanianWordTokenizer() {
+  }
 
   @Override
   public List<String> tokenize(final String text) {
@@ -49,7 +51,7 @@ public class RomanianWordTokenizer extends WordTokenizer {
     while (st.hasMoreElements()) {
       l.add(st.nextToken());
     }
-    return joinEMailsAndUrls(l);
+    return l;
   }
 
 }

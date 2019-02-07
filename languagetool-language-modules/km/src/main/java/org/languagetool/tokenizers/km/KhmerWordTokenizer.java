@@ -23,14 +23,16 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 import org.languagetool.tokenizers.Tokenizer;
-import org.languagetool.tokenizers.WordTokenizer;
 
 /**
  * Tokenizes a sentence into words. Punctuation and whitespace gets its own token.
  * 
  * @author Daniel Naber
  */
-public class KhmerWordTokenizer extends WordTokenizer {
+public class KhmerWordTokenizer implements Tokenizer {
+
+  public KhmerWordTokenizer() {
+  }
   
   @Override
   public List<String> tokenize(String text) {
@@ -46,7 +48,7 @@ public class KhmerWordTokenizer extends WordTokenizer {
     while (st.hasMoreElements()) {
       tokens.add(st.nextToken());
     }
-    return joinEMailsAndUrls(tokens);
+    return tokens;
   }
   
 }

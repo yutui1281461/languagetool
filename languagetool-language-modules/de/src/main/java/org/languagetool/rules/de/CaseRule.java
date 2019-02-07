@@ -321,15 +321,6 @@ public class CaseRule extends Rule {
     Arrays.asList( // Das ist also ihr Zuhause.
       posRegex(".+:(POS|GEN):.+"),
       csToken("Zuhause")
-    ),
-    Arrays.asList( // Ein anderes Zuhause habe ich nicht.
-      regex("altes|anderes|k?ein|neues"),
-      csToken("Zuhause")
-    ),
-    Arrays.asList( // Weil er das kommen sah, traf er Vorkehrungen.
-      csToken("das"),
-      csToken("kommen"),
-      new PatternTokenBuilder().csToken("sehen").matchInflectedForms().build()
     )
   );
 

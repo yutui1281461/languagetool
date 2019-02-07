@@ -87,14 +87,13 @@ class RequestLimiter {
     return requestLimitPeriodInSeconds;
   }
 
-  String computeFingerprint(Map<String, List<String>> httpHeader, Map<String, String> parameters) {
+  String computeFingerprint(Map<String, List<String>> httpHeader) {
     List<String> empty = Collections.singletonList("");
     String separator = "|";
     List<String> fields = new LinkedList<>();
     fields.add(String.join(separator, httpHeader.getOrDefault("User-Agent", empty)));
     fields.add(String.join(separator, httpHeader.getOrDefault("Accept-Language", empty)));
     fields.add(String.join(separator, httpHeader.getOrDefault("Referer", empty)));
-    fields.add(String.join(separator, parameters.getOrDefault("textSessionId", "")));
     return String.join(separator, fields);
   }
 
@@ -107,7 +106,7 @@ class RequestLimiter {
     while (requestEvents.size() > REQUEST_QUEUE_SIZE) {
       requestEvents.remove(0);
     }
-    requestEvents.add(new RequestEvent(ipAddress, new Date(), reqSize, computeFingerprint(httpHeader, params), ServerTools.getMode(params)));
+    requestEvents.add(new RequestEvent(ipAddress, new Date(), reqSize, computeFingerprint(httpHeader), ServerTools.getMode(params)));
     checkLimit(ipAddress, params, httpHeader);
   }
 
@@ -161,7 +160,7 @@ class RequestLimiter {
     int requestSizeByFingerprint = 0;
     // all requests before this date are considered old:
     Date thresholdDate = new Date(System.currentTimeMillis() - requestLimitPeriodInSeconds * 1000L);
-    String fingerprint = computeFingerprint(httpHeader, parameters);
+    String fingerprint = computeFingerprint(httpHeader);
     String referer = getReferer(httpHeader);
     String userAgent = getUserAgent(httpHeader);
     Long clientId = getClientId(parameters);
